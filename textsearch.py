@@ -305,7 +305,7 @@ def index_search_box():                                                         
             TableColumn(field="years", title="Year", formatter=HTMLTemplateFormatter()),
             TableColumn(field="populations", title="Population", formatter=NumberFormatter(format='0,0')),
             TableColumn(field="counties", title="County"),
-            TableColumn(field="scores", title="Search Score"),
+            TableColumn(field="scores", title="Relevance Score"),
         ]
     city_table = DataTable(source=citySource, columns=columns, width=size, height=600,reorderable=False, index_position=None)
     
@@ -315,7 +315,7 @@ def index_search_box():                                                         
             TableColumn(field="names", title="Name"),
             TableColumn(field="years", title="Year", formatter=HTMLTemplateFormatter()),
             TableColumn(field="populations", title="Population", formatter=NumberFormatter(format='0,0')),
-            TableColumn(field="scores", title="Search Score", formatter=NumberFormatter(format='0,0')),
+            TableColumn(field="scores", title="Relevance Score"),
         ]
     county_table = DataTable(source=countySource, columns= columns, reorderable=False, index_position=None)
     
