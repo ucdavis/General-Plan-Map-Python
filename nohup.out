@@ -182,3 +182,93 @@ error with file CA_City-La-Canada-Flintridge_2013.txt result ignored 127.0.0.1 -
 127.0.0.1 - - [13/Jan/2021 02:36:19] "[37mGET / HTTP/1.1[0m" 200 -
 127.0.0.1 - - [13/Jan/2021 03:20:27] "[37mGET /outp/CA_City-Tustin_2013.pdf/housing HTTP/1.1[0m" 200 -
 127.0.0.1 - - [13/Jan/2021 03:21:10] "[37mGET /outp/CA_City-Whittier_2013.pdf/housing HTTP/1.1[0m" 200 -
+ * Detected change in '/home/sujoy/website2/textsearch.py', reloading
+
+{'Yuba': 72155, 'Riverside': 2189641, 'Imperial': 174528, 'San Luis Obispo': 269637, 'Sacramento': 1418788, 'El Dorado': 181058, 'Tuolumne': 55365, 'Santa Cruz': 262382, 'San Francisco': 805235, 'Shasta': 177223, 'Santa Barbara': 423895, 'Calaveras': 45578, 'Mono': 14202, 'Kern': 839631, 'Colusa': 21419, 'San Benito': 55269, 'Monterey': 415057, 'Mendocino': 87841, 'Yolo': 200849, 'Sonoma': 483878, 'Nevada': 98764, 'Fresno': 930450, 'Alameda': 1510271, 'Lake': 64665, 'Contra Costa': 1049025, 'Placer': 348432, 'Orange': 3010232, 'Amador': 38091, 'Sierra': 3240, 'Trinity': 13786, 'San Joaquin': 685306, 'Marin': 252409, 'Modoc': 9686, 'San Bernardino': 2035210, 'Napa': 136484, 'Stanislaus': 514453, 'Plumas': 20007, 'Tulare': 442179, 'Madera': 150865, 'Solano': 413344, 'Inyo': 18546, 'Butte': 220000, 'Los Angeles': 9818605, 'Del Norte': 28610, 'San Diego': 3095313, 'Santa Clara': 1781642}
+error with file CA_City-Saint-Helena_2015.txt result ignored 
+error with file CA_City-Walnut-Park_2014.txt result ignored 
+error with file CA_City-San-Buenaventura_2013.txt result ignored 
+error with file CA_City-La-Canada-Flintridge_2014.txt result ignored 
+error with file CA_City-Town-of-Windsor_2009.txt result ignored 
+error with file CA_City-Rowland-Heights_1951.txt result ignored 
+error with file CA_City-Town-of-Truckee_2005.txt result ignored 
+error with file CA_City-Gustine-City_2002.txt result ignored 
+error with file CA_City-South-Whittier_1993.txt result ignored 
+error with file CA_City-La-Canada-Flintridge_2013.txt result ignored 
+{'Yuba': 72155, 'Riverside': 2189641, 'Imperial': 174528, 'San Luis Obispo': 269637, 'Sacramento': 1418788, 'El Dorado': 181058, 'Tuolumne': 55365, 'Santa Cruz': 262382, 'San Francisco': 805235, 'Shasta': 177223, 'Santa Barbara': 423895, 'Calaveras': 45578, 'Mono': 14202, 'Kern': 839631, 'Colusa': 21419, 'San Benito': 55269, 'Monterey': 415057, 'Mendocino': 87841, 'Yolo': 200849, 'Sonoma': 483878, 'Nevada': 98764, 'Fresno': 930450, 'Alameda': 1510271, 'Lake': 64665, 'Contra Costa': 1049025, 'Placer': 348432, 'Orange': 3010232, 'Amador': 38091, 'Sierra': 3240, 'Trinity': 13786, 'San Joaquin': 685306, 'Marin': 252409, 'Modoc': 9686, 'San Bernardino': 2035210, 'Napa': 136484, 'Stanislaus': 514453, 'Plumas': 20007, 'Tulare': 442179, 'Madera': 150865, 'Solano': 413344, 'Inyo': 18546, 'Butte': 220000, 'Los Angeles': 9818605, 'Del Norte': 28610, 'San Diego': 3095313, 'Santa Clara': 1781642}
+error with file CA_City-Saint-Helena_2015.txt result ignored 
+error with file CA_City-Walnut-Park_2014.txt result ignored 
+error with file CA_City-San-Buenaventura_2013.txt result ignored 
+error with file CA_City-La-Canada-Flintridge_2014.txt result ignored 
+error with file CA_City-Town-of-Windsor_2009.txt result ignored 
+error with file CA_City-Rowland-Heights_1951.txt result ignored 
+error with file CA_City-Town-of-Truckee_2005.txt result ignored 
+error with file CA_City-Gustine-City_2002.txt result ignored 
+error with file CA_City-South-Whittier_1993.txt result ignored 
+error with file CA_City-La-Canada-Flintridge_2013.txt result ignored 
+{'Yuba': 72155, 'Riverside': 2189641, 'Imperial': 174528, 'San Luis Obispo': 269637, 'Sacramento': 1418788, 'El Dorado': 181058, 'Tuolumne': 55365, 'Santa Cruz': 262382, 'San Francisco': 805235, 'Shasta': 177223, 'Santa Barbara': 423895, 'Calaveras': 45578, 'Mono': 14202, 'Kern': 839631, 'Colusa': 21419, 'San Benito': 55269, 'Monterey': 415057, 'Mendocino': 87841, 'Yolo': 200849, 'Sonoma': 483878, 'Nevada': 98764, 'Fresno': 930450, 'Alameda': 1510271, 'Lake': 64665, 'Contra Costa': 1049025, 'Placer': 348432, 'Orange': 3010232, 'Amador': 38091, 'Sierra': 3240, 'Trinity': 13786, 'San Joaquin': 685306, 'Marin': 252409, 'Modoc': 9686, 'San Bernardino': 2035210, 'Napa': 136484, 'Stanislaus': 514453, 'Plumas': 20007, 'Tulare': 442179, 'Madera': 150865, 'Solano': 413344, 'Inyo': 18546, 'Butte': 220000, 'Los Angeles': 9818605, 'Del Norte': 28610, 'San Diego': 3095313, 'Santa Clara': 1781642}
+invalid city name San Buenaventura (Ventura)
+invalid city name La Cañada Flintridge
+invalid city name Angels
+invalid city name El Paso de Robles (Paso Robles)
+invalid city name Carmel-by-the-Sea
+invalid city name San Buenaventura (Ventura)
+invalid city name San Buenaventura (Ventura)
+invalid city name La Cañada Flintridge
+invalid city name La Cañada Flintridge
+invalid city name Angels
+invalid city name Angels
+invalid city name El Paso de Robles (Paso Robles)
+invalid city name El Paso de Robles (Paso Robles)
+invalid city name Carmel-by-the-Sea
+invalid city name Carmel-by-the-Sea
+error with file CA_City-Walnut-Park_2002.txt result ignored 
+error with file CA_City-Town-of-Windsor_2009.txt result ignored 
+error with file CA_City-Lakeside_2011.txt result ignored 
+error with file CA_City-Ramona_2010.txt result ignored 
+error with file CA_City-Town-of-Truckee_2005.txt result ignored 
+{'Nevada': 98764, 'Alameda': 1510271, 'Plumas': 20007, 'Santa Barbara': 423895, 'Siskiyou': 44900, 'Trinity': 13786, 'Mendocino': 87841, 'Yolo': 200849, 'Imperial': 174528, 'Solano': 413344, 'Tuolumne': 55365, 'Sonoma': 483878, 'Lassen': 34895, 'Marin': 252409, 'Calaveras': 45578, 'San Luis Obispo': 269637, 'Los Angeles': 9818605, 'Sutter': 94737, 'Amador': 38091, 'Shasta': 177223, 'Mono': 14202, 'San Bernardino': 2035210, 'Contra Costa': 1049025, 'Sierra': 3240, 'Kings': 152982, 'Sacramento': 1418788, 'Napa': 136484, 'Orange': 3010232, 'San Francisco': 805235}
+invalid city name San Buenaventura (Ventura)
+invalid city name La Cañada Flintridge
+invalid city name Angels
+invalid city name El Paso de Robles (Paso Robles)
+invalid city name Carmel-by-the-Sea
+error with file CA_City-San-Buenaventura_2013.txt result ignored 
+error with file CA_City-Saint-Helena_2015.txt result ignored 
+error with file CA_City-Town-of-Windsor_2009.txt result ignored 
+error with file CA_City-La-Canada-Flintridge_2014.txt result ignored 
+error with file CA_City-Walnut-Park_2014.txt result ignored 
+error with file CA_City-Town-of-Truckee_2005.txt result ignored 
+error with file CA_City-South-Whittier_1993.txt result ignored 
+error with file CA_City-Gustine-City_2002.txt result ignored 
+error with file CA_City-Westmont_1990.txt result ignored 
+error with file CA_City-Rowland-Heights_1951.txt result ignored 
+error with file CA_City-Walnut-Park_2002.txt result ignored 
+error with file CA_City-Saint-Helena_1993.txt result ignored 
+error with file CA_City-Orangevale_1976.txt result ignored 
+error with file CA_City-La-Canada-Flintridge_2013.txt result ignored 
+error with file CA_City-Lakeside_2011.txt result ignored 
+error with file CA_City-Ramona_2010.txt result ignored 
+{'San Luis Obispo': 269637, 'Mendocino': 87841, 'El Dorado': 181058, 'San Benito': 55269, 'Santa Cruz': 262382, 'Sacramento': 1418788, 'San Francisco': 805235, 'Alameda': 1510271, 'Sonoma': 483878, 'Colusa': 21419, 'Imperial': 174528, 'Napa': 136484, 'Shasta': 177223, 'Monterey': 415057, 'Yuba': 72155, 'Riverside': 2189641, 'Yolo': 200849, 'Mono': 14202, 'Santa Barbara': 423895, 'Nevada': 98764, 'Calaveras': 45578, 'Kern': 839631, 'Trinity': 13786, 'Fresno': 930450, 'San Joaquin': 685306, 'Tuolumne': 55365, 'Sierra': 3240, 'Alpine': 1175, 'Stanislaus': 514453, 'Marin': 252409, 'Solano': 413344, 'Placer': 348432, 'Lake': 64665, 'San Bernardino': 2035210, 'Merced': 255793, 'San Diego': 3095313, 'Siskiyou': 44900, 'Tehama': 63463, 'Tulare': 442179, 'Butte': 220000, 'Inyo': 18546, 'Modoc': 9686, 'Contra Costa': 1049025, 'Orange': 3010232, 'Santa Clara': 1781642, 'Sutter': 94737, 'Lassen': 34895, 'Plumas': 20007, 'Madera': 150865, 'Mariposa': 18251, 'Amador': 38091, 'Del Norte': 28610, 'Los Angeles': 9818605, 'Kings': 152982, 'San Mateo': 718451}
+invalid city name San Buenaventura (Ventura)
+invalid city name La Cañada Flintridge
+invalid city name Angels
+invalid city name El Paso de Robles (Paso Robles)
+invalid city name Carmel-by-the-Sea
+ * Restarting with stat
+  File "/home/sujoy/website2/textsearch.py", line 45
+IndentationError: expected an indented block
+ * Serving Flask app "textsearch" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 150-478-062
+127.0.0.1 - - [13/Jan/2021 04:02:32] "[37mGET / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [13/Jan/2021 04:02:54] "[37mPOST / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [13/Jan/2021 04:02:57] "[36mGET /static/cssjs/js/bokeh-2.1.1.min.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [13/Jan/2021 04:02:57] "[36mGET /static/cssjs/js/bokeh-widgets-2.1.1.min.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [13/Jan/2021 04:02:57] "[36mGET /static/cssjs/js/bokeh-tables-2.1.1.min.js HTTP/1.1[0m" 304 -
