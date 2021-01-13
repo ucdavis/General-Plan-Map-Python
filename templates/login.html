@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=1024">
+        <meta http-equiv="cache-control" content="no-cache" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="-1" />
+        <link rel = "icon" href =  "https://www.ucdavis.edu/sites/all/themes/ucd_one/favicon.ico" type = "image/x-icon">
+
+        <title>California General Plan Database Mapping Tool</title>
+
+        <!-- Additional CSS Files -->
+        <link rel="stylesheet" href="/static/cssjs/css/bootstrap.min.css" integrity="
+        sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="/static/cssjs/css/font-awesome.css">
+        <link rel="stylesheet" href="/static/cssjs/css/general-template.css">
+        <link rel="stylesheet" href="/static/cssjs/css/login.css">
+  
+
+    </head>
+
+    
+     <!-- ***** Preloader Start ***** -->
+    <div id="js-preloader" class="js-preloader">
+      <div class="preloader-inner">
+        <span class="dot"></span>
+        <div class="dots">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
+    
+    
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky">
+        <nav class="main-nav">
+            <a href="" class="logo">California General Plan  <em> Database Mapping Tool </em></a>
+            <ul class="nav">
+                <li class="scroll-to-section"><a href="#top" class="active">Log in</a></li>                  
+                <li class="scroll-to-section"><a href="https://docs.google.com/forms/d/e/1FAIpQLSeCpD1Dil06c8tuSLnDqHp9W_6zK3S50ho4eGQtM4MyBhYM4g/viewform">Feedback</a></li>
+            </ul>        
+            <a class='menu-trigger'>
+                <span>Menu</span>
+            </a>
+        </nav>
+    </header>
+    <!-- ***** Header Area End ***** -->
+
+
+
+
+    <!-- ***** Main Banner Area Start ***** -->
+    <div class="main-banner" id="top">
+      <img src="/static/images/ca.jpg" style="width: 100%;">
+        <div class="video-overlay header-text">
+            <div class="caption">
+                <div class="grow">
+                    <h2>Log <em>in</em></h2>
+                </div>
+                <center>
+	                <form class="form1" method="POST">
+	                    <input type="text"  value="" placeholder="Username" name="username"><br>
+	                    <input type="password" value="" placeholder="Password" name="password"><br>
+						<input type="submit" value="Enter" class="btnnn ">       
+	            	</form>
+                </center>           
+            </div>
+        </div>
+    </div>
+    <!-- ***** Main Banner Area End ***** -->
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <script>
+      var messages = {{ messages | safe }};
+      for (var i=0; i<messages.length; i++) {
+        alert(messages[i]);
+      }
+    </script>
+  {% endif %}
+{% endwith %}
+
+       
+    <!-- ***** Footer Start ***** -->
+    <footer>
+        <p>Cite as: Brinkley, C; Poirier, L; Ghosh, S; Dettmann, M (2020) California City General Plan Database Mapping Tool. v2.0<br><a rel="nofollow" href="http://critical-data-analysis.org/shiny/general-plan-map/R/" class="tm-text-link" target="_parent">http://critical-data-analysis.org/shiny/general-plan-map/R/</a></p>
+    </footer>
+
+
+    <!-- jQuery -->
+    <script src="/static/cssjs/js/jquery.min.js"></script>
+<script type=text/javascript>
+        $(function() {
+          $('a#test').bind('click', function() {
+            $.getJSON('/background_process_test',
+                function(data) {
+              //do nothing
+            });
+            return false;
+          });
+        });
+</script>
+    <!-- Bootstrap -->
+    <script src="/static/cssjs/js/popper.js"></script>
+    <script src="/static/cssjs/js/bootstrap.min.js"></script>
+
+    <!-- Plugins -->
+    <script src="/static/cssjs/js/scrollreveal.min.js"></script>
+    <script src="/static/cssjs/js/waypoints.min.js"></script>
+    <script src="/static/cssjs/js/jquery.counterup.min.js"></script>
+    <script src="/static/cssjs/js/imgfix.min.js"></script> 
+    <script src="/static/cssjs/js/mixitup.js"></script> 
+    <script src="/static/cssjs/js/accordions.js"></script>
+    
+    <!-- Global Init -->
+    <script src="/static/cssjs/js/custom.js"></script>
+
+  </body>
+</html>
