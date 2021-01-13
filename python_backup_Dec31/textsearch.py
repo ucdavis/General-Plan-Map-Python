@@ -28,176 +28,167 @@ from bokeh.models import TextInput, Button
 from bokeh.models.widgets import Panel, Tabs
 from bokeh.io import show, output_file
 import shapely.affinity
-import es 
-import re
 
 app = Flask(__name__)                                                                                                               #create flask object
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0                                                                                         #avoid storing cache
 bootstrap = Bootstrap(app)                                                                                                          #create bootstrap object
 
 
+
+
+
 @app.route('/')                                                                                                                     #declare flask page url
 def my_form():                                                                                                                      #function for main index
+
     return render_template('index.html')                                                                                            #return index page
 
 
-def getResults(wordinput):                                                                                                          
-    """This function is used to take word input in the searchbox, query elasticsearch,
-    and then return the results. 
-    Args:
-        wordinput (str): an elastic search query
 
-    Returns:
-        str: html doc that will be displayed 
-    """    
+def getResults(wordinput):                                                                                                          
+    
+    countyPopFile = open('static/data/countyPopulations.csv')
+    countyPops = {}
+    for line in countyPopFile:
+        parts = line.split(',')
+        countyPops[parts[0]] = parts[1]
+    countyPopFile.close()
+    
+    
+    cityPopFile = open('static/data/cityPopulations.csv')
+    cityPops = []
+    for line in cityPopFile:
+        parts = line.split(',')
+        temp = cityPop()
+        temp.name=parts[0]
+        temp.type = parts[1]
+        temp.county = parts[2]
+        temp.population = parts[3]
+        cityPops.append(temp)
+    
+    
+    txtFilenames = []
+    for filename in os.listdir("static/data/places"):
+        if filename.endswith(".txt"):
+
+            txtFilenames.append(filename)
     results = []
     query = wordinput
-
-    ids, scores = es.elastic_search(query)
-    result_props = es.map_index_to_vals(ids)
-    for score, result_prop in zip(scores, result_props):
-        result_prop = result_prop.copy()
-        result_prop['query'] = query 
-        result_prop['score'] = score
-        new_result = Result(**result_prop)
-        try:
-            place_props = es.get_place_properties(new_result.is_city, new_result.place_name)
-        except:
-            print('error with file %s result ignored '%new_result.filename)
-            continue 
-
-        if new_result.is_city:
-            new_result.cityType = place_props[0]
-            new_result.county = place_props[1]
-            new_result.population = int(place_props[2])
-        else:
-            new_result.cityType = 'county'
-            new_result.county = new_result.place_name
-            new_result.population = int(place_props[0])
-
-        results.append(new_result)
-
-    
+    word = query.split(",")
+    wordcount = len(word)
+    for fName in txtFilenames:
+        isMatch = False
+        file = open("static/data/places/" + fName, 'r',errors='ignore')
         
-    return results
-
-    
-class Result:
-    """This results class stores the data of a single search 'hit'.
-    """    
-    def __init__(self, state, filename, is_city, place_name, plan_date, filetype,  query, county='na', population=0, city_type='na', score=0):
-        # place properties 
-        self.state = state
-        self.filename = filename
-        self.is_city = is_city
-        self.place_name = place_name
-        self.plan_date = plan_date
-        self.filetype = filetype
-        #search things 
-        self.score = score
         
-        # additional properties 
-        self.county = county
-        self.population = 0
-        self.cityType = city_type
+        with open("static/data/places/" + fName, 'r',errors='ignore') as file:
+            data = file.read().replace('\n', '')
+        data = data.lower()
+        occurences = []
+        for w in word:
+            num = data.count(w)
+            occurences.append(num)
+            if isMatch or num > 0:
+                isMatch = True
+        if isMatch:
+            tempResult = result(cityFile = fName, wordcount=wordcount)
+            tempResult.type = fName.split('-')[0].split('_')[1]
+            parts = fName.split('-')[1:]
+            parts[-1] = parts[-1].split('.')[0]
+            year = parts[-1].split('_')[1]
+            parts[-1] = parts[-1].split('_')[0]
+            name = ""
+            for part in parts:
+                name += part + " "
+            name = name[:-1]
+            tempResult.cityName = name
+            tempResult.year = year
+            tempResult.occurences = occurences
+            if tempResult.type == 'county':
+                tempResult.population = int(countyPops[tempResult.cityName])
+            else:
+                cityPopVal = [pop for pop in cityPops if pop.name == tempResult.cityName]
+                if len(cityPopVal) != 0:
 
-        self.pdf_filename = self.filename.split('.')[0] + '.pdf'
-        parsed_query = self.parse_query(query) 
-        # this self.year is the html that will be displayed around the year 
-        # it will link to a function that will highlight the word occuraces in the file
-        self.year = '<p hidden>'+self.plan_date+'</p> <a href="outp/'+self.pdf_filename+'/'+parsed_query+'" target="_blank">'+self.plan_date+"</a>"
+                    tempResult.population = int(cityPopVal[0].population)
+                    tempResult.cityType = cityPopVal[0].type
+                    tempResult.county = cityPopVal[0].county
+            results.append(tempResult)
+    if len(results) > 0:
+        for res in results:
+            for item in res.occurences:
+                item = float(item)
+        results.sort(key=lambda x: x.totalOccurences, reverse=True)
+    return results, cityPops, countyPops  
+
+class cityPop:
     
-    def parse_query(self, query):
-        """This function parses a query to add commas between words except
-        for words that are a phrase (indicated by their quotes)]
-
-        Args:
-            query (str): query to parse
-
-        Returns:
-            [type]: a parsed query that can be used in html  
-        """        
+    def __init__(self, name="na"):
         
-        phrases_in_quotes = re.findall(r'\"(.+?)\"',query)
-        non_quotes = re.sub(r'"',"", re.sub(r'\"(.+?)\"', '', query))
-        all_words = re.findall('[A-z]+', non_quotes)
-        list_split = phrases_in_quotes + all_words
-        return ','.join(list_split)
-
-    @property
-    def cityName(self):
-        """This is a property tag that is useful for parts of legacy code
-
-        Returns:
-            str: place name  
-        """        
-        return self.place_name
+        self.county = "na"
+        self.population = "na"
+        self.name = "na"
+        self.type = "na"
     
-    @property
-    def type(self):
-        """returns a str describing the category of place
-        Returns:
-            str: either "City" or "county"
-        """        
-        if self.is_city:
-            return 'City'
-        else:
-            return 'county'
+class result:
     
-       
+    def __init__(self, cityFile="", wordcount=0):
+        
+        self.cityFile = cityFile
+        self.occurences = [0] * wordcount
+        self.totalOccurences = 0
+        self.cityName = ""
+        self.type = "city"
+        self.year = "na"
+        self.county = "na"
+        self.population = "0"
+        self.cityType = "na"
+
+
+        
 @app.route('/', methods=['POST'])                                                                                                   #connect search form to html page
 def index_search_box():                                                                                                             #function for accepting search input
-    """The code for the search box functionality 
-
-    Returns:
-        str : html webpage
-    """    
+    
+    wordcount=1                                                                                                                     #initialize no. of phrase inputs
+    flag=0
     wordinput=" "                                                                                                                   #initialize string input for search
     wordinput=request.form['u']                                                                                                     #set name for search form
-    results = getResults(wordinput)
-    matched_city_names = []
-    matched_county_names = []
+    wordinput=wordinput.lower()                                                                                                     #convert input string to lowercase for non case sensitive search
+    wordinput_copy=wordinput                                                                                                        #copy of input string
+    wordlist=""                                                                                                                     #list of phrase input in single string
+    phrase_split = wordinput_copy.split(",")                                                                                        #split input phrase into multiple words at every comma
+    wordcount=len(phrase_split)                                                                                                     #count no. of phrases in input
+    for x in range(wordcount):
+        if wordcount ==1:
+            wordlist= phrase_split[0]
+            break
+        wordlist += phrase_split[x]+','                                                                                             #add commas after every phrase
+    wordlist= wordlist.strip(',')                                                                                                   #remove commas from end and beginning of string input
+    results, cityPops, countyPops = getResults(wordinput)
     cityResults = []
     countyResults = []
-    countyPops = {}
-    cityPops = {}
     uniqueCities = 0
     uniqueCounties = 0
-    maxCityPop = 1
-    maxCountyPop = 1
     for res in results:
-        if res.is_city:
-            cityResults.append(res)
-            matched_city_names.append(res.place_name) 
-            cityPops[res.place_name] = res.population
-            if res.population > maxCityPop:
-                maxCityPop = res.population
-        else:
+        res.cityFile = res.cityFile.split('.')[0]+'.pdf'
+        res.year = '<p hidden>'+res.year+'</p> <a href="outp/'+res.cityFile+'/'+wordlist+'" target="_blank">'+res.year+"</a>"
+        if res.type == "county":
             countyResults.append(res)
-            countyPops[res.place_name] = res.population
-            matched_county_names.append(res.place_name) 
-            if res.population > maxCountyPop:
-                maxCountyPop = res.population
+        else:
+            cityResults.append(res)
+    global txtFilenames 
     
-    print(countyPops)
+    query = wordinput
+    word = query.split(",")
+    #results = getResults(wordinput)
     if len(results) < 1:
         return render_template('noresult.html')
     
-    #load in city shape files 
     cities = gpd.read_file("static/data/ca-places-boundaries/cities.shp")[['NAME','NAMELSAD', 'geometry']]
     cities.columns = ['name', 'color', 'geometry']
     cities.color = "#d47500"
     cities['line_color'] = '#dedede'
     numCities = len(cities.index)
     
-    #load in county shape files 
-    counties = gpd.read_file("static/data/CA_Counties/CA_Counties_TIGER2016.shp")[['NAME', 'NAMELSAD', 'geometry']]
-    counties.columns = ['color', 'name', 'geometry']
-    counties.color = "#00a4a6"
-    counties['line_color'] = '#b3b3b3'
-    numCounties = len(counties.index)
-
-    # if there are no results then set these shapes to white 
     cityResultsName = [res.cityName for res in results]
     cityNames = cities['name'].to_list()
     for ind in cities.index:
@@ -205,10 +196,28 @@ def index_search_box():                                                         
         if val not in cityResultsName:
             cities.at[ind, 'color']='white'
     
+    counties = gpd.read_file("static/data/CA_Counties/CA_Counties_TIGER2016.shp")[['NAME', 'NAMELSAD', 'geometry']]
+    counties.columns = ['color', 'name', 'geometry']
+    counties.color = "#00a4a6"
+    counties['line_color'] = '#b3b3b3'
+    numCounties = len(counties.index)
+    
     for ind in counties.index:
-        #parse name for matching 
-        county_name = re.sub(' County', '', counties['name'][ind])
-        if county_name not in matched_county_names: 
+        parts = counties['name'][ind].split(' ')[0:-1]
+        val = ""
+        if len(parts) == 1:
+            val = parts[0]
+        else:
+            for part in parts:
+                val += part + ' '
+            val = val[0:-1]
+        #print(val, flush=True)
+        flag = False
+        for res in results:
+            if res.type == 'county':
+                if val == res.cityName:
+                    flag = True
+        if not flag:
             counties.at[ind, 'color'] = 'white'
     
     combined = counties.append(cities)
@@ -225,33 +234,39 @@ def index_search_box():                                                         
         )
     p2.grid.grid_line_color = None
     p2.hover.point_policy = "follow_mouse"
-    
-    #make population map 
-    
+    maxCountyPop = 1
+    for county in countyResults:
+        if county.population > maxCountyPop:
+            maxCountyPop = county.population
     cartCounties = counties
-    for ind in counties.index:
-        county_name = re.sub(' County', '', counties['name'][ind])
-        try:
-            pop = float(es.get_place_properties(False, county_name)[-1])
-        except KeyError:
-            pop = 1 
-            print(f"invalid county name {county_name}")
-
+    for ind in cartCounties.index:
+        names = counties['name'][ind].split(' ')[0:-1]
+        name = names[0]
+        if len(names) > 1:
+            for n in names[1:]:
+                name += ' ' + n
+        pop = float(countyPops[name])
         geo = cartCounties['geometry'][ind]
         if maxCountyPop == 1:
             scale = 1
         else:
-            scale = (pop/maxCountyPop)**(1/2)
+            scale = (pop/maxCountyPop )**(1/2)
         cartCounties['geometry'][ind] = shapely.affinity.scale(geo, scale, scale)
 
     
+    maxCityPop = 1
+    for city in cityResults:
+        if float(city.population) > float(maxCityPop):
+            maxCityPop = city.population
     cartCities = cities
     for ind in cartCities.index:
+        name = cities['name'][ind]
+        pop = [r.population for r in cityPops if r.name == name]
+        if len(pop) > 0:
+            pop = float(pop[0])
+        else:
+            pop = 0.0
         geo = cartCities['geometry'][ind]
-        try:
-            pop = float(es.get_place_properties(True, cities['name'][ind])[-1])
-        except:
-            print(f"invalid city name {cities['name'][ind]}")
         if maxCityPop == 1:
             scale = 1
         else:
@@ -279,24 +294,28 @@ def index_search_box():                                                         
         names=[res.cityName for res in cityResults],
         years=[res.year for res in cityResults],
         types=[res.cityType for res in cityResults],
-        fNames=[res.pdf_filename for res in cityResults],
+        fNames=[res.cityFile for res in cityResults],
         populations = [res.population for res in cityResults],
         counties = [res.county for res in cityResults],
-        scores = [res.score for res in cityResults]
         )
-
     countyData = dict(
         names=[res.cityName for res in countyResults],
         years=[res.year for res in countyResults],
         types=[res.type for res in countyResults],
-        fNames=[res.pdf_filename for res in countyResults],
+        fNames=[res.cityFile for res in countyResults],
         populations=[res.population for res in countyResults],
-        scores = [res.score for res in countyResults]
         )
     
     uniqueCities = len(set(cityData["names"]))
     uniqueCounties = len(set(countyData["names"]))
+    occurences=[res.totalOccurences for res in results],
+    numOccurences = len(results[0].occurences)
     
+    for i,w in enumerate(phrase_split):
+        cityOccurences = [cityres.occurences[i] for cityres in cityResults]
+        cityData[w] = cityOccurences
+        countyOccurences = [countyres.occurences[i] for countyres in countyResults]
+        countyData[w] = countyOccurences
     
     citySource = ColumnDataSource(cityData)
     
@@ -305,8 +324,9 @@ def index_search_box():                                                         
             TableColumn(field="years", title="Year", formatter=HTMLTemplateFormatter()),
             TableColumn(field="populations", title="Population", formatter=NumberFormatter(format='0,0')),
             TableColumn(field="counties", title="County"),
-            TableColumn(field="scores", title="Relevance Score"),
         ]
+    for w in phrase_split:
+        columns.append(TableColumn(field=w, title=w,  formatter=NumberFormatter(format='0,0'))),
     city_table = DataTable(source=citySource, columns=columns, width=size, height=600,reorderable=False, index_position=None)
     
     countySource = ColumnDataSource(countyData)
@@ -315,9 +335,10 @@ def index_search_box():                                                         
             TableColumn(field="names", title="Name"),
             TableColumn(field="years", title="Year", formatter=HTMLTemplateFormatter()),
             TableColumn(field="populations", title="Population", formatter=NumberFormatter(format='0,0')),
-            TableColumn(field="scores", title="Relevance Score"),
         ]
-    county_table = DataTable(source=countySource, columns= columns, reorderable=False, index_position=None)
+    for w in phrase_split:
+        columns.append(TableColumn(field=w, title=w,  formatter=NumberFormatter(format='0,0'))),
+    county_table = DataTable(source=countySource, columns=columns, reorderable=False, index_position=None)
     
     cityTab = Panel(title="Cities", child=city_table)
     countyTab = Panel(title="Counties", child=county_table)
@@ -342,16 +363,8 @@ def index_search_box():                                                         
 
 
 @app.route('/outp/<string:city>/<string:words>')                                                                                    #route for page containing highlighted pdf
-def highlight_pdf(city, words):
-    """Function responsible for highlighting pdf words
+def highlight_pdf(city,words):                                                                                                      #function for highlighting pdf phrases with pdf file name, list of words and phrase count as inputs
 
-    Args:
-        city (str): the name of the city
-        words (str): comma seperated phrases to highlight
-
-    Returns:
-        str: webpages
-    """    
     complete_name = os.path.join("static/data/places", city)                                                                        #path for city pdf file
     doc = fitz.open(complete_name)                                                                                                  #create open pdf file object
     page_count= len(doc)                                                                                                            #find no. of pages in pdf               
@@ -375,9 +388,13 @@ def highlight_pdf(city, words):
     fht = Markup(fht)                                                                                                               #make the link safe for sending to html
     
     return render_template('download.html',fht=fht)                                                                                 #render pdf file with the higlighted pdflink as argument
-
+    
 
     
 if __name__ == "__main__":                                                                                                          #run app on local host at port 5000 in debug mode
     
     app.run(host="0.0.0.0", port=5000, debug=True)
+     
+
+
+

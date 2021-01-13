@@ -16,8 +16,6 @@ import ghostscript
 import PyPDF2
 import bcrypt
 from datetime import datetime
-import es 
-
 
 app = Flask(__name__)                                                                                                                   #create flask object
 mail= Mail(app)                                                                                                                         #create mail object
@@ -67,15 +65,9 @@ def home():                                                                     
 def do_admin_login():                                                                                                                   #function to collect username password
     global blockip
     if str(request.remote_addr)+"t" in blockip:                                                                                         #check if the ip has exceeded the 10 try mark
-<<<<<<< HEAD
-        if (datetime.now()-blockip[str(request.remote_addr)+"t"]).total_seconds() <20:
-            cal=20-(datetime.now()-blockip[str(request.remote_addr)+"t"]).total_seconds()
-            flash("Try again after "+str(int(cal))+" seconds")
-=======
         if (datetime.now()-blockip[str(request.remote_addr)+"t"]).total_seconds() <1800:
             cal=(1800-(datetime.now()-blockip[str(request.remote_addr)+"t"]).total_seconds())/60
             flash("Try again after "+str(int(cal))+" minutes")
->>>>>>> 9503e217fa1d2cde6d39eefc85bfc3cf1e0f0862
         else:
             flash("Try again ")
             del blockip[str(request.remote_addr)+"t"]
@@ -94,11 +86,7 @@ def do_admin_login():                                                           
                 
                 blockip[str(request.remote_addr)]+=1
                 if blockip[str(request.remote_addr)]>10:                                                                                    #check if ip address has exceeded 10 incorrect attempts
-<<<<<<< HEAD
-                        msg = Message('Excessive log in attempts', sender = 'generalplanserver@gmail.com', recipients = ['forsomething456@gmail.com'])  #send email for download notification
-=======
                         msg = Message('Excessive log in attempts', sender = 'generalplanserver@gmail.com', recipients = ['ckbrinkley@ucdavis.edu'])  #send email for download notification
->>>>>>> 9503e217fa1d2cde6d39eefc85bfc3cf1e0f0862
                         geoip_data = simple_geoip.get_geoip_data()
                         ip=str(geoip_data['ip'])
                         co=str(geoip_data['location']['country'])
@@ -107,11 +95,7 @@ def do_admin_login():                                                           
                         msg.body = "Dear Admin,\n\nThere have been excessive log in attempts on Uploader site. The details of the client are as follows:\n\nIP:"+ip+"\nCountry:"+co+"\nRegion:"+rg+"\nBrowser:"+brow+"\n\nGeneral Plan Server."
                         mail.send(msg)
                         
-<<<<<<< HEAD
                         flash('Excessive incorrect attempts, Try again after 20 seconds')
-=======
-                        flash('Excessive incorrect attempts, Try again after 30 minutes')
->>>>>>> 9503e217fa1d2cde6d39eefc85bfc3cf1e0f0862
                         
                         del blockip[str(request.remote_addr)]
                         blockip[str(request.remote_addr)+"t"]=datetime.now()
@@ -176,11 +160,7 @@ def upload_file1():                                                             
                 location_name=request.form['county']
             file.filename=request.form['state']+"_"+request.form['type']+"_"+location_name+"_"+request.form['year']+".pdf"              #generate filename with select form data
             print(file.filename)
-<<<<<<< HEAD
-            msg = Message('General Plan file upload', sender = 'generalplanserver@gmail.com', recipients = ['forsomething456@gmail.com'])  #send email for download notification
-=======
             msg = Message('General Plan file upload', sender = 'generalplanserver@gmail.com', recipients = ['ckbrinkley@ucdavis.edu'])  #send email for download notification
->>>>>>> 9503e217fa1d2cde6d39eefc85bfc3cf1e0f0862
             msg.body = "Dear Admin,\n\nA file named "+file.filename+" has been uploaded to the server by: "+request.form['email']+" .\n\nGeneral Plan Server"
             mail.send(msg)                                                                                                              #send mail for file upload to server
             completeName = os.path.join("static/data/places",file.filename)
@@ -189,11 +169,7 @@ def upload_file1():                                                             
             tempname=os.path.join("static/data/temp",secure_filename(file.filename))                                                    #temporary copy file in case compression is not possible
             file.save(completeName)                                                                                                     #save file to server         
             arg1= '-sOutputFile='+ tempname                                                                                             #path for output file after compression to reduce pdf size
-<<<<<<< HEAD
             p = subprocess.Popen(['C:\\Program Files\\gs\\gs9.53.1\\bin\\gswin64c.exe',
-=======
-            p = subprocess.Popen(['/usr/bin/gs',
->>>>>>> 9503e217fa1d2cde6d39eefc85bfc3cf1e0f0862
                                   '-sDEVICE=pdfwrite','-dCompatibilityLevel=1.4',
                                   '-dPDFSETTINGS=/screen','-dNOPAUSE', '-dBATCH',  '-dQUIET',
                                   str(arg1),completeName ], stdout=subprocess.PIPE)                                                     #function to compress pdf
@@ -227,14 +203,8 @@ def upload_file1():                                                             
                     imornot=imornot+1
 
             if imornot > int(length/2):                                                                                                 #if more than half pages of pdf are scanned convert to text pdf through OCR  
-<<<<<<< HEAD
                 fname=fname.replace('.pdf', '')                                     
                 textfile = open(fname + ".txt", "a")                                                                                    #create text file with place name
-=======
-                fname=fname.replace('.pdf', '')
-                text_file_name = fname + ".txt"                                 
-                textfile = open(text_file_name, "a")                                                                                    #create text file with place name
->>>>>>> 9503e217fa1d2cde6d39eefc85bfc3cf1e0f0862
                 for page in doc:                                                                        
                     pix = page.getPixmap(alpha = False)                                                                                 #generate image file from page
                     pixn=os.path.join("static/data/places","page-%i.png" % page.number)     
@@ -281,10 +251,6 @@ def upload_file1():                                                             
 
     up="Files Uploaded Successfully!"
     
-<<<<<<< HEAD
-=======
-    es.add_to_index(text_file_name)
->>>>>>> 9503e217fa1d2cde6d39eefc85bfc3cf1e0f0862
     
     return render_template('upload_confirm.html',up=up)                                                                                 #render upload confirmation message page
 

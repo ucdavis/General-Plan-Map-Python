@@ -1,0 +1,44 @@
+.form1 {
+  
+  width: 30%;
+  height:40%;
+  
+}
+
+input[type=text], input[type=password] {
+  width: 80%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  font-family: Timesnewroman;
+  font-size: 18px;
+}
+input[type=text]:hover, input[type=password]:hover{
+	transition: 0.5s;
+  width: 100%;
+  
+}
+
+
+.btnnn {
+  background-color: #808080;
+  border-radius: 8px;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 50%;
+  font-size: 18px;
+}
+
+
+.btnnn:hover {
+	transition: 1s;
+  opacity: 0.8;
+  background-color: orangered;
+}
+
+

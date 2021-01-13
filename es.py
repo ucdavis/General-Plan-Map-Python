@@ -218,12 +218,13 @@ def map_index_to_vals(search_result_indices, key_to_hash_path='key_hash_mapping.
 
 
 if __name__ == "__main__":
+	index_everything()
 	# index_everything()
 	search_result_indices, score = elastic_search('City of Buellton General Plan Land Use Acreage')
 	map_keys_to_values([3])	
 	#print(index_to_info_map)
 	result = map_keys_to_values(search_result_indices)
-
+	print(result)
 	# build_pop_dicts()
 	# search = es.search(index='test_3', body={'query': {'match_phrase': {'text': "made to reduce greenhouse"}}})
 	# ids = []
@@ -233,6 +234,4 @@ if __name__ == "__main__":
 	# 	scores.append(float(hit['_score']))
 
 	#print(ids)
-
-
 
