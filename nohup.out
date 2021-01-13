@@ -1,0 +1,184 @@
+ * Serving Flask app "textsearch" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 150-478-062
+127.0.0.1 - - [12/Jan/2021 00:25:19] "[37mGET / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 00:25:37] "[37mPOST / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 00:25:39] "[36mGET /static/cssjs/js/bokeh-2.1.1.min.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [12/Jan/2021 00:25:39] "[36mGET /static/cssjs/js/bokeh-tables-2.1.1.min.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [12/Jan/2021 00:25:39] "[36mGET /static/cssjs/js/bokeh-widgets-2.1.1.min.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [12/Jan/2021 00:26:15] "[37mGET /outp/CA_City-Tustin_2001.pdf/fruit,stands HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 00:26:54] "[37mGET / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 00:27:12] "[37mPOST / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 00:27:14] "[36mGET /static/cssjs/js/bokeh-2.1.1.min.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [12/Jan/2021 00:27:14] "[36mGET /static/cssjs/js/bokeh-tables-2.1.1.min.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [12/Jan/2021 00:27:14] "[36mGET /static/cssjs/js/bokeh-widgets-2.1.1.min.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [12/Jan/2021 00:30:36] "[37mGET / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 00:30:56] "[37mPOST / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 00:30:59] "[36mGET /static/cssjs/js/bokeh-2.1.1.min.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [12/Jan/2021 00:30:59] "[36mGET /static/cssjs/js/bokeh-widgets-2.1.1.min.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [12/Jan/2021 00:30:59] "[36mGET /static/cssjs/js/bokeh-tables-2.1.1.min.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [12/Jan/2021 00:37:19] "[37mGET / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 00:37:43] "[37mPOST / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 00:37:46] "[36mGET /static/cssjs/js/bokeh-2.1.1.min.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [12/Jan/2021 00:37:46] "[36mGET /static/cssjs/js/bokeh-widgets-2.1.1.min.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [12/Jan/2021 00:37:46] "[36mGET /static/cssjs/js/bokeh-tables-2.1.1.min.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [12/Jan/2021 00:38:09] "[37mGET /outp/CA_county-San-Benito_2014.pdf/fruit%20stand HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 00:54:19] "[37mGET / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 03:25:43] "[37mGET / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 03:26:06] "[37mPOST / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 03:26:08] "[37mGET /static/cssjs/js/bokeh-2.1.1.min.js HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 03:26:08] "[37mGET /static/cssjs/js/bokeh-widgets-2.1.1.min.js HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 03:26:08] "[37mGET /static/cssjs/js/bokeh-tables-2.1.1.min.js HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 04:03:13] "[37mGET / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 05:04:12] "[37mGET / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 05:04:31] "[37mPOST / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 05:04:34] "[36mGET /static/cssjs/js/bokeh-2.1.1.min.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [12/Jan/2021 05:04:34] "[36mGET /static/cssjs/js/bokeh-widgets-2.1.1.min.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [12/Jan/2021 05:04:34] "[36mGET /static/cssjs/js/bokeh-tables-2.1.1.min.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [12/Jan/2021 05:47:00] "[37mGET / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 05:47:23] "[37mPOST / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 05:47:26] "[36mGET /static/cssjs/js/bokeh-2.1.1.min.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [12/Jan/2021 05:47:26] "[36mGET /static/cssjs/js/bokeh-widgets-2.1.1.min.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [12/Jan/2021 05:47:27] "[36mGET /static/cssjs/js/bokeh-tables-2.1.1.min.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [12/Jan/2021 10:45:22] "[37mGET / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 12:33:34] "[37mGET / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 13:23:09] "[37mGET / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 17:58:27] "[37mGET / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 17:58:51] "[37mPOST / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 17:58:54] "[36mGET /static/cssjs/js/bokeh-2.1.1.min.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [12/Jan/2021 17:58:54] "[36mGET /static/cssjs/js/bokeh-widgets-2.1.1.min.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [12/Jan/2021 17:58:54] "[36mGET /static/cssjs/js/bokeh-tables-2.1.1.min.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [12/Jan/2021 17:59:02] "[37mGET /outp/CA_City-Gilroy_2016.pdf/fruit,stands HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 21:15:33] "[37mGET / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 21:15:53] "[37mPOST / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 21:15:56] "[36mGET /static/cssjs/js/bokeh-2.1.1.min.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [12/Jan/2021 21:15:56] "[36mGET /static/cssjs/js/bokeh-widgets-2.1.1.min.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [12/Jan/2021 21:15:56] "[36mGET /static/cssjs/js/bokeh-tables-2.1.1.min.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [12/Jan/2021 21:23:52] "[37mGET / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 21:27:31] "[37mPOST / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 22:39:08] "[37mGET / HTTP/1.1[0m" 200 -
+error with file CA_City-Ramona_2010.txt result ignored 
+{'Alameda': 1510271, 'Santa Barbara': 423895, 'Mendocino': 87841, 'Lassen': 34895, 'Madera': 150865, 'Calaveras': 45578, 'Imperial': 174528, 'Amador': 38091, 'Nevada': 98764, 'Solano': 413344, 'Riverside': 2189641, 'Plumas': 20007, 'Stanislaus': 514453, 'Orange': 3010232, 'San Luis Obispo': 269637, 'Shasta': 177223, 'Merced': 255793, 'Fresno': 930450, 'San Benito': 55269, 'Yolo': 200849, 'Sonoma': 483878, 'Yuba': 72155, 'Los Angeles': 9818605, 'Butte': 220000, 'Kings': 152982, 'Alpine': 1175, 'Sutter': 94737, 'Tuolumne': 55365, 'Marin': 252409, 'Tulare': 442179, 'Sacramento': 1418788, 'Contra Costa': 1049025}
+invalid city name San Buenaventura (Ventura)
+invalid city name La Cañada Flintridge
+invalid city name Angels
+invalid city name El Paso de Robles (Paso Robles)
+invalid city name Carmel-by-the-Sea
+{'Madera': 150865, 'Solano': 413344, 'Stanislaus': 514453}
+invalid city name San Buenaventura (Ventura)
+invalid city name La Cañada Flintridge
+invalid city name Angels
+invalid city name El Paso de Robles (Paso Robles)
+invalid city name Carmel-by-the-Sea
+error with file CA_City-Town-of-Truckee_2005.txt result ignored 
+error with file CA_City-La-Canada-Flintridge_2013.txt result ignored 
+{'San Luis Obispo': 269637, 'Siskiyou': 44900, 'San Francisco': 805235, 'San Benito': 55269, 'Colusa': 21419, 'Mono': 14202, 'Marin': 252409, 'Tulare': 442179, 'Contra Costa': 1049025, 'Solano': 413344, 'Santa Barbara': 423895, 'Alameda': 1510271, 'Sutter': 94737}
+invalid city name San Buenaventura (Ventura)
+invalid city name La Cañada Flintridge
+invalid city name Angels
+invalid city name El Paso de Robles (Paso Robles)
+invalid city name Carmel-by-the-Sea
+{'San Benito': 55269}
+invalid city name San Buenaventura (Ventura)
+invalid city name La Cañada Flintridge
+invalid city name Angels
+invalid city name El Paso de Robles (Paso Robles)
+invalid city name Carmel-by-the-Sea
+error with file CA_City-San-Buenaventura_2013.txt result ignored 
+error with file CA_City-Town-of-Windsor_2009.txt result ignored 
+{'Yolo': 200849, 'San Luis Obispo': 269637, 'Siskiyou': 44900, 'Tulare': 442179, 'Plumas': 20007, 'Solano': 413344, 'Kings': 152982, 'Imperial': 174528, 'Trinity': 13786, 'Modoc': 9686, 'Santa Barbara': 423895, 'Yuba': 72155, 'Sutter': 94737, 'Alameda': 1510271, 'San Joaquin': 685306, 'Merced': 255793, 'Contra Costa': 1049025, 'Stanislaus': 514453, 'Sonoma': 483878, 'Mono': 14202, 'Sacramento': 1418788, 'San Diego': 3095313, 'Del Norte': 28610, 'Colusa': 21419, 'Monterey': 415057, 'Fresno': 930450, 'San Francisco': 805235, 'Shasta': 177223, 'Marin': 252409}
+invalid city name San Buenaventura (Ventura)
+invalid city name La Cañada Flintridge
+invalid city name Angels
+invalid city name El Paso de Robles (Paso Robles)
+invalid city name Carmel-by-the-Sea
+error with file CA_City-Town-of-Truckee_2005.txt result ignored 
+error with file CA_City-La-Canada-Flintridge_2014.txt result ignored 
+{'Stanislaus': 514453, 'Solano': 413344, 'Riverside': 2189641, 'San Francisco': 805235, 'Kings': 152982, 'Marin': 252409, 'Fresno': 930450, 'Monterey': 415057, 'Butte': 220000, 'Mono': 14202, 'Sacramento': 1418788, 'Colusa': 21419, 'Orange': 3010232, 'Alameda': 1510271, 'Tuolumne': 55365}
+invalid city name San Buenaventura (Ventura)
+invalid city name La Cañada Flintridge
+invalid city name Angels
+invalid city name El Paso de Robles (Paso Robles)
+invalid city name Carmel-by-the-Sea
+error with file CA_City-South-Whittier_1993.txt result ignored 
+error with file CA_City-San-Buenaventura_2013.txt result ignored 
+error with file CA_City-La-Canada-Flintridge_2014.txt result ignored 
+error with file CA_City-Town-of-Truckee_2005.txt result ignored 
+error with file CA_City-Gustine-City_2002.txt result ignored 
+error with file CA_City-Town-of-Windsor_2009.txt result ignored 
+error with file CA_City-Walnut-Park_2014.txt result ignored 
+error with file CA_City-Walnut-Park_2002.txt result ignored 
+error with file CA_City-Saint-Helena_2015.txt result ignored 
+error with file CA_City-Rowland-Heights_1951.txt result ignored 
+error with file CA_City-La-Canada-Flintridge_2013.txt result ignored 
+error with file CA_City-Saint-Helena_1993.txt result ignored 
+error with file CA_City-Orangevale_1976.txt result ignored 
+error with file CA_City-Ramona_2010.txt result ignored 
+error with file CA_City-Lakeside_2011.txt result ignored 
+error with file CA_City-Westmont_1990.txt result ignored 
+{'Fresno': 930450, 'Sonoma': 483878, 'Yolo': 200849, 'San Francisco': 805235, 'El Dorado': 181058, 'Lake': 64665, 'Alpine': 1175, 'Nevada': 98764, 'Sierra': 3240, 'Merced': 255793, 'Napa': 136484, 'Colusa': 21419, 'Alameda': 1510271, 'Calaveras': 45578, 'Santa Barbara': 423895, 'Mendocino': 87841, 'Monterey': 415057, 'Sacramento': 1418788, 'Inyo': 18546, 'Stanislaus': 514453, 'Marin': 252409, 'Yuba': 72155, 'Solano': 413344, 'Riverside': 2189641, 'Mono': 14202, 'Orange': 3010232, 'Santa Cruz': 262382, 'San Luis Obispo': 269637, 'Sutter': 94737, 'Placer': 348432, 'Lassen': 34895, 'Tulare': 442179, 'San Benito': 55269, 'Madera': 150865, 'Contra Costa': 1049025, 'Plumas': 20007, 'Modoc': 9686, 'Butte': 220000, 'Imperial': 174528, 'Santa Clara': 1781642, 'San Diego': 3095313, 'Shasta': 177223, 'Amador': 38091, 'San Joaquin': 685306, 'Del Norte': 28610, 'Tuolumne': 55365, 'Mariposa': 18251, 'Los Angeles': 9818605, 'Kings': 152982, 'Trinity': 13786, 'San Bernardino': 2035210, 'Kern': 839631, 'Siskiyou': 44900, 'San Mateo': 718451}
+invalid city name San Buenaventura (Ventura)
+invalid city name La Cañada Flintridge
+invalid city name Angels
+invalid city name El Paso de Robles (Paso Robles)
+invalid city name Carmel-by-the-Sea
+error with file CA_City-Ramona_2010.txt result ignored 
+{'Alameda': 1510271, 'Santa Barbara': 423895, 'Mendocino': 87841, 'Lassen': 34895, 'Madera': 150865, 'Calaveras': 45578, 'Imperial': 174528, 'Amador': 38091, 'Nevada': 98764, 'Solano': 413344, 'Riverside': 2189641, 'Plumas': 20007, 'Stanislaus': 514453, 'Orange': 3010232, 'San Luis Obispo': 269637, 'Shasta': 177223, 'Merced': 255793, 'Fresno': 930450, 'San Benito': 55269, 'Yolo': 200849, 'Sonoma': 483878, 'Yuba': 72155, 'Los Angeles': 9818605, 'Butte': 220000, 'Kings': 152982, 'Alpine': 1175, 'Sutter': 94737, 'Tuolumne': 55365, 'Marin': 252409, 'Tulare': 442179, 'Sacramento': 1418788, 'Contra Costa': 1049025}
+invalid city name San Buenaventura (Ventura)
+invalid city name La Cañada Flintridge
+invalid city name Angels
+invalid city name El Paso de Robles (Paso Robles)
+invalid city name Carmel-by-the-Sea
+{}
+invalid city name San Buenaventura (Ventura)
+invalid city name La Cañada Flintridge
+invalid city name Angels
+invalid city name El Paso de Robles (Paso Robles)
+invalid city name Carmel-by-the-Sea
+error with file CA_City-Ramona_2010.txt result ignored 
+{'Santa Barbara': 423895, 'Alameda': 1510271, 'Mendocino': 87841, 'San Luis Obispo': 269637, 'Orange': 3010232, 'Riverside': 2189641, 'Nevada': 98764, 'Stanislaus': 514453, 'Napa': 136484, 'San Benito': 55269, 'Lassen': 34895, 'Shasta': 177223, 'Amador': 38091, 'Solano': 413344, 'Imperial': 174528, 'Los Angeles': 9818605, 'Kings': 152982, 'Alpine': 1175, 'Butte': 220000, 'Marin': 252409, 'Sonoma': 483878, 'Contra Costa': 1049025, 'Tulare': 442179, 'San Bernardino': 2035210, 'Sacramento': 1418788, 'Sutter': 94737, 'Tuolumne': 55365}
+invalid city name San Buenaventura (Ventura)
+invalid city name La Cañada Flintridge
+invalid city name Angels
+invalid city name El Paso de Robles (Paso Robles)
+invalid city name Carmel-by-the-Sea
+error with file CA_City-Saint-Helena_2015.txt result ignored 
+error with file CA_City-Walnut-Park_2014.txt result ignored 
+error with file CA_City-San-Buenaventura_2013.txt result ignored 
+error with file CA_City-La-Canada-Flintridge_2014.txt result ignored 
+error with file CA_City-Town-of-Windsor_2009.txt result ignored 
+error with file CA_City-Rowland-Heights_1951.txt result ignored 
+error with file CA_City-Town-of-Truckee_2005.txt result ignored 
+error with file CA_City-Gustine-City_2002.txt result ignored 
+error with file CA_City-South-Whittier_1993.txt result ignored 
+error with file CA_City-La-Canada-Flintridge_2013.txt result ignored 127.0.0.1 - - [12/Jan/2021 22:46:10] "[37mPOST / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 22:46:27] "[37mPOST / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 22:46:28] "[37mPOST / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 22:46:32] "[37mGET /static/cssjs/js/bokeh-2.1.1.min.js HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 22:46:32] "[37mGET /static/cssjs/js/bokeh-widgets-2.1.1.min.js HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 22:46:33] "[37mGET /static/cssjs/js/bokeh-tables-2.1.1.min.js HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 22:46:56] "[37mGET /outp/CA_City-Pasadena_2014.pdf/new,apartments HTTP/1.1[0m" 200 -
+127.0.0.1 - - [12/Jan/2021 22:47:19] "[37mGET / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [13/Jan/2021 00:16:27] "[37mGET / HTTP/1.1[0m" 200 -
+80.82.70.118 - - [13/Jan/2021 01:01:49] code 400, message Bad request syntax ('\x16\x03\x02\x01o\x01\x00\x01k\x03\x02RHÅ\x1a#÷:Nßâ´\x82/ÿ\tT\x9f§Äy°hÆ\x13\x8c¤\x1c="á\x1a\x98 \x84´,\x85¯nãY»bhlÿ(=\':©\x82ÙoÈ¢×\x93\x98´ï\x80å¹\x90\x00(À')
+80.82.70.118 - - [13/Jan/2021 01:01:49] "[35m[1mo kRHÅ#÷:Nßâ´/ÿ	T§Äy°hÆ¤="á ´,¯nãY»bhlÿ(=':©ÙoÈ¢×´ïå¹ (À[0m" HTTPStatus.BAD_REQUEST -
+127.0.0.1 - - [13/Jan/2021 01:05:03] "[37mGET /outp/CA_City-Gilroy_2016.pdf/fruit%20stands HTTP/1.1[0m" 200 -
+127.0.0.1 - - [13/Jan/2021 02:06:39] "[37mGET / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [13/Jan/2021 02:07:03] "[37mPOST / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [13/Jan/2021 02:07:06] "[37mGET /static/cssjs/js/bokeh-2.1.1.min.js HTTP/1.1[0m" 200 -
+127.0.0.1 - - [13/Jan/2021 02:07:06] "[37mGET /static/cssjs/js/bokeh-tables-2.1.1.min.js HTTP/1.1[0m" 200 -
+127.0.0.1 - - [13/Jan/2021 02:07:06] "[37mGET /static/cssjs/js/bokeh-widgets-2.1.1.min.js HTTP/1.1[0m" 200 -
+127.0.0.1 - - [13/Jan/2021 02:26:44] "[37mGET / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [13/Jan/2021 02:27:08] "[37mPOST / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [13/Jan/2021 02:27:11] "[36mGET /static/cssjs/js/bokeh-2.1.1.min.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [13/Jan/2021 02:27:12] "[36mGET /static/cssjs/js/bokeh-widgets-2.1.1.min.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [13/Jan/2021 02:27:12] "[36mGET /static/cssjs/js/bokeh-tables-2.1.1.min.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [13/Jan/2021 02:36:19] "[37mGET / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [13/Jan/2021 03:20:27] "[37mGET /outp/CA_City-Tustin_2013.pdf/housing HTTP/1.1[0m" 200 -
+127.0.0.1 - - [13/Jan/2021 03:21:10] "[37mGET /outp/CA_City-Whittier_2013.pdf/housing HTTP/1.1[0m" 200 -
