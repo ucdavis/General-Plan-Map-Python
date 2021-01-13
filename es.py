@@ -58,7 +58,7 @@ def build_pop_dicts() -> None:
 	county_dict = dict_dict['countyPopulations.csv']
 	city_dict = dict_dict['cityPopulations.csv'] 	
 
-def get_place_properties(is_city: bool, place_name: str) -> Dict :
+def get_place_properties(is_city: bool, place_name: str) -> Dict:
 	"""gets a place's properties
 	Args:
 		is_city (bool): A boolean for if the name belongs to a city or county
@@ -219,6 +219,7 @@ def map_index_to_vals(search_result_indices, key_to_hash_path='key_hash_mapping.
 
 if __name__ == "__main__":
 	index_everything()
+	# index_everything()
 	search_result_indices, score = elastic_search('City of Buellton General Plan Land Use Acreage')
 	map_keys_to_values([3])	
 	#print(index_to_info_map)
@@ -233,7 +234,4 @@ if __name__ == "__main__":
 	# 	scores.append(float(hit['_score']))
 
 	#print(ids)
-
-
-
 

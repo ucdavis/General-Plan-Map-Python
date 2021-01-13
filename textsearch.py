@@ -42,7 +42,14 @@ def my_form():                                                                  
 
 
 def getResults(wordinput):                                                                                                          
-    
+    """This function is used to take word input in the searchbox, query elasticsearch,
+    and then return the results. 
+    Args:
+        wordinput (str): an elastic search query
+
+    Returns:
+        str: html doc that will be displayed 
+    """    
     results = []
     query = wordinput
 
@@ -76,6 +83,8 @@ def getResults(wordinput):
 
     
 class Result:
+    """This results class stores the data of a single search 'hit'.
+    """    
     def __init__(self, state, filename, is_city, place_name, plan_date, filetype,  query, county='na', population=0, city_type='na', score=0):
         # place properties 
         self.state = state
@@ -94,12 +103,21 @@ class Result:
 
         self.pdf_filename = self.filename.split('.')[0] + '.pdf'
         parsed_query = self.parse_query(query) 
+        # this self.year is the html that will be displayed around the year 
+        # it will link to a function that will highlight the word occuraces in the file
         self.year = '<p hidden>'+self.plan_date+'</p> <a href="outp/'+self.pdf_filename+'/'+parsed_query+'" target="_blank">'+self.plan_date+"</a>"
     
     def parse_query(self, query):
         """This function parses a query to add commas between words except
-        for words that are a phrase (indicated by their quotes)"""
+        for words that are a phrase (indicated by their quotes)]
 
+        Args:
+            query (str): query to parse
+
+        Returns:
+            [type]: a parsed query that can be used in html  
+        """        
+        
         phrases_in_quotes = re.findall(r'\"(.+?)\"',query)
         non_quotes = re.sub(r'"',"", re.sub(r'\"(.+?)\"', '', query))
         all_words = re.findall('[A-z]+', non_quotes)
@@ -108,10 +126,19 @@ class Result:
 
     @property
     def cityName(self):
+        """This is a property tag that is useful for parts of legacy code
+
+        Returns:
+            str: place name  
+        """        
         return self.place_name
     
     @property
     def type(self):
+        """returns a str describing the category of place
+        Returns:
+            str: either "City" or "county"
+        """        
         if self.is_city:
             return 'City'
         else:
@@ -120,6 +147,11 @@ class Result:
        
 @app.route('/', methods=['POST'])                                                                                                   #connect search form to html page
 def index_search_box():                                                                                                             #function for accepting search input
+    """The code for the search box functionality 
+
+    Returns:
+        str : html webpage
+    """    
     wordinput=" "                                                                                                                   #initialize string input for search
     wordinput=request.form['u']                                                                                                     #set name for search form
     results = getResults(wordinput)
@@ -273,7 +305,7 @@ def index_search_box():                                                         
             TableColumn(field="years", title="Year", formatter=HTMLTemplateFormatter()),
             TableColumn(field="populations", title="Population", formatter=NumberFormatter(format='0,0')),
             TableColumn(field="counties", title="County"),
-            TableColumn(field="scores", title="Search Score"),
+            TableColumn(field="scores", title="Relevance Score"),
         ]
     city_table = DataTable(source=citySource, columns=columns, width=size, height=600,reorderable=False, index_position=None)
     
@@ -283,7 +315,7 @@ def index_search_box():                                                         
             TableColumn(field="names", title="Name"),
             TableColumn(field="years", title="Year", formatter=HTMLTemplateFormatter()),
             TableColumn(field="populations", title="Population", formatter=NumberFormatter(format='0,0')),
-            TableColumn(field="scores", title="Search Score", formatter=NumberFormatter(format='0,0')),
+            TableColumn(field="scores", title="Relevance Score"),
         ]
     county_table = DataTable(source=countySource, columns= columns, reorderable=False, index_position=None)
     
@@ -311,6 +343,15 @@ def index_search_box():                                                         
 
 @app.route('/outp/<string:city>/<string:words>')                                                                                    #route for page containing highlighted pdf
 def highlight_pdf(city, words):
+    """Function responsible for highlighting pdf words
+
+    Args:
+        city (str): the name of the city
+        words (str): comma seperated phrases to highlight
+
+    Returns:
+        str: webpages
+    """    
     complete_name = os.path.join("static/data/places", city)                                                                        #path for city pdf file
     doc = fitz.open(complete_name)                                                                                                  #create open pdf file object
     page_count= len(doc)                                                                                                            #find no. of pages in pdf               
@@ -340,8 +381,3 @@ def highlight_pdf(city, words):
 if __name__ == "__main__":                                                                                                          #run app on local host at port 5000 in debug mode
     
     app.run(host="0.0.0.0", port=5000, debug=True)
-     
-
-
-
-
