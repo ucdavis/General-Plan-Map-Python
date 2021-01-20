@@ -10,8 +10,13 @@ import csv
 from typing import Dict, List, Tuple
 
 #when you load this pacakge these global variables are defined 
-es = Elasticsearch('http://localhost:9200')
-
+#es = Elasticsearch('http://localhost:9200')
+es = Elasticsearch(
+    [os.environ.get('ES_HOST')],
+    http_auth=(os.environ.get('ES_USR'), os.environ.get('ES_PWD')),
+    scheme="https",
+    port=9243,
+)
 
 def parse_filename(filename: str) -> str:
 	"""	This function uses regular expressions to parse a filename. 
@@ -151,7 +156,7 @@ def elastic_search(query) -> Tuple[List[int], List[float]]:
 	
 	global es
 	query_json = {"_source": False,
-	"size":1000,
+	"size":1000,        
 	"query": {
     "simple_query_string" : {
         "query": query,
@@ -176,7 +181,7 @@ def elastic_search(query) -> Tuple[List[int], List[float]]:
 	# webpage = ' <p>'.join(search['hits']['hits'][0]['highlight']['text'])
 	# with open('/Users/dda/Desktop/mywebpage.html', 'w') as f:
 	# 	f.write(webpage)
-
+	print(search)
 	return ids , scores
 
 
@@ -218,7 +223,7 @@ def map_index_to_vals(search_result_indices, key_to_hash_path='key_hash_mapping.
 
 
 if __name__ == "__main__":
-	index_everything()
+	#index_everything()
 	# index_everything()
 	search_result_indices, score = elastic_search('City of Buellton General Plan Land Use Acreage')
 	map_keys_to_values([3])	
