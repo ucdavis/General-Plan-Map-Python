@@ -7,10 +7,10 @@
 # History files
 .Rhistory
 .Rapp.history
-
+run_server.sh
 # Session Data files
 .RData
-
+nohup.out
 # User-specific files
 .Ruserdata
 
