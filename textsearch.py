@@ -297,8 +297,8 @@ def index_search_box():                                                         
     countyTab = Panel(title="Counties", child=county_table)
     tabs = Tabs(tabs=[cityTab, countyTab])
 
-    numCities = 10
-    numCounties = 10
+    numCities = 482 
+    numCounties = 58 
     resultsDiv = Div(text="""
                      <h1>{} out of {} cities have a match.</h1>
                      <h1>{} out of {} counties have a match.</h1>
