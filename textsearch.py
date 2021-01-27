@@ -177,7 +177,6 @@ def change_json_colors(json_dict, results,
             #     feature['properties']['color'] = blank_county_color
             #     feature['properties']['line_color'] = blank_county_outline
 
-
 geojson_path = os.path.join('static', 'data', 'CA_geojson')
 with open(os.path.join(geojson_path, 'map.geojson'), 'r') as f:  
     my_str = f.read()  
