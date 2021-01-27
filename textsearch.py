@@ -30,6 +30,7 @@ from bokeh.io import show, output_file
 import shapely.affinity
 import es 
 import re
+import geojson 
 
 app = Flask(__name__)                                                                                                               #create flask object
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0                                                                                         #avoid storing cache
@@ -143,8 +144,39 @@ class Result:
             return 'City'
         else:
             return 'county'
-    
-       
+
+def change_json_colors(json_dict, results, blank_color, blank_outline, match_city_fill_color,
+                       match_city_outline, match_county_fill_color, match_county_outline): 
+    result_names = []
+    result_dict = {}
+    for result in results:
+        if result.is_city:
+            name = result.cityName
+        else:
+            name = result.cityName + ' County'
+        
+        result_names.append(name)
+        result_dict[name] = result 
+    print(result_names)
+    for feature in json_dict['features']:
+        print(feature['properties']['name'] )
+        if feature['properties']['name'] in result_names:
+            if result_dict[feature['properties']['name']].is_city:
+                feature['properties']['color'] = match_city_fill_color
+                feature['properties']['line_color'] = match_city_outline
+            else:  # a county 
+                feature['properties']['color'] = match_county_fill_color
+                feature['properties']['line_color'] = match_county_outline 
+ 
+        else:
+            feature['properties']['color'] = blank_color
+            feature['properties']['line_color'] = blank_outline
+
+
+with open('map.json', 'r') as f:  
+    my_str = f.read()  
+    my_map = json.loads(my_str)
+
 @app.route('/', methods=['POST'])                                                                                                   #connect search form to html page
 def index_search_box():                                                                                                             #function for accepting search input
     """The code for the search box functionality 
@@ -179,43 +211,53 @@ def index_search_box():                                                         
             if res.population > maxCountyPop:
                 maxCountyPop = res.population
     
-    print(countyPops)
+    #print(countyPops)
     if len(results) < 1:
         return render_template('noresult.html')
-    
+
+    change_json_colors(my_map, results, blank_color='white', blank_outline='black', 
+                      match_city_fill_color='blue', match_city_outline='blue', 
+                      match_county_fill_color='blue', match_county_outline='blue')
+     
     #load in city shape files 
-    cities = gpd.read_file("static/data/ca-places-boundaries/cities.shp")[['NAME','NAMELSAD', 'geometry']]
-    cities.columns = ['name', 'color', 'geometry']
-    cities.color = "#d47500"
-    cities['line_color'] = '#dedede'
-    numCities = len(cities.index)
+    # cities = gpd.read_file("static/data/ca-places-boundaries/cities.shp")[['NAME','NAMELSAD', 'geometry']]
+    # cities.columns = ['name', 'color', 'geometry']
+    # cities.color = "#d47500"
+    # cities['line_color'] = '#dedede'
+    # numCities = len(cities.index)
     
     #load in county shape files 
-    counties = gpd.read_file("static/data/CA_Counties/CA_Counties_TIGER2016.shp")[['NAME', 'NAMELSAD', 'geometry']]
-    counties.columns = ['color', 'name', 'geometry']
-    counties.color = "#00a4a6"
-    counties['line_color'] = '#b3b3b3'
-    numCounties = len(counties.index)
+    # counties = gpd.read_file("static/data/CA_Counties/CA_Counties_TIGER2016.shp")[['NAME', 'NAMELSAD', 'geometry']]
+    # counties.columns = ['color', 'name', 'geometry']
+    # counties.color = "#00a4a6"
+    # counties['line_color'] = '#b3b3b3'
+    # numCounties = len(counties.index)
 
     # if there are no results then set these shapes to white 
-    cityResultsName = [res.cityName for res in results]
-    cityNames = cities['name'].to_list()
-    for ind in cities.index:
-        val = cityNames[ind]
-        if val not in cityResultsName:
-            cities.at[ind, 'color']='white'
+
+    # cityNames = cities['name'].to_list()
+    # for ind in cities.index:
+    #     val = cityNames[ind]
+    #     if val not in cityResultsName:
+    #         cities.at[ind, 'color']='white'
     
-    for ind in counties.index:
-        #parse name for matching 
-        county_name = re.sub(' County', '', counties['name'][ind])
-        if county_name not in matched_county_names: 
-            counties.at[ind, 'color'] = 'white'
+    # for ind in counties.index:
+    #     #just do this part load the json thing and 
+    #     #parse name for matching 
+    #     county_name = re.sub(' County', '', counties['name'][ind])
+    #     if county_name not in matched_county_names: 
+    #         counties.at[ind, 'color'] = 'white'
     
-    combined = counties.append(cities)
-    mergedJson = json.loads(combined.to_json())
-    jsonCombined = json.dumps(mergedJson)
-    geosource = GeoJSONDataSource(geojson = jsonCombined)
-    
+    # This part is really really slow.... 
+    # combined = counties.append(cities
+
+
+    geosource = GeoJSONDataSource(geojson = json.dumps(my_map))
+
+    # with open('map.json', 'w') as f:
+    #     geojson.dump(combined, f, sort_keys=True, indent=4)
+
+
     TOOLS = ["hover", "pan", "wheel_zoom", "save"]
     p2 = figure(
         x_axis_location=None, y_axis_location=None,
@@ -229,40 +271,45 @@ def index_search_box():                                                         
     #make population map 
     
     cartCounties = counties
-    for ind in counties.index:
-        county_name = re.sub(' County', '', counties['name'][ind])
-        try:
-            pop = float(es.get_place_properties(False, county_name)[-1])
-        except KeyError:
-            pop = 1 
-            print(f"invalid county name {county_name}")
+    # for ind in results.index:
+    #     county_name = re.sub(' County', '', counties['name'][ind])
+    #     try:
+    #         pop = float(es.get_place_properties(False, county_name)[-1])
+    #     except KeyError:
+    #         pop = 1 
+    #         print(f"invalid county name {county_name}")
 
-        geo = cartCounties['geometry'][ind]
-        if maxCountyPop == 1:
-            scale = 1
-        else:
-            scale = (pop/maxCountyPop)**(1/2)
-        cartCounties['geometry'][ind] = shapely.affinity.scale(geo, scale, scale)
+    #     geo = cartCounties['geometry'][ind]
+    #     if maxCountyPop == 1:
+    #         scale = 1
+    #     else:
+    #         scale = (pop/maxCountyPop)**(1/2)
+    #     cartCounties['geometry'][ind] = shapely.affinity.scale(geo, scale, scale)
 
     
-    cartCities = cities
-    for ind in cartCities.index:
-        geo = cartCities['geometry'][ind]
-        try:
-            pop = float(es.get_place_properties(True, cities['name'][ind])[-1])
-        except:
-            print(f"invalid city name {cities['name'][ind]}")
-        if maxCityPop == 1:
-            scale = 1
-        else:
-            scale = (pop/maxCityPop)**(1/2)
-        cartCities['geometry'][ind] = shapely.affinity.scale(geo,scale,scale)
+    # cartCities = cities
+    # for ind in cartCities.index:
+    #     geo = cartCities['geometry'][ind]
+    #     try:
+    #         pop = float(es.get_place_properties(True, cities['name'][ind])[-1])
+    #     except:
+    #         print(f"invalid city name {cities['name'][ind]}")
+    #     if maxCityPop == 1:
+    #         scale = 1
+    #     else:
+    #         scale = (pop/maxCityPop)**(1/2)
+    #     cartCities['geometry'][ind] = shapely.affinity.scale(geo,scale,scale)
      
-    combined = cartCounties.append(cartCities)
-    countyJson = json.loads(combined.to_json())
-    jsonCounty=json.dumps(countyJson)
-    p2GeoSource = GeoJSONDataSource(geojson=jsonCounty)
-    p2.patches('xs','ys',source=p2GeoSource,fill_color='color', line_color='line_color')   
+    # combined = cartCounties.append(cartCities)  # combined countiches with the cities 
+    # # I have all of these shapes files, how do I turn it into a patch on a map 
+    # # I tried a few things and this was the thing that worked first 
+    # # p2GeoSource 
+    # countyJson = json.loads(combined.to_json())
+    # jsonCounty=json.dumps(countyJson)
+    # #change the colors of this jsonCounty 
+    # p2GeoSource = GeoJSONDataSource(geojson=jsonCounty)
+
+    # p2.patches('xs','ys',source=p2GeoSource,fill_color='color', line_color='line_color')   
     
     size = 850
     TOOLS = ["hover", "pan", "wheel_zoom", "save"]
@@ -323,6 +370,8 @@ def index_search_box():                                                         
     countyTab = Panel(title="Counties", child=county_table)
     tabs = Tabs(tabs=[cityTab, countyTab])
 
+    numCities = 10
+    numCounties = 10
     resultsDiv = Div(text="""
                      <h1>{} out of {} cities have a match.</h1>
                      <h1>{} out of {} counties have a match.</h1>
@@ -380,4 +429,7 @@ def highlight_pdf(city, words):
     
 if __name__ == "__main__":                                                                                                          #run app on local host at port 5000 in debug mode
     
+    # from werkzeug.contrib.profiler import ProfilerMiddleware
+    # app.config['PROFILE'] = True
+    # app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[30])
     app.run(host="0.0.0.0", port=5000, debug=True)
