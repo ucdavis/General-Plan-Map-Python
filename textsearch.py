@@ -173,9 +173,12 @@ def change_json_colors(json_dict, results, blank_color, blank_outline, match_cit
             feature['properties']['line_color'] = blank_outline
 
 
-with open('map.json', 'r') as f:  
+with open('map.geojson', 'r') as f:  
     my_str = f.read()  
     my_map = json.loads(my_str)
+
+with open('pop_map.geojson', 'r') as f:  
+    pop_map = json.load(f)
 
 @app.route('/', methods=['POST'])                                                                                                   #connect search form to html page
 def index_search_box():                                                                                                             #function for accepting search input
@@ -211,14 +214,17 @@ def index_search_box():                                                         
             if res.population > maxCountyPop:
                 maxCountyPop = res.population
     
-    #print(countyPops)
     if len(results) < 1:
         return render_template('noresult.html')
 
     change_json_colors(my_map, results, blank_color='white', blank_outline='black', 
                       match_city_fill_color='blue', match_city_outline='blue', 
                       match_county_fill_color='blue', match_county_outline='blue')
-     
+
+    change_json_colors(pop_map, results, blank_color='white', blank_outline='black', 
+                    match_city_fill_color='blue', match_city_outline='blue', 
+                    match_county_fill_color='blue', match_county_outline='blue')
+ 
     #load in city shape files 
     # cities = gpd.read_file("static/data/ca-places-boundaries/cities.shp")[['NAME','NAMELSAD', 'geometry']]
     # cities.columns = ['name', 'color', 'geometry']
@@ -270,7 +276,6 @@ def index_search_box():                                                         
     
     #make population map 
     
-    cartCounties = counties
     # for ind in results.index:
     #     county_name = re.sub(' County', '', counties['name'][ind])
     #     try:
@@ -303,13 +308,13 @@ def index_search_box():                                                         
     # combined = cartCounties.append(cartCities)  # combined countiches with the cities 
     # # I have all of these shapes files, how do I turn it into a patch on a map 
     # # I tried a few things and this was the thing that worked first 
-    # # p2GeoSource 
-    # countyJson = json.loads(combined.to_json())
+    # p2GeoSource 
+     #countyJson = json.loads(combined.to_json())
     # jsonCounty=json.dumps(countyJson)
     # #change the colors of this jsonCounty 
-    # p2GeoSource = GeoJSONDataSource(geojson=jsonCounty)
 
-    # p2.patches('xs','ys',source=p2GeoSource,fill_color='color', line_color='line_color')   
+    p2GeoSource = GeoJSONDataSource(geojson=json.dumps(pop_map))
+    p2.patches('xs','ys',source=p2GeoSource,fill_color='color', line_color='line_color')   
     
     size = 850
     TOOLS = ["hover", "pan", "wheel_zoom", "save"]
