@@ -11,12 +11,13 @@ from typing import Dict, List, Tuple
 
 #when you load this pacakge these global variables are defined 
 #es = Elasticsearch('http://localhost:9200')
-es = Elasticsearch(
-    [os.environ.get('ES_HOST')],
-    http_auth=(os.environ.get('ES_USR'), os.environ.get('ES_PWD')),
-    scheme="https",
-    port=9243,
-)
+# es = Elasticsearch(
+#    [os.environ.get('ES_HOST')],
+#    http_auth=(os.environ.get('ES_USR'), os.environ.get('ES_PWD')),
+#    scheme="https",
+#    port=9243,
+# )
+es = Elasticsearch('http://localhost:9200')
 
 def parse_filename(filename: str) -> str:
 	"""	This function uses regular expressions to parse a filename. 
@@ -223,7 +224,7 @@ def map_index_to_vals(search_result_indices, key_to_hash_path='key_hash_mapping.
 
 
 if __name__ == "__main__":
-	#index_everything()
+	index_everything()
 	# index_everything()
 	search_result_indices, score = elastic_search('City of Buellton General Plan Land Use Acreage')
 	map_keys_to_values([3])	
