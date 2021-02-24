@@ -5,6 +5,12 @@
 *.TXT
 *.s*
 .vscode
+#secretes 
+client_secrets.json
+runserver.sh
+mycreds.txt
+passw 
+
 # History files
 .Rhistory
 .Rapp.history
