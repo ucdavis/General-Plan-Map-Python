@@ -26,8 +26,8 @@ The General Plan Map provides access to the text of all California city General 
 
 * [Catherine Brinkley](https://humanecology.ucdavis.edu/catherine-brinkley), Project Lead
 * [Lindsay Poirier](https://sts.ucdavis.edu/people/lpoirier), Critical Data Analysis Lead
-* Dexter Antonio, Lead Developer
-* Mirthala Lopez
+* [Dexter Antonio](https://github.com/dexterantonio), Lead Developer
+* [Mirthala Lopez](https://www.linkedin.com/in/mirthala-lopez/)
 * Makena Dettmann
 * Sujoy Ghosh
 
