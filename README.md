@@ -26,14 +26,14 @@ The General Plan Map provides access to the text of all California city General 
 
 * [Catherine Brinkley](https://humanecology.ucdavis.edu/catherine-brinkley), Project Lead
 * [Lindsay Poirier](https://sts.ucdavis.edu/people/lpoirier), Critical Data Analysis Lead
-* Dexter Antonio, Lead Developer
+* [Dexter Antonio](https://github.com/dexterantonio), Lead Developer
+* [Mirthala Lopez](https://www.linkedin.com/in/mirthala-lopez/)
 * Makena Dettmann
 * Sujoy Ghosh
-* Margaret Riley
 
 ## How to Contribute
 
-1. File an issue via this repo's [issue queue](https://github.com/Hack-for-California/General-Plan-Map/issues).
+1. File an issue via this repo's [issue queue](https://github.com/Hack-for-California/General-Plan-Map-Python/issues).
 
 2. Write code to fix issues or to create new features. When contributing code, please be sure to:
 
@@ -63,9 +63,10 @@ The .html templates are stored in /templates/. These templates contain reference
 
 ## Copyrights
 
-Please see [license](https://github.com/Hack-for-California/General-Plan-Map/blob/master/LICENSE) file for details.
+Please see [license](https://github.com/Hack-for-California/General-Plan-Map-Python/blob/main/LICENSE) file for details.
 
 ## Cite As
+
 
 Brinkley, C; Poirier, L; Antonio, D (2020) California City General Plan Database Mapping Tool. [http://critical-data-analysis.org/shiny/general-plan-map/R/](http://critical-data-analysis.org/shiny/general-plan-map/R/)
 [![DOI](https://zenodo.org/badge/238352230.svg)](https://zenodo.org/badge/latestdoi/238352230)
