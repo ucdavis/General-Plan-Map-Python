@@ -4,6 +4,7 @@
 *.PDF
 *.TXT
 *.s*
+.vscode
 # History files
 .Rhistory
 .Rapp.history
