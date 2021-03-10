@@ -1,0 +1,44 @@
+
+{
+   "title": "General Plan Database Mapping Tool",
+   "license": "GPL-3.0", 
+   "upload_type": "software", 
+   "publication_date": "2021-02-24", 
+   "creators": [
+      {
+         "name": "Dexter Antonio",
+         "affiliation": "UC Davis",
+         "orcid": "0000-0001-7181-8270"
+      }, 
+      {
+         "name": "Mirthala Lopez",
+         "affiliation": "UC Davis"
+      },
+      {
+         "name": "Lindsay Poirier",
+         "affiliation": "UC Davis",
+         "orcid": "0000-0001-9307-5834"
+      }, 
+      {
+         "name": "Sujoy Ghosh",
+         "affiliation": "UC Davis",
+         "orcid": "0000-0002-0479-4245"
+      },
+      {
+         "name": "Makena Dettmann",
+         "affiliation": "UC Davis",
+         "orcid": "0000-0002-7934-1398"
+      }, 
+      {
+         "name": "Catherine Brinkley",
+         "affiliation": "UC Davis",
+         "orcid": "0000-0002-3642-8207"
+      }
+   ],
+   "keywords": [
+      "California",
+      "planning",
+      "ElasticSearch"
+   ],
+   "access_right": "open"
+}
