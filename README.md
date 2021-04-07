@@ -26,14 +26,14 @@ The General Plan Database Mapping Tool provides access to the text of California
 
 ## Contributors
 <!-- ALL-CONTRIBUTORS-LIST:START -->
-| Contributions | Name (alpha order) | Role |
-| ----: | :---- | :---- |
+| Contributions | Name (alpha order) |
+| ----: | :---- |
 | [💻](# "Code") [🚇](# "Infrastructure") [🤔](# "Ideas and Planning") | [Dexter Antonio](https://github.com/dexterantonio)
 | [💻](# "Code") [📖](# "Documentation") [🤔](# "Ideas and Planning") | [Mirthala Lopez](https://www.linkedin.com/in/mirthala-lopez/)
 | [📆](# "Project Management") [🧑‍🏫](# "Mentoring") [💻](# "Design") [🚇](# "Infrastructure") [📖](# "Documentation") [🤔](# "Ideas and Planning") | [Lindsay Poirier](https://sts.ucdavis.edu/people/lpoirier)
 | [💻](# "Code") [🚇](# "Infrastructure") [🤔](# "Ideas and Planning") | [Sujoy Ghosh](https://www.linkedin.com/in/sujoy-ghosh-266b0181)
 | [💻](# "Code") [🚇](# "Infrastructure") [🤔](# "Ideas and Planning") | [Makena Dettman](https://www.linkedin.com/in/makenadettmann)
-| [📆](# "Project Management") [🔬](# "Research") [🔣] (# "Data") [🤔](# "Ideas and Planning") | [Catherine Brinkley](https://humanecology.ucdavis.edu/catherine-brinkley)
+| [📆](# "Project Management") [🔬](# "Research") [🔣](# "Data") [🤔](# "Ideas and Planning") | [Catherine Brinkley](https://humanecology.ucdavis.edu/catherine-brinkley)
 
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
