@@ -15,22 +15,12 @@ This project is developing a platform for readily querying and extracting snippe
 The General Plan Database Mapping Tool provides access to the text of California city and county General Plans and enables users to identify the plans in which a queried phrase is referenced. Upon searching, the tool filters a map to the cities in CA with General Plans that reference the phrase, offering a geospatial representation of its use. The tool also links to the plans that reference the search phrase. 
 
 ## Contributors
-
-* [Catherine Brinkley](https://humanecology.ucdavis.edu/catherine-brinkley), Project Lead
-* [Lindsay Poirier](https://sts.ucdavis.edu/people/lpoirier), Critical Data Analysis Lead
-* [Dexter Antonio](https://github.com/dexterantonio), Lead Developer
-* [Mirthala Lopez](https://www.linkedin.com/in/mirthala-lopez/)
-* Makena Dettmann
-* Sujoy Ghosh
-
-
-## Contributors
 <!-- ALL-CONTRIBUTORS-LIST:START -->
 | Contributions | Name (alpha order) |
 | ----: | :---- |
 | [💻](# "Code") [🚇](# "Infrastructure") [🤔](# "Ideas and Planning") | [Dexter Antonio](https://github.com/dexterantonio)
 | [💻](# "Code") [📖](# "Documentation") [🤔](# "Ideas and Planning") | [Mirthala Lopez](https://www.linkedin.com/in/mirthala-lopez/)
-| [📆](# "Project Management") [🧑‍🏫](# "Mentoring") [💻](# "Design") [🚇](# "Infrastructure") [📖](# "Documentation") [🤔](# "Ideas and Planning") | [Lindsay Poirier](https://sts.ucdavis.edu/people/lpoirier)
+| [📆](# "Project Management") [🧑‍🏫](# "Mentoring") [🚇](# "Infrastructure") [📖](# "Documentation") [🤔](# "Ideas and Planning") | [Lindsay Poirier](https://sts.ucdavis.edu/people/lpoirier)
 | [💻](# "Code") [🚇](# "Infrastructure") [🤔](# "Ideas and Planning") | [Sujoy Ghosh](https://www.linkedin.com/in/sujoy-ghosh-266b0181)
 | [💻](# "Code") [🚇](# "Infrastructure") [🤔](# "Ideas and Planning") | [Makena Dettman](https://www.linkedin.com/in/makenadettmann)
 | [📆](# "Project Management") [🔬](# "Research") [🔣](# "Data") [🤔](# "Ideas and Planning") | [Catherine Brinkley](https://humanecology.ucdavis.edu/catherine-brinkley)
