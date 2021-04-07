@@ -16,7 +16,7 @@ The General Plan Database Mapping Tool provides access to the text of California
 
 ## Contributors
 <!-- ALL-CONTRIBUTORS-LIST:START -->
-| Contributions | Name (alpha order) |
+| Contributions | Name |
 | ----: | :---- |
 | [💻](# "Code") [🚇](# "Infrastructure") [🤔](# "Ideas and Planning") | [Dexter Antonio](https://github.com/dexterantonio)
 | [💻](# "Code") [📖](# "Documentation") [🤔](# "Ideas and Planning") | [Mirthala Lopez](https://www.linkedin.com/in/mirthala-lopez/)
@@ -66,9 +66,7 @@ Please see [license](https://github.com/Hack-for-California/General-Plan-Map-Pyt
 
 ## Cite As
 
-
-Brinkley, C; Poirier, L; Antonio, D (2020) California City General Plan Database Mapping Tool. [http://critical-data-analysis.org/shiny/general-plan-map/R/](http://critical-data-analysis.org/shiny/general-plan-map/R/)
-[![DOI](https://zenodo.org/badge/238352230.svg)](https://zenodo.org/badge/latestdoi/238352230)
+Dexter Antonio, Mirthala Lopez, Lindsay Poirier, Sujoy Ghosh, Makena Dettmann, & Catherine Brinkley. (2021, February 24). General Plan Database Mapping Tool (Version 2.1.2). Zenodo. http://doi.org/10.5281/zenodo.4566234
 
 ## Have Questions?
 Contact [hack-for-california@ucdavis.edu](mailto:hack-for-california@ucdavis.edu)
