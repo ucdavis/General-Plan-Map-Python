@@ -12,24 +12,23 @@ This project is developing a platform for readily querying and extracting snippe
 
 ### The Tool
 
-The General Plan Map provides access to the text of all California city General Plans and enables users to query for a single search term to determine the plans in which that term is referenced. Upon searching, the tool filters a map to the cities in CA with General Plans that reference the word, offering a geospatial representation of the term's use. The tool also links to the plans that reference the term. Users can click through to the plans and search within the page for the term. 
-
-### Longer-Term Goals
-
-* Archive historical general plans for each city in order to be able to track changes in plans over time
-* Add county plans to the map, and allow users to toggle between the two
-* Expand search functionality beyond a single word towards phrases
-* Link to PDFs of the general plans vs. unformatted text
-* Streamline the addition of new plans to the database
+The General Plan Database Mapping Tool provides access to the text of California city and county General Plans and enables users to identify the plans in which a queried phrase is referenced. Upon searching, the tool filters a map to the cities in CA with General Plans that reference the phrase, offering a geospatial representation of its use. The tool also links to the plans that reference the search phrase. 
 
 ## Contributors
+<!-- ALL-CONTRIBUTORS-LIST:START -->
+| Contributions | Name |
+| ----: | :---- |
+| [💻](# "Code") [🚇](# "Infrastructure") [🤔](# "Ideas and Planning") | [Dexter Antonio](https://github.com/dexterantonio)
+| [💻](# "Code") [📖](# "Documentation") [🤔](# "Ideas and Planning") | [Mirthala Lopez](https://www.linkedin.com/in/mirthala-lopez/)
+| [📆](# "Project Management") [🧑‍🏫](# "Mentoring") [🚇](# "Infrastructure") [📖](# "Documentation") [🤔](# "Ideas and Planning") | [Lindsay Poirier](https://sts.ucdavis.edu/people/lpoirier)
+| [💻](# "Code") [🚇](# "Infrastructure") [🤔](# "Ideas and Planning") | [Sujoy Ghosh](https://www.linkedin.com/in/sujoy-ghosh-266b0181)
+| [💻](# "Code") [🚇](# "Infrastructure") [🤔](# "Ideas and Planning") | [Makena Dettman](https://www.linkedin.com/in/makenadettmann)
+| [📆](# "Project Management") [🔬](# "Research") [🔣](# "Data") [🤔](# "Ideas and Planning") | [Catherine Brinkley](https://humanecology.ucdavis.edu/catherine-brinkley)
 
-* [Catherine Brinkley](https://humanecology.ucdavis.edu/catherine-brinkley), Project Lead
-* [Lindsay Poirier](https://sts.ucdavis.edu/people/lpoirier), Critical Data Analysis Lead
-* [Dexter Antonio](https://github.com/dexterantonio), Lead Developer
-* [Mirthala Lopez](https://www.linkedin.com/in/mirthala-lopez/)
-* Makena Dettmann
-* Sujoy Ghosh
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+(For a key to the contribution emoji or more info on this format, check out [“All Contributors.”](https://allcontributors.org/docs/en/emoji-key))
 
 ## How to Contribute
 
@@ -67,9 +66,7 @@ Please see [license](https://github.com/Hack-for-California/General-Plan-Map-Pyt
 
 ## Cite As
 
-
-Brinkley, C; Poirier, L; Antonio, D (2020) California City General Plan Database Mapping Tool. [http://critical-data-analysis.org/shiny/general-plan-map/R/](http://critical-data-analysis.org/shiny/general-plan-map/R/)
-[![DOI](https://zenodo.org/badge/238352230.svg)](https://zenodo.org/badge/latestdoi/238352230)
+Dexter Antonio, Mirthala Lopez, Lindsay Poirier, Sujoy Ghosh, Makena Dettmann, & Catherine Brinkley. (2021, February 24). General Plan Database Mapping Tool (Version 2.1.2). Zenodo. http://doi.org/10.5281/zenodo.4566234
 
 ## Have Questions?
 Contact [hack-for-california@ucdavis.edu](mailto:hack-for-california@ucdavis.edu)
