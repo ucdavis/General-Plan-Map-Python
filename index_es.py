@@ -23,7 +23,7 @@ def index_everything():
 		keyhash = i
 		print(key, keyhash)
 		key_hash_mapping[keyhash] = key
-		es.index(index='test_2', id=keyhash, body={'text': txt, 'plan_name': key})
+		es.index(index='test_4', id=keyhash, body={'text': txt, 'plan_name': key})
 		i += 1
 		if i >10:
 			break 
@@ -34,7 +34,7 @@ def index_everything():
 
 def search_contains_words(words):
 	es = Elasticsearch('http://localhost:9200')
-	search = es.search(index='test_2', body={'query': {'match': {'text': words}}})
+	search = es.search(index='test_4', body={'query': {'match': {'text': words}}})
 	ids = []
 	keys = []
 	for hit in search['hits']['hits']:
@@ -45,7 +45,7 @@ def search_contains_words(words):
 
 def search_contains_phrase(words):
 	es = Elasticsearch('http://localhost:9200')
-	search = es.search(index='test_2', body={'query': {'match_phrase': {'text': words}}})
+	search = es.search(index='test_4', body={'query': {'match_phrase': {'text': words}}})
 	ids = []
 	keys = []
 	for hit in search['hits']['hits']:
