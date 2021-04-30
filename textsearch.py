@@ -54,12 +54,14 @@ def getResults(wordinput):
     results = []
     query = wordinput
 
-    ids, scores = es.elastic_search(query)
+    ids, scores, hits, highlights = es.elastic_search_highlight(query)
     result_props = es.map_index_to_vals(ids)
-    for score, result_prop in zip(scores, result_props):
+    for score, result_prop, hit, highlight in zip(scores, result_props, hits, highlights):
         result_prop = result_prop.copy()
         result_prop['query'] = query 
         result_prop['score'] = score
+        result_prop['hits'] = hit
+        result_prop['highlights'] = highlight
         new_result = Result(**result_prop)
         try:
             place_props = es.get_place_properties(new_result.is_city, new_result.place_name)
@@ -86,7 +88,7 @@ def getResults(wordinput):
 class Result:
     """This results class stores the data of a single search 'hit'.
     """    
-    def __init__(self, state, filename, is_city, place_name, plan_date, filetype,  query, county='na', population=0, city_type='na', score=0):
+    def __init__(self, state, filename, is_city, place_name, plan_date, filetype,  query, county='na', population=0, city_type='na', score=0, hits=0, highlights=None):
         # place properties 
         self.state = state
         self.filename = filename
@@ -96,6 +98,8 @@ class Result:
         self.filetype = filetype
         #search things 
         self.score = score
+        self.hits = hits
+        self.highlights = highlights
         
         # additional properties 
         self.county = county
@@ -117,8 +121,7 @@ class Result:
 
         Returns:
             [type]: a parsed query that can be used in html  
-        """        
-        
+        """
         phrases_in_quotes = re.findall(r'\"(.+?)\"',query)
         non_quotes = re.sub(r'"',"", re.sub(r'\"(.+?)\"', '', query))
         all_words = re.findall('[A-z]+', non_quotes)
@@ -256,7 +259,8 @@ def index_search_box():                                                         
         fNames=[res.pdf_filename for res in cityResults],
         populations = [res.population for res in cityResults],
         counties = [res.county for res in cityResults],
-        scores = [res.score for res in cityResults]
+        scores = [res.score for res in cityResults],
+        hits = [res.hits for res in cityResults]
         )
 
     countyData = dict(
@@ -265,7 +269,8 @@ def index_search_box():                                                         
         types=[res.type for res in countyResults],
         fNames=[res.pdf_filename for res in countyResults],
         populations=[res.population for res in countyResults],
-        scores = [res.score for res in countyResults]
+        scores = [res.score for res in countyResults],
+        hits = [res.hits for res in countyResults]
         )
     
     uniqueCities = len(set(cityData["names"]))
@@ -280,6 +285,7 @@ def index_search_box():                                                         
             TableColumn(field="populations", title="Population", formatter=NumberFormatter(format='0,0')),
             TableColumn(field="counties", title="County"),
             TableColumn(field="scores", title="Relevance Score"),
+            TableColumn(field="hits", title="Hits")
         ]
     city_table = DataTable(source=citySource, columns=columns, width=size, height=600,reorderable=False, index_position=None)
     
@@ -290,6 +296,7 @@ def index_search_box():                                                         
             TableColumn(field="years", title="Year", formatter=HTMLTemplateFormatter()),
             TableColumn(field="populations", title="Population", formatter=NumberFormatter(format='0,0')),
             TableColumn(field="scores", title="Relevance Score"),
+            TableColumn(field="hits", title="Hits")
         ]
     county_table = DataTable(source=countySource, columns= columns, reorderable=False, index_position=None)
     
@@ -359,4 +366,4 @@ if __name__ == "__main__":                                                      
     # from werkzeug.contrib.profiler import ProfilerMiddleware
     # app.config['PROFILE'] = True
     # app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[30])
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5002, debug=True)
