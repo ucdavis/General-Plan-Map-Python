@@ -222,6 +222,7 @@ def map_index_to_vals(search_result_indices, key_to_hash_path='key_hash_mapping.
 
 def elastic_search_highlight(query):
 	"""Puts a query into elasticsearch and returns the ids, score, hits and highlights
+	This works by counting the number of <em> paris in the highlighted text. 
 	Args:
 		query (str): The elasticsearch query 
 		page_num (int): [Optional] The page number
