@@ -8,12 +8,43 @@ Start by cloning the repo to your local machine. You can do this by calling `git
 
 # 2. Set up your working branch
 
-Whenever you are making changes to a code repo, it is best practice to work on a separate branch, then merge your code in later. This makes and changes clearly and easily revesible. To start a branch open the project directory in some terminal application (on Windows usualyl git bash, on mac the normal terminal). You will want to make sure you are basing your work off of the `dev` branch, rather than the default `main`. To make sure this is the case, first make sure you have all branches in your local repo by running `git pull --all`. Once that is done, switch to dev using `git checkout dev`. From there, you can create a new branch which will be based on your current branch of dev. To do this run `git checkout -b <NAME OF BRANCH>` using whatever short name for the branch that works for you, and describes your intended changes. If you type `git status` it should now say you are on your new branch. Use `git push origin <NAME OF BRANCH>` to register your new branch on Github. From here on, you can just use `git push` to send commits as normal.
+Whenever you are making changes to a code repo, it is best practice to work on a separate branch, then merge your code in later. This makes and changes clearly and easily revesible. To start a branch open the project directory in some terminal application (on Windows usualyl git bash, on mac the normal terminal). You will want to make sure you are basing your work off of the `dev` branch, rather than the default `main`.
+
+To make sure this is the case, first make sure you have all branches in your local repo by running `git pull --all`. Once that is done, switch to dev using `git checkout dev`. From there, you can create a new branch which will be based on your current branch of dev. To do this run `git checkout -b <NAME OF BRANCH>` using whatever short name for the branch that works for you, and describes your intended changes. If you type `git status` it should now say you are on your new branch. Use `git push origin <NAME OF BRANCH>` to register your new branch on Github. From here on, you can just use `git push` to send commits as normal.
 
 # 3. Switch the disply port
 
 Before you start working on your changes, remember to change the port the mapper will be dispalyed in. You can do this by editing `textsearch.py` and editing the final line of code (`app.run(host="0.0.0.0", port=5000, debug=True)`). You want to change the port from `5000` to another `5002`, as that is what all colaborators use for testing the dev sites.
 
-# 4. Get the current version running
+# 4. Prepare your python environment
 
-Before you start making changes, we want to assure the current verion can run on your machine (so we know what broke it if it won't run later!). 
+Before you can run any code, you will need to set up a python environment with all the required modules. You can use the `environment.yml` file in the base directory of the project to do so in conjunstion with `conda`. If you do now have `conda` installed, you will need to do so. When you are ready to create your `conda` environment, navigate to the base directory of the project and run `conda env create -f environment.yml`. This will create a conda environment named `gpenv`.
+
+Once the environment is set up, you can activate it at any time using `conda activate gpenv`. You will need to do this whenever you want to run code related to this project. 
+
+**(NOTE)** If this does not work you can try using a `venv` instad. To do so go to your home directory and create the env using `python -m venv gpenv`, then enter `source /gpenv/bin/activate` to activate the environment. Once started, naviagete to the project directory and use `cat requirements.txt | xargs -n 1 pip install` to install the required modules. 
+
+# 5. Install Elastic Search
+
+Before you can run the General Plan Mapper locally, you will need to install ElsticSearch locally. Please follow the directions avaialbe [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html).
+
+Once you have installed ElasticSearch, you will need to start it before you launch the General Plan Mapper. The method of starting ElasticSearch depends on how you installed it. Please see [this guide](https://www.elastic.co/guide/en/elasticsearch/reference/current/starting-elasticsearch.html) to find the method for your situation.
+
+# 6. Installing Bokeh sample data
+
+Before you can run the repo, you need to download the example bokeh datasets. First start a python instance by calling `python` within the `gpenv` environment. You will know you are in python when the input changes into `>>>`. Once in python run `import bokeh` then `bokeh.sampledata.download()`.
+
+# 7. Download data files
+
+You will need to download all the current data files from [the google drive](https://drive.google.com/drive/u/2/folders/1E6-I1oL4DX88TYxI59TBN_lOJtp0vMzR). Right click on the places fodler and hit download. It will zip the entire deirectory and download it. Once it is finished, open the zip and place all the contents into the `./static/data/` directory (so there sould be a folder at `./static/data/places` which contains several `.txt` and `.pdf` files).
+
+# 8. Build the index
+
+Next you will need to build the index for elastic search. To do so start python while in the `gpenv` environment by calling `python`, then `import es` to import the elastic search functions from `es.py`. Next enter `es.index_everything()`. You should see the names of several texfiles and associated numers pass through your terminal.
+
+# 9. Get the current version running
+
+Before you start making changes, we want to assure the current verion can run on your machine (so we know what broke it if it won't run later!). To try running the program start the general plan mapper using `python textsearch.py`. It should then start up an instance of the mapper on your local machine. You can see it my going to a web browser and entering `localhost:5002`. Try searching for "water", if a map of California shows up, you're all good!
+
+# 10. 
+
