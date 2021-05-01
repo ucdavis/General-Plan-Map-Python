@@ -62,11 +62,7 @@ The .html templates are stored in /templates/. These templates contain reference
 
 ### Setting up Your Environment
 
-It is suggested you use some form of environment manager for this project, like `conda` or `venv`. You can use the `requirements.txt` file to install all the packages you need for this project using either tool.
-
-If you are using conda, navigate to the project base directory and enter `conda create --name gpm --file requirements.txt`. You can thus use `conda activate gpm` to enter the general plan mapper environment and run the project code.
-
-If you are using venv, first create a venv using `python3 -m venv ~/gpm`, this will create a folder in your home directory which will contain the general plan mapper environment. Whenever you want to activate this environment, use `source ~/gpm/bin/activate`. To finish preparing your environment for this project, activate the `gpm` environment, then navigate to the project base directory and enter `pip install -r requirements.txt`. You can then run project code.
+Please follow the [install guide](./install_guide.md) on setting up a local version of the repository for testing and development.
 
 ## Copyrights
 
