@@ -259,7 +259,6 @@ def index_search_box():                                                         
         fNames=[res.pdf_filename for res in cityResults],
         populations = [res.population for res in cityResults],
         counties = [res.county for res in cityResults],
-        scores = [res.score for res in cityResults],
         hits = [res.hits for res in cityResults]
         )
 
@@ -269,7 +268,6 @@ def index_search_box():                                                         
         types=[res.type for res in countyResults],
         fNames=[res.pdf_filename for res in countyResults],
         populations=[res.population for res in countyResults],
-        scores = [res.score for res in countyResults],
         hits = [res.hits for res in countyResults]
         )
     
@@ -284,8 +282,7 @@ def index_search_box():                                                         
             TableColumn(field="years", title="Year", formatter=HTMLTemplateFormatter()),
             TableColumn(field="populations", title="Population", formatter=NumberFormatter(format='0,0')),
             TableColumn(field="counties", title="County"),
-            TableColumn(field="scores", title="Relevance Score"),
-            TableColumn(field="hits", title="Hits")
+            TableColumn(field="hits", title="Count")
         ]
     city_table = DataTable(source=citySource, columns=columns, width=size, height=600,reorderable=False, index_position=None)
     
@@ -295,8 +292,7 @@ def index_search_box():                                                         
             TableColumn(field="names", title="Name"),
             TableColumn(field="years", title="Year", formatter=HTMLTemplateFormatter()),
             TableColumn(field="populations", title="Population", formatter=NumberFormatter(format='0,0')),
-            TableColumn(field="scores", title="Relevance Score"),
-            TableColumn(field="hits", title="Hits")
+            TableColumn(field="hits", title="Count")
         ]
     county_table = DataTable(source=countySource, columns= columns, reorderable=False, index_position=None)
     
