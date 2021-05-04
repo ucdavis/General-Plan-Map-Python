@@ -55,6 +55,16 @@ def getResults(wordinput):
     query = wordinput
 
     ids, scores, hits, highlights = es.elastic_search_highlight(query)
+    # sort by hits 
+    zipped = list(zip(ids, scores, hits, highlights))
+    zipped.sort(key=lambda x: x[2], reverse=True)
+    ids, scores, hits, highlights = zip(*zipped)
+    ids = list(ids)
+    scores = list(scores)
+    hits = list(hits)
+    highlights = list(highlights)
+        
+
     result_props = es.map_index_to_vals(ids)
     for score, result_prop, hit, highlight in zip(scores, result_props, hits, highlights):
         result_prop = result_prop.copy()
@@ -259,7 +269,6 @@ def index_search_box():                                                         
         fNames=[res.pdf_filename for res in cityResults],
         populations = [res.population for res in cityResults],
         counties = [res.county for res in cityResults],
-        scores = [res.score for res in cityResults],
         hits = [res.hits for res in cityResults]
         )
 
@@ -269,7 +278,6 @@ def index_search_box():                                                         
         types=[res.type for res in countyResults],
         fNames=[res.pdf_filename for res in countyResults],
         populations=[res.population for res in countyResults],
-        scores = [res.score for res in countyResults],
         hits = [res.hits for res in countyResults]
         )
     
@@ -284,8 +292,7 @@ def index_search_box():                                                         
             TableColumn(field="years", title="Year", formatter=HTMLTemplateFormatter()),
             TableColumn(field="populations", title="Population", formatter=NumberFormatter(format='0,0')),
             TableColumn(field="counties", title="County"),
-            TableColumn(field="scores", title="Relevance Score"),
-            TableColumn(field="hits", title="Hits")
+            TableColumn(field="hits", title="Count")
         ]
     city_table = DataTable(source=citySource, columns=columns, width=size, height=600,reorderable=False, index_position=None)
     
@@ -295,8 +302,7 @@ def index_search_box():                                                         
             TableColumn(field="names", title="Name"),
             TableColumn(field="years", title="Year", formatter=HTMLTemplateFormatter()),
             TableColumn(field="populations", title="Population", formatter=NumberFormatter(format='0,0')),
-            TableColumn(field="scores", title="Relevance Score"),
-            TableColumn(field="hits", title="Hits")
+            TableColumn(field="hits", title="Count")
         ]
     county_table = DataTable(source=countySource, columns= columns, reorderable=False, index_position=None)
     
