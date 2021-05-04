@@ -1,6 +1,6 @@
 # Install Guide
 
-This guide will walk you through the process of installing a local version of the general plan mapper to test your contributions before making a pull request. It will start with X, Y, Z.
+This guide will walk you through the process of installing a local version of the general plan mapper to test your contributions before making a pull request.
 
 # 1. Clone the repo
 
