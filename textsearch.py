@@ -55,6 +55,16 @@ def getResults(wordinput):
     query = wordinput
 
     ids, scores, hits, highlights = es.elastic_search_highlight(query)
+    # sort by hits 
+    zipped = list(zip(ids, scores, hits, highlights))
+    zipped.sort(key=lambda x: x[2])
+    ids, scores, hits, highlights = zip(*zipped)
+    ids = list(ids)
+    scores = list(scores)
+    hits = list(hits)
+    highlights = list(highlights)
+        
+
     result_props = es.map_index_to_vals(ids)
     for score, result_prop, hit, highlight in zip(scores, result_props, hits, highlights):
         result_prop = result_prop.copy()
