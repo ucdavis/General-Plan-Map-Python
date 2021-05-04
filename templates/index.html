@@ -20,7 +20,25 @@
     sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/static/cssjs/css/font-awesome.css">
     <link rel="stylesheet" href="/static/cssjs/css/general-template.css">
-  
+
+    <!-- Matomo -->
+    <script  type="text/javascript">
+        var _paq = window._paq = window._paq || [];
+        _paq.push(['disableCookies']);
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        _paq.push(['alwaysUseSendBeacon']);
+        _paq.push(['setTrackerUrl', "https://critical-data-analysis.org/wp-content/plugins/matomo/app/matomo.php"]);
+        _paq.push(['setSiteId', '1']);
+        var d=document,
+            g=d.createElement('script'),
+            s=d.getElementsByTagName('script')[0];
+            g.type='text/javascript';
+            g.async=true;
+            g.src="https://critical-data-analysis.org/wp-content/uploads/matomo/matomo.js";
+            s.parentNode.insertBefore(g,s);
+    </script>
+    <!-- End Matomo Code -->
 
     </head>
 
@@ -97,7 +115,7 @@
                     <div class="right-content">
                         <h4>Instructions</h4>
                                                         <p>This website utilizes Elasticsearch to search through the general plans. To search for an exact phrase, enclose the exact phrase in quotes. To allow fuzzy searching do not include quotes.  
-                            After entering a query, click “Search” to search across the plans. The relevance score for each plan will be shown. The relevance scores range from 5 (best) to 0 (worst).  The search hits can be sorted by year, city name or 2010 population. The table can also be exported to allow further research. Results are also visualized as maps that show the cities and counties with search hits. To see how many people are impacted by the plans, the search results can be visualized as a cartogram based on 2010 census population. This visualization results in places like Los Angeles County being very large while counties with smaller populations are smaller. The search returns a substring, so that if you search 'race' you will also pull up hits for 'race-based policies.' Similarly, you will pull up hits for 'marathon races'. To understand the context of the search hits, click on the year for a city or county plan to view the PDF with the highlighted keywords. Plans were added in 2020, and we are in the process of adding updates. If you have any feedback please provide it here <b>(<a href="https://docs.google.com/forms/d/e/1FAIpQLSeCpD1Dil06c8tuSLnDqHp9W_6zK3S50ho4eGQtM4MyBhYM4g/viewform">Feedback</a>)</p>
+                            After entering a query, click “Search” to search across the plans. The total number of occurrences for each plan will be shown. The search hits can be sorted by count, year, city name or 2010 population. The table can also be exported to allow further research. Results are also visualized as maps that show the cities and counties with search hits. To see how many people are impacted by the plans, the search results can be visualized as a cartogram based on 2010 census population. This visualization results in places like Los Angeles County being very large while counties with smaller populations are smaller. The search returns a substring, so that if you search 'race' you will also pull up hits for 'race-based policies.' Similarly, you will pull up hits for 'marathon races'. To understand the context of the search hits, click on the year for a city or county plan to view the PDF with the highlighted keywords. Plans were added in 2020, and we are in the process of adding updates. If you have any feedback please provide it here <b>(<a href="https://docs.google.com/forms/d/e/1FAIpQLSeCpD1Dil06c8tuSLnDqHp9W_6zK3S50ho4eGQtM4MyBhYM4g/viewform">Feedback</a>)</p>
                     </div>
                 </li>
             </ul>

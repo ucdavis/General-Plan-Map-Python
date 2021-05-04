@@ -8,7 +8,7 @@ import json
 from collections import namedtuple
 import csv 
 from typing import Dict, List, Tuple
-
+from collections import OrderedDict
 #when you load this pacakge these global variables are defined 
 #es = Elasticsearch('http://localhost:9200')
 # es = Elasticsearch(
@@ -220,6 +220,50 @@ def map_index_to_vals(search_result_indices, key_to_hash_path='key_hash_mapping.
 
 	return list(map(lambda x:my_dict[str(x)], search_result_indices))
 
+def elastic_search_highlight(query):
+	"""Puts a query into elasticsearch and returns the ids, score, hits and highlights
+	This works by counting the number of <em> paris in the highlighted text. 
+	Args:
+		query (str): The elasticsearch query 
+		page_num (int): [Optional] The page number
+	Returns:
+		Tuple(List[int], List[float], List[int], List[str]): ids, score, hits and highlights 
+	"""	
+	size =1000
+	global es
+	query_json = {"_source": False,
+	"size": size,      
+	"query":{
+    "simple_query_string" : {
+        "query": query,
+        "fields": ["text"],
+        "default_operator": "and"}
+        }, 
+        "highlight": {
+		   "fields": {
+			   "text": {}
+		}
+      }
+    }
+	search_with_highlights = es.search(index='test_4' ,body=query_json, request_timeout=30) 
+	hit_count_dict = OrderedDict()
+	highlight_list = []
+	ids = []
+	scores = []
+	for snipets in search_with_highlights["hits"]["hits"]:
+		id = snipets["_id"]
+		highlight_list.append(snipets["highlight"]["text"])
+		ids.append(int(snipets['_id']))
+		scores.append(float(snipets['_score']))
+		for snip in snipets["highlight"]["text"]:
+			if id in hit_count_dict:
+				hit_count_dict[id] += snip.count("em>")//2
+			else:
+				hit_count_dict[id] = snip.count("em>")//2
+
+	hit_count_list = list(hit_count_dict.values())
+
+	return (ids, scores, hit_count_list, highlight_list) 
 
 
 
