@@ -60,6 +60,10 @@ The .html templates are stored in /templates/. These templates contain reference
 * [pandas](https://pandas.pydata.org/)
 * [geopandas](https://geopandas.org/)
 
+### Setting up Your Environment
+
+Please follow the [install guide](./install_guide.md) on setting up a local version of the repository for testing and development.
+
 ## Copyrights
 
 Please see [license](https://github.com/Hack-for-California/General-Plan-Map-Python/blob/main/LICENSE) file for details.
