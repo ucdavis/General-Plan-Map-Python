@@ -1,0 +1,135 @@
+/*
+---------------------------------------------
+font & reset css
+---------------------------------------------
+*/
+@import url("https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i");
+
+/*
+---------------------------------------------
+bokeh
+---------------------------------------------
+*/
+.bk {
+  font-family: 'Poppins', sans-serif !important;
+}
+.bk-data-table {
+  left:0px !important;
+  right:0px !important;
+}
+.slick-header-columns, .slick-header-column {
+  background-image: none !important;
+  background-color: #ff4500 !important;
+  color: white !important;
+  font-weight: 600 !important;
+}
+.slick-header-column {
+  height: 35px !important;
+  padding-top: 15px !important;
+}
+.slick-header-column span{
+  width:100% !important;
+  margin-bottom: 0px !important;
+}
+.slick-cell {
+  text-align: left !important;
+  padding-top: 7px !important;
+}
+.bk-tab {
+  border-radius: 0 0 0 0 !important;
+  padding-top: 8px !important;
+  padding-top: 8px !important;
+  background-color: rgba(35,45,57,0.8) !important;
+  color: white !important;
+  font-weight: 600 !important;
+  width:120px !important;
+  margin-right:2px !important;
+}
+.bk-tab.bk-active {
+  border-color: #ff4500 !important;
+  border-width: 3px 0px 0px 0px !important;
+}
+.results-div {
+  background-color: rgba(35,45,57,0.8);
+  font-weight: 600;
+  padding:30px !important;
+  font-size: 24px !important;
+}
+.results-div .darker-text-color {
+    color: #ff4500;
+}
+.results-div .white-text-color {
+    color: white;
+}
+.table-results-div {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.share-div {
+  color: #ff4500;
+  text-align: left;
+}
+.share-div .bk-clearfix{
+  text-align: left;
+}
+/*
+---------------------------------------------
+Search Sidebar
+---------------------------------------------
+*/
+.search-sidebar{
+  width:200px;
+  height: 150px;
+  position:fixed;
+  top:80px;
+  z-index: 1;
+  overflow: hidden;
+  transition: 0.5s;
+}
+.search-sidebar:hover {
+  background-color: rgba(35,45,57,0.5);
+}
+.open-btn {
+  left:0px;
+  border-style:none;
+  background-color:#ff4500;
+  color:white;
+  font-weight:600;
+  font-size:16px;
+  padding:10px;
+  width:200px;
+}
+.search-form {
+  opacity:0;
+}
+.search-sidebar button, .search-sidebar input{
+  font-family: 'Poppins', sans-serif;
+}
+.search-sidebar input[type=text] {
+  padding: 5px;
+  border:0;
+  width:180px;
+  margin:10px;
+  background-color: white;
+  display: block;
+  font-size:12px;
+}
+.submit-btn {
+  background-color: #ff4500;
+  color: white;
+  font-weight: 600;
+  border:none;
+  padding:5px;
+  margin: 0px auto;
+  width:100px;
+  display: block;
+}
+/*
+---------------------------------------------
+Footer
+---------------------------------------------
+*/
+.citation {
+  margin-left:20px;
+  margin-right:20px;
+}
