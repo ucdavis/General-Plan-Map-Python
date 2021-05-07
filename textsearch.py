@@ -246,43 +246,43 @@ def index_search_box():                                                         
 
     TOOLS = ["hover", "pan", "wheel_zoom", "save"]
     p2 = figure(
-        x_axis_location=None, y_axis_location=None,
-        x_axis_type="mercator", y_axis_type="mercator",
-        tools=TOOLS,
-        tooltips=[("Name", "@name")]
+        x_axis_location = None, y_axis_location = None,
+        x_axis_type = "mercator", y_axis_type = "mercator",
+        tools = TOOLS,
+        tooltips = [("Name", "@name")]
         )
     p2.grid.grid_line_color = None
     p2.hover.point_policy = "follow_mouse"
-    p2GeoSource = GeoJSONDataSource(geojson=json.dumps(pop_map))
-    p2.patches('xs','ys',source=p2GeoSource,fill_color='color', line_color='line_color')
+    p2GeoSource = GeoJSONDataSource(geojson = json.dumps(pop_map))
+    p2.patches('xs','ys',source = p2GeoSource,fill_color = 'color', line_color = 'line_color')
 
     size = 850
     TOOLS = ["hover", "pan", "wheel_zoom", "save"]
     p = figure(
-        x_axis_location=None, y_axis_location=None,
-        tools=TOOLS,
-        tooltips=[("Name", "@name")])
+        x_axis_location = None, y_axis_location = None,
+        tools = TOOLS,
+        tooltips = [("Name", "@name")])
     p.grid.grid_line_color = None
     p.hover.point_policy = "follow_mouse"
-    p.patches('xs','ys', source = geosource, fill_color='color', line_color='line_color')
+    p.patches('xs','ys', source = geosource, fill_color = 'color', line_color = 'line_color')
 
 
     cityData = dict(
-        names=[res.cityName for res in cityResults],
-        years=[res.year for res in cityResults],
-        types=[res.cityType for res in cityResults],
-        fNames=[res.pdf_filename for res in cityResults],
+        names = [res.cityName for res in cityResults],
+        years = [res.year for res in cityResults],
+        types = [res.cityType for res in cityResults],
+        fNames = [res.pdf_filename for res in cityResults],
         populations = [res.population for res in cityResults],
         counties = [res.county for res in cityResults],
         hits = [res.hits for res in cityResults]
         )
 
     countyData = dict(
-        names=[res.cityName for res in countyResults],
-        years=[res.year for res in countyResults],
-        types=[res.type for res in countyResults],
-        fNames=[res.pdf_filename for res in countyResults],
-        populations=[res.population for res in countyResults],
+        names = [res.cityName for res in countyResults],
+        years = [res.year for res in countyResults],
+        types = [res.type for res in countyResults],
+        fNames = [res.pdf_filename for res in countyResults],
+        populations = [res.population for res in countyResults],
         hits = [res.hits for res in countyResults]
         )
 
@@ -293,45 +293,54 @@ def index_search_box():                                                         
     citySource = ColumnDataSource(cityData)
 
     columns = [
-            TableColumn(field="names", title="Name"),
-            TableColumn(field="years", title="Year", formatter=HTMLTemplateFormatter()),
-            TableColumn(field="populations", title="Population", formatter=NumberFormatter(format='0,0')),
-            TableColumn(field="counties", title="County"),
-            TableColumn(field="hits", title="Count")
+            TableColumn(field = "names", title = "Name"),
+            TableColumn(field = "years", title = "Year", formatter = HTMLTemplateFormatter()),
+            TableColumn(field = "populations", title = "Population", formatter = NumberFormatter(format = '0,0')),
+            TableColumn(field = "counties", title = "County"),
+            TableColumn(field = "hits", title = "Count")
         ]
-    city_table = DataTable(source=citySource, columns=columns, width=size, height=600,reorderable=False, index_position=None)
+    city_table = DataTable(source = citySource, columns = columns, width = size, height = 600, reorderable = False, index_position = None, row_height = 40)
 
     countySource = ColumnDataSource(countyData)
 
     columns = [
-            TableColumn(field="names", title="Name"),
-            TableColumn(field="years", title="Year", formatter=HTMLTemplateFormatter()),
-            TableColumn(field="populations", title="Population", formatter=NumberFormatter(format='0,0')),
-            TableColumn(field="hits", title="Count")
+            TableColumn(field = "names", title = "Name"),
+            TableColumn(field = "years", title = "Year", formatter = HTMLTemplateFormatter()),
+            TableColumn(field = "populations", title = "Population", formatter = NumberFormatter(format = '0,0')),
+            TableColumn(field = "hits", title = "Count")
         ]
-    county_table = DataTable(source=countySource, columns= columns, reorderable=False, index_position=None)
+    county_table = DataTable(source = countySource, columns = columns, reorderable = False, index_position = None, row_height = 40)
 
-    cityTab = Panel(title="Cities", child=city_table)
-    countyTab = Panel(title="Counties", child=county_table)
-    tabs = Tabs(tabs=[cityTab, countyTab])
+    cityTab = Panel(title = "Cities", child = city_table)
+    countyTab = Panel(title = "Counties", child = county_table)
+    tabs = Tabs(tabs = [cityTab, countyTab], css_classes=["table-results-div"])
 
     numCities = 482
     numCounties = 58
-    resultsDiv = Div(text="""
-                     <h1>{} out of {} cities have a match.</h1>
-                     <h1>{} out of {} counties have a match.</h1>
-                     """.format(uniqueCities, numCities, uniqueCounties, numCounties))
+    resultsDiv = Div(text = """
+                     <span class='darker-text-color'>{} </span><span class='white-text-color'>out of </span><span class='darker-text-color'>{} </span><span class='white-text-color'>cities mention </span><span class='darker-text-color'>'{}'.</span><br/><br/>
+                     <span class='darker-text-color'>{} </span><span class='white-text-color'>out of </span><span class='darker-text-color'>{} </span><span class='white-text-color'>counties mention </span><span class='darker-text-color'>'{}'.</span>
+                     """.format(uniqueCities, numCities, wordinput, uniqueCounties, numCounties, wordinput),
+                     margin = (30, 0, 20, 30),
+                     css_classes=["results-div"])
+    shareDiv = Div(text = """
+                        <h1> Share Results: </h1>
+                        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-show-count="false">
+                        Tweet
+                        </a>""",
+                        margin = (0, 0, 0, 30),
+                        css_classes = ["share-div"])
 
-    popMap = Panel(title="Population", child=p2)
-    outlineMap = Panel(title="Spatial", child=p)
-    mapTabs = Tabs(tabs=[outlineMap, popMap])
+    popMap = Panel(title = "Population", child = p2)
+    outlineMap = Panel(title = "Spatial", child = p)
+    mapTabs = Tabs(tabs = [outlineMap, popMap])
 
-    l = layout(column([row([mapTabs, resultsDiv]), tabs]))
+    l = layout(column([row([column(mapTabs), column([resultsDiv, shareDiv])]), tabs]))
     lScript,lDiv = components(l)
     cdn_js = CDN.js_files
     cdn_css = CDN.css_files
 
-    return render_template('results.html',lScript=lScript,lDiv=lDiv)                                                                #render results page with map and table object as arguments
+    return render_template('results.html', lScript = lScript, lDiv = lDiv)                                                                #render results page with map and table object as arguments
 
 
 
