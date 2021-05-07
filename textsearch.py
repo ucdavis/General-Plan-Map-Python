@@ -58,6 +58,10 @@ def getResults(wordinput):
     # sort by hits
     zipped = list(zip(ids, scores, hits, highlights))
     zipped.sort(key=lambda x: x[2], reverse=True)
+
+    if not zipped:
+        return results
+
     ids, scores, hits, highlights = zip(*zipped)
     ids = list(ids)
     scores = list(scores)
@@ -205,9 +209,10 @@ def index_search_box():                                                         
     Returns:
         str : html webpage
     """
-    wordinput=" "                                                                                                                   #initialize string input for search
-    wordinput=request.args.get('query')                                                                                                   #set name for search form
+    wordinput = " "                                                                                                                   #initialize string input for search
+    wordinput = request.args.get('query')                                                                                                   #set name for search form
     results = getResults(wordinput)
+
     matched_city_names = []
     matched_county_names = []
     cityResults = []
