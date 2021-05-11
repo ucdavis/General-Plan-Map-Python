@@ -227,7 +227,7 @@ def elastic_search_highlight(query):
 		query (str): The elasticsearch query 
 		page_num (int): [Optional] The page number
 	Returns:
-		Tuple(List[int], List[float], List[int], List[str]): ids, score, hits and highlights 
+		Tuple(List[int], List[float], List[int], Dict[str]): ids, score, hits and highlights 
 	"""	
 	size =1000
 	global es
@@ -243,16 +243,19 @@ def elastic_search_highlight(query):
 		   "fields": {
 			   "text": {}
 		}
-      }
-    }
+      },
+		"fields": [ "filename" ]
+	}
+
 	search_with_highlights = es.search(index='test_4' ,body=query_json, request_timeout=30) 
 	hit_count_dict = OrderedDict()
-	highlight_list = []
+	highlight_list = {}
 	ids = []
 	scores = []
 	for snipets in search_with_highlights["hits"]["hits"]:
 		id = snipets["_id"]
-		highlight_list.append(snipets["highlight"]["text"])
+		# highlight_list.append(snipets["highlight"]["text"])
+		highlight_list[snipets["fields"]["filename"][0]] = snipets["highlight"]["text"]
 		ids.append(int(snipets['_id']))
 		scores.append(float(snipets['_score']))
 		for snip in snipets["highlight"]["text"]:
