@@ -1,6 +1,6 @@
 # Install Guide
 
-This guide will walk you through the process of installing a local version of the general plan mapper to test your contributions before making a pull request.
+This guide will walk you through the process of installing a local version of the general plan mapper to test your contributions before making a pull request. It will start with X, Y, Z.
 
 # 1. Clone the repo
 
@@ -20,9 +20,9 @@ Before you start working on your changes, remember to change the port the mapper
 
 Before you can run any code, you will need to set up a python environment with all the required modules. You can use the `environment.yml` file in the base directory of the project to do so in conjunction with `conda`. If you do now have `conda` installed, you will need to do so. When you are ready to create your `conda` environment, navigate to the base directory of the project and run `conda env create -f environment.yml`. This will create a conda environment named `gpenv`.
 
-Once the environment is set up, you can activate it at any time using `conda activate gpenv`. You will need to do this whenever you want to run code related to this project. 
+Once the environment is set up, you can activate it at any time using `conda activate gpenv`. You will need to do this whenever you want to run code related to this project.
 
-**(NOTE)** If this does not work you can try using a `venv` instead. To do so go to your home directory and create the env using `python -m venv gpenv`, then enter `source /gpenv/bin/activate` to activate the environment. Once started, navigate to the project directory and use `cat requirements.txt | xargs -n 1 pip install` to install the required modules. 
+**(NOTE)** If this does not work you can try using a `venv` instead. To do so go to your home directory and create the env using `python -m venv gpenv`, then enter `source /gpenv/bin/activate` to activate the environment. Once started, navigate to the project directory and use `cat requirements.txt | xargs -n 1 pip install` to install the required modules.
 
 # 5. Install Elastic Search
 
@@ -40,7 +40,7 @@ You will need to download all the current data files from [the google drive](htt
 
 # 8. Build the index
 
-Next you will need to build the index for elastic search. To do so start python while in the `gpenv` environment by calling `python`, then `import es` to import the elastic search functions from `es.py`. Next enter `es.index_everything()`. You should see the names of several text files and associated numbers pass through your terminal.
+Next you will need to build the index for elastic search. To do so start python while in the `gpenv` environment by calling `python`, then `import es` to import the elastic search functions from `es.py`. Open a new additional terminal window to start the ElasticSearch server. See section 5 on how to start the ElasticSearch server. Next enter `es.index_everything()` (elasticssearch must be running!). You should see the names of several text files and associated numbers pass through your terminal.
 
 # 9. Get the current version running
 
@@ -49,6 +49,3 @@ Before you start making changes, we want to assure the current version can run o
 **(NOTE)** If things aren't working, try running `curl -X PUT http://localhost:9200/test_4/_settings -H 'Content-Type: application/json' -d '{   "index" : {     "highlight.max_analyzed_offset" : 10000000   } }'` in a terminal while elasticsearch is running.
 
 # 10. Make your changes
-
-
-
