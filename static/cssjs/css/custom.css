@@ -85,6 +85,7 @@ Search Sidebar
   height: 150px;
   position:fixed;
   top:80px;
+  right:0px;
   z-index: 1;
   overflow: hidden;
   transition: 0.5s;
