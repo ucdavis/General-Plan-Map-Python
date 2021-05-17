@@ -308,25 +308,34 @@ def index_search_box():
             TableColumn(field="populations", title="Population", formatter=NumberFormatter(format='0,0')),
             TableColumn(field="hits", title="Count")
         ]
-    county_table = DataTable(source=countySource, columns= columns, reorderable=False, index_position=None)
-    
-    cityTab = Panel(title="Cities", child=city_table)
-    countyTab = Panel(title="Counties", child=county_table)
-    tabs = Tabs(tabs=[cityTab, countyTab])
+    county_table = DataTable(source = countySource, columns = columns, reorderable = False, index_position = None, row_height = 40)
+
+    cityTab = Panel(title = "Cities", child = city_table)
+    countyTab = Panel(title = "Counties", child = county_table)
+    tabs = Tabs(tabs = [cityTab, countyTab], css_classes=["table-results-div"], margin = (30, 0, 30, 0))
     # *************** END TABLE CREATION *************** 
 
-    numCities = 482 
-    numCounties = 58 
-    resultsDiv = Div(text="""
-                     <h1>{} out of {} cities have a match.</h1>
-                     <h1>{} out of {} counties have a match.</h1>
-                     """.format(uniqueCities, numCities, uniqueCounties, numCounties))
-    
-    popMap = Panel(title="Population", child=p2)
-    outlineMap = Panel(title="Spatial", child=p)
-    mapTabs = Tabs(tabs=[outlineMap, popMap])
-    
-    l = layout(column([row([mapTabs, resultsDiv]), tabs]))
+    numCities = 482
+    numCounties = 58
+    resultsDiv = Div(text = """
+                     <span class='darker-text-color'>{} </span><span class='white-text-color'>out of </span><span class='darker-text-color'>{} </span><span class='white-text-color'>cities mention </span><span class='darker-text-color'>'{}'.</span><br/><br/>
+                     <span class='darker-text-color'>{} </span><span class='white-text-color'>out of </span><span class='darker-text-color'>{} </span><span class='white-text-color'>counties mention </span><span class='darker-text-color'>'{}'.</span>
+                     """.format(uniqueCities, numCities, wordinput, uniqueCounties, numCounties, wordinput),
+                     margin = (30, 0, 20, 30),
+                     css_classes=["results-div"])
+    shareDiv = Div(text = """
+                        <h1> Share Results: </h1>
+                        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-show-count="false">
+                        Tweet
+                        </a>""",
+                        margin = (0, 0, 0, 30),
+                        css_classes = ["share-div"])
+
+    popMap = Panel(title = "Population", child = p2)
+    outlineMap = Panel(title = "Spatial", child = p)
+    mapTabs = Tabs(tabs = [outlineMap, popMap])
+
+    l = layout(column([row([column(mapTabs), column([resultsDiv, shareDiv])]), tabs]))
 
     # lScript contains data for plot, lDiv is target to show data on webpage
     lScript,lDiv = components(l)
