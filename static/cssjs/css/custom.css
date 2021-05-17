@@ -62,7 +62,7 @@ bokeh
     color: white;
 }
 .table-results-div {
-  margin-top: 30px;
+  margin-top: 30px !important;
   margin-bottom: 30px;
 }
 .share-div {
@@ -71,6 +71,9 @@ bokeh
 }
 .share-div .bk-clearfix{
   text-align: left;
+}
+#results .section-heading{
+  margin-top:140px;
 }
 /*
 ---------------------------------------------
