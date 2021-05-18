@@ -2,7 +2,7 @@
 <html lang="en">
 
   <head>
-   
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=1024">
     <meta http-equiv="cache-control" content="no-cache" />
@@ -13,14 +13,15 @@
     <title>Search Results</title>
 
     <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="/static/cssjs/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/static/cssjs/css/font-awesome.css">
-    <link rel="stylesheet" href="/static/cssjs/css/general-template.css">
+    <link rel="stylesheet" href="/../../static/cssjs/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/../../static/cssjs/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="/../../static/cssjs/css/general-template.css">
+    <link rel="stylesheet" type="text/css" href="/../../static/cssjs/css/custom.css">
 
     </head>
-    
+
     <body>
-    
+
      <!-- ***** Preloader Start ***** -->
     <div id="js-preloader" class="js-preloader">
       <div class="preloader-inner">
@@ -33,9 +34,9 @@
       </div>
     </div>
     <!-- ***** Preloader End ***** -->
-    
 
-    
+
+
     <!-- ***** Header Area Start ***** -->
     <header class="header-area header-sticky">
 	    <nav class="main-nav">
@@ -44,7 +45,7 @@
 	            	<center>
 	                <a href="" class="logo" style=" color:white;">California General Plan <em> Database Mapping Tool </em></a></center>
 	            </div>
-	        </div> 
+	        </div>
 	            <a class='menu-trigger'>
 	                <span>Menu</span>
 	            </a>
@@ -54,28 +55,23 @@
 
 
 
-	<div  class="sidebar" onmouseover="openNav()" onmouseout="closeNav()">
-  		<button id="opnbtt" class="openbtn">Search Again<i class="fa fa-bars" aria-hidden="true"></i></button><br><br>
-        <div class="side-wrapper" id="mySidebar" >
+	<div class="search-sidebar" onmouseover="openNav()" onmouseout="closeNav()">
+  		<button id="open-btn" class="open-btn">Search Again <i class="fa fa-bars" aria-hidden="true"></i></button>
+        <div class="search-sidebar-wrapper" id="search-sidebar-wrapper" >
   			<li class="scroll-to-section" aria-hidden="true">
-            	<center>
-  					<form method="POST" id="sr" class="serc">       
-                		<input name="u" type="text" placeholder="Search.." >
-                    	<input type="submit" class="changecolor" margin-top: 10px;">
-                	</form>
-            	</center>
+  		      <form method="GET" id="search-form" class="search-form" action="/results">
+              <input name="query" type="text" placeholder="Enter search term..." >
+              <input type="submit" class="submit-btn">
+            </form>
   			</li>
         </div>
 	</div>
 
 
-	
+
  <!-- ***** Results Start ***** -->
     <section class="section" id="results">
       <div class="section-heading">
-        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-show-count="false">
-          Tweet
-        </a>
         <center name="results">
         {{lScript | safe}}
         {{lDiv | safe}}
@@ -85,30 +81,26 @@
     <!-- ***** Results Classes End ***** -->
 
 
- 
+
     <!-- ***** Footer Start ***** -->
  	<footer>
-		<p>Cite as: Dexter Antonio, Mirthala Lopez, Lindsay Poirier, Sujoy Ghosh, Makena Dettmann, & Catherine Brinkley. (2021, February 24). General Plan Database Mapping Tool (Version 2.1.2). Zenodo.<a href="http://doi.org/10.5281/zenodo.4566234">http://doi.org/10.5281/zenodo.4566234</a><br><a rel="nofollow" href=" https://critical-data-analysis.org/general-plan-map/" class="tm-text-link" target="_parent"> https://critical-data-analysis.org/general-plan-map/</a></p>
-    </footer>
-   
+    <div class = 'citation'>
+		    <p>Cite as: Dexter Antonio, Mirthala Lopez, Lindsay Poirier, Sujoy Ghosh, Makena Dettmann, & Catherine Brinkley. (2021, February 24). General Plan Database Mapping Tool (Version 2.1.2). Zenodo. <a href="http://doi.org/10.5281/zenodo.4566234">http://doi.org/10.5281/zenodo.4566234</a><br><a rel="nofollow" href=" https://critical-data-analysis.org/general-plan-map/" class="tm-text-link" target="_parent"> https://critical-data-analysis.org/general-plan-map/</a></p>
+    </div>
+  </footer>
+
 
     <script>
 		function openNav() {
 
-		document.getElementById("mySidebar").style.width = "200px";
-		document.getElementById("mySidebar").style.opacity = "1";
-		document.getElementById("mySidebar").style.backgroundColor = "#FF9933";
-		document.getElementById("opnbtt").style.color = "white";
-		document.getElementById("sr").style.opacity = "1";
-
+		document.getElementById("search-sidebar-wrapper").style.opacity = "1";
+    document.getElementById("search-sidebar-wrapper").style.display = "block";
+		document.getElementById("search-form").style.opacity = "1";
 							}
 
 		function closeNav() {
-			
-		document.getElementById("mySidebar").style.width = "30px";
-		document.getElementById("mySidebar").style.opacity = "0.2";
-		document.getElementById("opnbtt").style.color = "black";
-		document.getElementById("opnbtt").style.opacity = "1";
+
+		document.getElementById("search-sidebar-wrapper").style.display = "none";
 
 							}
 	</script>
@@ -125,13 +117,13 @@
     <script src="/static/cssjs/js/scrollreveal.min.js"></script>
     <script src="/static/cssjs/js/waypoints.min.js"></script>
     <script src="/static/cssjs/js/jquery.counterup.min.js"></script>
-    <script src="/static/cssjs/js/imgfix.min.js"></script> 
-    <script src="/static/cssjs/js/mixitup.js"></script> 
-    <script src="static/cssjs/js/bokeh-2.1.1.min.js" crossorigin="anonymous"></script>   
-    <script src="static/cssjs/js/bokeh-widgets-2.1.1.min.js" crossorigin="anonymous"></script>
-    <script src="static/cssjs/js/bokeh-tables-2.1.1.min.js" crossorigin="anonymous"></script>
+    <script src="/static/cssjs/js/imgfix.min.js"></script>
+    <script src="/static/cssjs/js/mixitup.js"></script>
+    <script src="/static/cssjs/js/bokeh-2.1.1.min.js" crossorigin="anonymous"></script>
+    <script src="/static/cssjs/js/bokeh-widgets-2.1.1.min.js" crossorigin="anonymous"></script>
+    <script src="/static/cssjs/js/bokeh-tables-2.1.1.min.js" crossorigin="anonymous"></script>
     <script src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-    
+
     <!-- Global Init -->
     <script src="/static/cssjs/js/custom.js"></script>
 

@@ -40,7 +40,7 @@ You will need to download all the current data files from [the google drive](htt
 
 # 8. Build the index
 
-Next you will need to build the index for elastic search. To do so start python while in the `gpenv` environment by calling `python`, then `import es` to import the elastic search functions from `es.py`. Open a new additional terminal window to start the ElasticSearch server. See section 5 on how to start the ElasticSearch server. Next enter `es.index_everything()` (elasticssearch must be running!). You should see the names of several text files and associated numbers pass through your terminal.
+Next you will need to build the index for elastic search. To do so start python while in the `gpenv` environment by calling `python`, then `import es` to import the elastic search functions from `es.py`. Open a new additional terminal window to start the ElasticSearch server. See section 5 on how to start the ElasticSearch server. Next enter `es.index_everything()`. You should see the names of several text files and associated numbers pass through your terminal.
 
 # 9. Get the current version running
 
