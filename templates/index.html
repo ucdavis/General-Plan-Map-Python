@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+  <head>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=1024">
     <meta name="description" content="">
@@ -9,156 +10,179 @@
     <meta http-equiv="cache-control" content="no-cache" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="-1" />
-    <link rel="icon" href="https://www.ucdavis.edu/sites/all/themes/ucd_one/favicon.ico" type="image/x-icon">
+    <link rel = "icon" href =  "https://www.ucdavis.edu/sites/all/themes/ucd_one/favicon.ico" type = "image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+
     <title>California General Plan Database Mapping Tool</title>
+
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="/static/cssjs/css/bootstrap.min.css" integrity="
     sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/static/cssjs/css/font-awesome.css">
     <link rel="stylesheet" href="/static/cssjs/css/general-template.css">
+    <link rel="stylesheet" href="/../../static/cssjs/css/custom.css">
+
     <!-- Matomo -->
-    <script type="text/javascript">
-    var _paq = window._paq = window._paq || [];
-    _paq.push(['disableCookies']);
-    _paq.push(['trackPageView']);
-    _paq.push(['enableLinkTracking']);
-    _paq.push(['alwaysUseSendBeacon']);
-    _paq.push(['setTrackerUrl', "https://critical-data-analysis.org/wp-content/plugins/matomo/app/matomo.php"]);
-    _paq.push(['setSiteId', '1']);
-    var d = document,
-        g = d.createElement('script'),
-        s = d.getElementsByTagName('script')[0];
-    g.type = 'text/javascript';
-    g.async = true;
-    g.src = "https://critical-data-analysis.org/wp-content/uploads/matomo/matomo.js";
-    s.parentNode.insertBefore(g, s);
+    <script  type="text/javascript">
+        var _paq = window._paq = window._paq || [];
+        _paq.push(['disableCookies']);
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        _paq.push(['alwaysUseSendBeacon']);
+        _paq.push(['setTrackerUrl', "https://critical-data-analysis.org/wp-content/plugins/matomo/app/matomo.php"]);
+        _paq.push(['setSiteId', '1']);
+        var d=document,
+            g=d.createElement('script'),
+            s=d.getElementsByTagName('script')[0];
+            g.type='text/javascript';
+            g.async=true;
+            g.src="https://critical-data-analysis.org/wp-content/uploads/matomo/matomo.js";
+            s.parentNode.insertBefore(g,s);
     </script>
     <!-- End Matomo Code -->
-</head>
-<!-- ***** Preloader Start ***** -->
-<div id="js-preloader" class="js-preloader">
-    <div class="preloader-inner">
+
+    </head>
+
+
+     <!-- ***** Preloader Start ***** -->
+    <div id="js-preloader" class="js-preloader">
+      <div class="preloader-inner">
         <span class="dot"></span>
         <div class="dots">
-            <span></span>
-            <span></span>
-            <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
+      </div>
     </div>
-</div>
-<!-- ***** Preloader End ***** -->
-<!-- ***** Header Area Start ***** -->
-<header class="header-area header-sticky">
-    <nav class="main-nav">
-        <a href="" class="logo">California General Plan <em> Database Mapping Tool </em></a>
-        <ul class="nav">
-            <li class="scroll-to-section"><a href="#top" class="active">Text Search</a></li>
-            <li class="scroll-to-section"><a href="#about">About</a></li>
-            <li class="scroll-to-section"><a href="https://docs.google.com/forms/d/e/1FAIpQLSeCpD1Dil06c8tuSLnDqHp9W_6zK3S50ho4eGQtM4MyBhYM4g/viewform">Feedback</a></li>
-        </ul>
-        <a class='menu-trigger'>
-            <span>Menu</span>
-        </a>
-    </nav>
-</header>
-<!-- ***** Header Area End ***** -->
-<!-- ***** Main Banner Area Start ***** -->
-<div class="main-banner" id="top">
-    <img src="/static/images/ca.jpg" style="width: 100%;">
-    <div class="video-overlay header-text">
-        <div class="caption">
-            <h6>GENERAL PLANS ARE REQUIRED TO SET FUTURE DEVELOPMENT GOALS AND POLICIES. USE THIS PORTAL TO ACCESS, QUERY, COMPARE, AND SPATIALLY VISUALIZE GENERAL PLANS ACROSS CALIFORNIA'S CITIES AND COUNTIES.</h6>
-            <div class="grow">
-                <h2>Enter <em>keywords</em> for search</h2>
-            </div>
-            <center>
-                <form method="POST">
-                    <input name="u" style="background-color: transparent;color:  white">
-                    <input type="submit" class="changecolor" margin-top: 10px;">
-                </form>
-            </center>
-        </div>
-    </div>
-</div>
-<!-- ***** Main Banner Area End ***** -->
-<!-- ***** About Item Start ***** -->
-<div class="fade">
-    <section class="section" id="about">
-        <div class="section-heading">
-            <h2>About <em>us</em></h2>
-        </div>
-        <ul>
-            <li class="about-item">
-                <div class="right-content">
-                    <h4>Purpose</h4>
-                    <p>The General Plan Portal is a national landmark in planning. This first-in-the-nation interactive map reveals how 461 cities and 58 counties in California govern land-use. The portal allows users to search across 112,052 pages of regulations, read and compare policies. The General Plan Portal will evolve as local jurisdictions update plans. <a href="https://journals.sagepub.com/doi/full/10.1177/0739456X21995890">You can read about some of the initial findings from this database here</a>. For corrections, updates, and questions, please contact the lead researcher and project coordinators, <a href="mailto:ckbrinkley@ucdavis.edu&subject=General%20Plan%20Mapper">Catherine Brinkley</a> or <a href="mailto:lnpoirier@ucdavis.edu&subject=General%20Plan%20Mapper">Lindsay Poirier</a>.</p>
-                </div>
-            </li>
-            <li class="about-item">
-                <div class="right-content">
-                    <h4>Background</h4>
-                    <p>Land-use control is exerted locally through General Plans which commit city and county governments to long-term planning and development goals that shape the fortunes and health of the jurisdiction through zoning regulations. General plans take an average of ten years to develop. Many general plans are over 2,000 pages in length. Thanks to steady advocacy and state policy, never have more people been involved in the process of crafting their local general plan. As a result, it can take many years for communities to make their general plan due to the numerous community meetings, charrettes and public hearings required in formulating the plan.<br><br>Representative engagement is critical to more equitable outcomes, but how will people make informed suggestions? Common historic practices contributed to inequity through segregation (e.g. redlining, restrictive covenants, urban renewal). Current policies all too often perpetuate such disparities in infrastructure investment. Addressing equity necessarily requires acknowledging and undoing undergirding land-use policies that introduced and contribute to segregation, while also preventing new policies from building on top of broken foundations.<br><br> If a community wants to improve upon innovative policies, they must first understand the suite of options that neighboring communities have piloted to success. To do so, people must read and compare across many plans, not only their own. We invite you to search for topics that interest you and to learn from planning efforts in other cities and counties.</p>
-                </div>
-            </li>
-            <li class="about-item">
-                <div class="right-content">
-                    <h4>Instructions</h4>
-                    <p>This website utilizes Elasticsearch to search through the general plans. To search for an exact phrase, enclose the exact phrase in quotes. To allow fuzzy searching do not include quotes. After entering a query, click “Search” to search across the plans. The total number of occurrences for each plan will be shown. The search hits can be sorted by count, year, city name or 2010 population. The table can also be exported to allow further research.<br><br>Results are also visualized as maps that show the cities and counties with search hits. To see how many people are impacted by the plans, the search results can be visualized as a cartogram based on 2010 census population. This visualization results in places like Los Angeles County being very large while counties with smaller populations are smaller. The search returns a substring, so that if you search 'race' you will also pull up hits for 'race-based policies.' Similarly, you will pull up hits for 'marathon races'. To understand the context of the search hits, click on the year for a city or county plan to view the PDF with the highlighted keywords. Plans were added in 2020, and we are in the process of adding updates. <a href="https://docs.google.com/forms/d/e/1FAIpQLSeCpD1Dil06c8tuSLnDqHp9W_6zK3S50ho4eGQtM4MyBhYM4g/viewform">If you have any feedback please provide it here</a>.</p>
-                </div>
-            </li>
-            <li class="about-item">
-                <div class="right-content">
-                    <h4>Team</h4>
-                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center;">
-                        <figure style="padding: 10px;">
-                            <a target="_blank" href="https://critical-data-analysis.org/projects/general-plan/">
-                                <img src="https://critical-data-analysis.org/wp-content/uploads/2020/10/headshot-summer-2020-prehaircut-dexter-antonio.jpeg" alt="Dexter Antonio" style="object-fit: cover; width: 300px; height: 300px;">
-                            </a>
-                            <figcaption style="font-size: 12px; text-align: center;">Dexter Antonio<br>M.S. Candidate, Chemical Engineering</figcaption>
-                        </figure>
-                        <figure style="padding: 10px;">
-                            <a target="_blank" href="https://critical-data-analysis.org/projects/general-plan/">
-                                <img src="https://critical-data-analysis.org/wp-content/uploads/2021/04/Amay-Kharbanda-Hack4CA.jpeg" alt="Amay Kharbanda" style="object-fit: cover; width: 300px; height: 300px;">
-                            </a>
-                            <figcaption style="font-size: 12px; text-align: center;">Amay Kharbanda<br>Statistics (Data Science track) ’21</figcaption>
-                        </figure>
-                        <figure style="padding: 10px;">
-                            <a target="_blank" href="https://critical-data-analysis.org/projects/general-plan/">
-                                <img src="https://critical-data-analysis.org/wp-content/uploads/2021/03/flat-2126876_1280-1.png" alt="Mirthala Lopez" style="object-fit: cover; width: 300px; height: 300px;">
-                            </a>
-                            <figcaption style="font-size: 12px; text-align: center;">Mirthala Lopez<br>Computer Science ’22</figcaption>
-                        </figure>
-                        <figure style="padding: 10px;">
-                            <a target="_blank" href="https://critical-data-analysis.org/projects/general-plan/">
-                                <img src="https://critical-data-analysis.org/wp-content/uploads/2021/03/headshot2.jpg" alt="Lindsay Poirier" style="object-fit: cover; width: 300px; height: 300px;">
-                            </a>
-                            <figcaption style="font-size: 12px; text-align: center;">Lindsay Poirier<br>Assistant Professor, Science & Technology Studies</figcaption>
-                        </figure>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </section>
-</div>
-<!-- ***** about Item End ***** -->
-<!-- ***** Footer Start ***** -->
-<footer>
-    <p>Cite as: Dexter Antonio, Mirthala Lopez, Lindsay Poirier, Sujoy Ghosh, Makena Dettmann, & Catherine Brinkley. (2021, February 24). General Plan Database Mapping Tool (Version 2.1.2). Zenodo.<a href="http://doi.org/10.5281/zenodo.4566234">http://doi.org/10.5281/zenodo.4566234</a><br><a rel="nofollow" href=" https://critical-data-analysis.org/general-plan-map/" class="tm-text-link" target="_parent"> https://critical-data-analysis.org/general-plan-map/</a></p>
-</footer>
-<!-- jQuery -->
-<script src="/static/cssjs/js/jquery.min.js"></script>
-<!-- Bootstrap -->
-<script src="/static/cssjs/js/popper.js"></script>
-<script src="/static/cssjs/js/bootstrap.min.js"></script>
-<!-- Plugins -->
-<script src="/static/cssjs/js/scrollreveal.min.js"></script>
-<script src="/static/cssjs/js/waypoints.min.js"></script>
-<script src="/static/cssjs/js/jquery.counterup.min.js"></script>
-<script src="/static/cssjs/js/imgfix.min.js"></script>
-<script src="/static/cssjs/js/mixitup.js"></script>
-<!-- Global Init -->
-<script src="/static/cssjs/js/custom.js"></script>
-</body>
+    <!-- ***** Preloader End ***** -->
 
+
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky">
+	    <nav class="main-nav">
+	        <a href="" class="logo">California General Plan  <em> Database Mapping Tool </em></a>
+	        <ul class="nav">
+	            <li class="scroll-to-section"><a href="#top" class="active">Text Search</a></li>
+	            <li class="scroll-to-section"><a href="#about">About</a></li>
+	            <li class="scroll-to-section"><a href="https://docs.google.com/forms/d/e/1FAIpQLSeCpD1Dil06c8tuSLnDqHp9W_6zK3S50ho4eGQtM4MyBhYM4g/viewform">Feedback</a></li>
+	        </ul>
+	        <a class='menu-trigger'>
+	            <span>Menu</span>
+	        </a>
+	    </nav>
+    </header>
+    <!-- ***** Header Area End ***** -->
+
+
+
+
+    <!-- ***** Main Banner Area Start ***** -->
+    <div class="main-banner" id="top">
+      <img src="/static/images/ca.jpg" style="width: 100%;">
+        <div class="video-overlay header-text">
+            <div class="caption">
+                <h6>GENERAL PLANS ARE REQUIRED TO SET FUTURE DEVELOPMENT GOALS AND POLICIES. USE THIS PORTAL TO ACCESS, QUERY, COMPARE, AND SPATIALLY VISUALIZE GENERAL PLANS ACROSS CALIFORNIA'S CITIES AND COUNTIES.</h6>
+                <div class="grow">
+                    <h2>Enter <em>keywords</em> for search</h2>
+                </div>
+				<center>
+				    <form method="GET" action="/results">
+				    <input name="query" style="background-color: transparent;color:  white">
+				    <input type="submit" class="changecolor" margin-top: 10px;">
+				    </form>
+				</center>
+            </div>
+        </div>
+    </div>
+    <!-- ***** Main Banner Area End ***** -->
+
+    <!-- ***** About Item Start ***** -->
+    <div class="fade">
+        <section class="section" id="about">
+            <div class="section-heading">
+                <h2>About <em>us</em></h2>
+            </div>
+            <ul>
+                <li class="about-item">
+                    <div class="right-content">
+                        <h4>Purpose</h4>
+                        <p>The General Plan Portal is a national landmark in planning. This first-in-the-nation interactive map reveals how 461 cities and 58 counties in California govern land-use. The portal allows users to search across 112,052 pages of regulations, read and compare policies. The General Plan Portal will evolve as local jurisdictions update plans. <a href="https://journals.sagepub.com/doi/full/10.1177/0739456X21995890">You can read about some of the initial findings from this database here</a>. For corrections, updates, and questions, please contact the lead researcher and project coordinators, <a href="mailto:ckbrinkley@ucdavis.edu&subject=General%20Plan%20Mapper">Catherine Brinkley</a> or <a href="mailto:lnpoirier@ucdavis.edu&subject=General%20Plan%20Mapper">Lindsay Poirier</a>.</p>
+                    </div>
+                </li>
+                <li class="about-item">
+                    <div class="right-content">
+                        <h4>Background</h4>
+                        <p>Land-use control is exerted locally through General Plans which commit city and county governments to long-term planning and development goals that shape the fortunes and health of the jurisdiction through zoning regulations. General plans take an average of ten years to develop. Many general plans are over 2,000 pages in length. Thanks to steady advocacy and state policy, never have more people been involved in the process of crafting their local general plan. As a result, it can take many years for communities to make their general plan due to the numerous community meetings, charrettes and public hearings required in formulating the plan.<br><br>Representative engagement is critical to more equitable outcomes, but how will people make informed suggestions? Common historic practices contributed to inequity through segregation (e.g. redlining, restrictive covenants, urban renewal). Current policies all too often perpetuate such disparities in infrastructure investment. Addressing equity necessarily requires acknowledging and undoing undergirding land-use policies that introduced and contribute to segregation, while also preventing new policies from building on top of broken foundations.<br><br> If a community wants to improve upon innovative policies, they must first understand the suite of options that neighboring communities have piloted to success. To do so, people must read and compare across many plans, not only their own. We invite you to search for topics that interest you and to learn from planning efforts in other cities and counties.</p>
+                    </div>
+                </li>
+                <li class="about-item">
+                    <div class="right-content">
+                        <h4>Instructions</h4>
+                        <p>This website utilizes Elasticsearch to search through the general plans. To search for an exact phrase, enclose the exact phrase in quotes. To allow fuzzy searching do not include quotes. After entering a query, click “Search” to search across the plans. The total number of occurrences for each plan will be shown. The search hits can be sorted by count, year, city name or 2010 population. The table can also be exported to allow further research.<br><br>Results are also visualized as maps that show the cities and counties with search hits. To see how many people are impacted by the plans, the search results can be visualized as a cartogram based on 2010 census population. This visualization results in places like Los Angeles County being very large while counties with smaller populations are smaller. The search returns a substring, so that if you search 'race' you will also pull up hits for 'race-based policies.' Similarly, you will pull up hits for 'marathon races'. To understand the context of the search hits, click on the year for a city or county plan to view the PDF with the highlighted keywords. Plans were added in 2020, and we are in the process of adding updates. <a href="https://docs.google.com/forms/d/e/1FAIpQLSeCpD1Dil06c8tuSLnDqHp9W_6zK3S50ho4eGQtM4MyBhYM4g/viewform">If you have any feedback please provide it here</a>.</p>
+                    </div>
+                </li>
+                <li class="about-item">
+                    <div class="right-content">
+                        <h4>Team</h4>
+                        <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center;">
+                            <figure style="padding: 10px;">
+                                <a target="_blank" href="https://critical-data-analysis.org/projects/general-plan/">
+                                    <img src="https://critical-data-analysis.org/wp-content/uploads/2020/10/headshot-summer-2020-prehaircut-dexter-antonio.jpeg" alt="Dexter Antonio" style="object-fit: cover; width: 300px; height: 300px;">
+                                </a>
+                                <figcaption style="font-size: 12px; text-align: center;">Dexter Antonio<br>M.S. Candidate, Chemical Engineering</figcaption>
+                            </figure>
+                            <figure style="padding: 10px;">
+                                <a target="_blank" href="https://critical-data-analysis.org/projects/general-plan/">
+                                    <img src="https://critical-data-analysis.org/wp-content/uploads/2021/04/Amay-Kharbanda-Hack4CA.jpeg" alt="Amay Kharbanda" style="object-fit: cover; width: 300px; height: 300px;">
+                                </a>
+                                <figcaption style="font-size: 12px; text-align: center;">Amay Kharbanda<br>Statistics (Data Science track) ’21</figcaption>
+                            </figure>
+                            <figure style="padding: 10px;">
+                                <a target="_blank" href="https://critical-data-analysis.org/projects/general-plan/">
+                                    <img src="https://critical-data-analysis.org/wp-content/uploads/2021/03/flat-2126876_1280-1.png" alt="Mirthala Lopez" style="object-fit: cover; width: 300px; height: 300px;">
+                                </a>
+                                <figcaption style="font-size: 12px; text-align: center;">Mirthala Lopez<br>Computer Science ’22</figcaption>
+                            </figure>
+                            <figure style="padding: 10px;">
+                                <a target="_blank" href="https://critical-data-analysis.org/projects/general-plan/">
+                                    <img src="https://critical-data-analysis.org/wp-content/uploads/2021/03/headshot2.jpg" alt="Lindsay Poirier" style="object-fit: cover; width: 300px; height: 300px;">
+                                </a>
+                                <figcaption style="font-size: 12px; text-align: center;">Lindsay Poirier<br>Assistant Professor, Science & Technology Studies</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </section>
+    </div>
+    <!-- ***** about Item End ***** -->
+
+
+    <!-- ***** Footer Start ***** -->
+
+    <footer>
+      <div class = 'citation'>
+  		    <p>Cite as: Dexter Antonio, Mirthala Lopez, Lindsay Poirier, Sujoy Ghosh, Makena Dettmann, & Catherine Brinkley. (2021, February 24). General Plan Database Mapping Tool (Version 2.1.2). Zenodo. <a href="http://doi.org/10.5281/zenodo.4566234">http://doi.org/10.5281/zenodo.4566234</a><br><a rel="nofollow" href=" https://critical-data-analysis.org/general-plan-map/" class="tm-text-link" target="_parent"> https://critical-data-analysis.org/general-plan-map/</a></p>
+      </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="/static/cssjs/js/jquery.min.js"></script>
+
+    <!-- Bootstrap -->
+    <script src="/static/cssjs/js/popper.js"></script>
+    <script src="/static/cssjs/js/bootstrap.min.js"></script>
+
+    <!-- Plugins -->
+    <script src="/static/cssjs/js/scrollreveal.min.js"></script>
+    <script src="/static/cssjs/js/waypoints.min.js"></script>
+    <script src="/static/cssjs/js/jquery.counterup.min.js"></script>
+    <script src="/static/cssjs/js/imgfix.min.js"></script>
+    <script src="/static/cssjs/js/mixitup.js"></script>
+
+    <!-- Global Init -->
+    <script src="/static/cssjs/js/custom.js"></script>
+
+  </body>
 </html>
