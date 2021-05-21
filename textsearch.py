@@ -305,6 +305,7 @@ def index_search_box():
     cityTab = Panel(title = "Cities", child = city_table)
     countyTab = Panel(title = "Counties", child = county_table)
     tabs = Tabs(tabs = [cityTab, countyTab], css_classes=["table-results-div"], margin = (30, 0, 30, 0))
+
     # *************** END TABLE CREATION *************** 
 
     numCities = 482
