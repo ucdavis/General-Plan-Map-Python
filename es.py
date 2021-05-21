@@ -25,7 +25,6 @@ def parse_filename(filename: str) -> str:
 	Args:
 		filename (str): a filename (basepath of a filepath) that has the 
 		format StateCode_CityORcounty_Place-Name_PlanYear.filetype
-
 	Returns:
 		Dict: Dictionarty containing filepath information 
 		the keys are state, filename, is_city, place_name,
@@ -69,7 +68,6 @@ def get_place_properties(is_city: bool, place_name: str) -> Dict:
 	Args:
 		is_city (bool): A boolean for if the name belongs to a city or county
 		place_name (str): the name of the place 
-
 	Returns:
 		dict: A dictionary of properties of the 
 	"""	
@@ -87,7 +85,6 @@ def get_max_index() -> int:
 
 def add_to_index(filepath:str) -> None:
 	"""Adds a new file to the elasticsearch index
-
 	Args:
 		filepath (str): a filepath to a txt file general plan
 	"""	
@@ -147,10 +144,8 @@ def index_everything():
 
 def elastic_search(query) -> Tuple[List[int], List[float]]:
 	"""Puts a query into elasticsearch and returns the ids and score
-
 	Args:
 		query (str): The elasticsearch query 
-
 	Returns:
 		Tuple(List[int], List[float]): ids of search results and their scores 
 	"""	
@@ -189,11 +184,9 @@ def elastic_search(query) -> Tuple[List[int], List[float]]:
 index_to_info_map = None
 def map_keys_to_values(search_result_indices, key_to_hash_path='key_hash_mapping.json'):
 	"""maps index to keys 
-
 	Args:
 		search_result_indices (List[int]): 
 		key_to_hash_path (str, optional): [description]. Defaults to 'key_hash_mapping.json'.
-
 	Returns:
 		dict of info values realting to the keys, such as filename: [
 	"""	
@@ -227,7 +220,7 @@ def elastic_search_highlight(query):
 		query (str): The elasticsearch query 
 		page_num (int): [Optional] The page number
 	Returns:
-		Tuple(List[int], List[float], List[int], List[str]): ids, score, hits and highlights 
+		Tuple(List[int], List[float], List[int], Dict[str]): ids, score, hits and highlights 
 	"""	
 	size =1000
 	global es
@@ -243,16 +236,19 @@ def elastic_search_highlight(query):
 		   "fields": {
 			   "text": {}
 		}
-      }
-    }
+      },
+		"fields": [ "filename" ]
+	}
+
 	search_with_highlights = es.search(index='test_4' ,body=query_json, request_timeout=30) 
 	hit_count_dict = OrderedDict()
-	highlight_list = []
+	highlight_list = {}
 	ids = []
 	scores = []
 	for snipets in search_with_highlights["hits"]["hits"]:
 		id = snipets["_id"]
-		highlight_list.append(snipets["highlight"]["text"])
+		# highlight_list.append(snipets["highlight"]["text"])
+		highlight_list[snipets["fields"]["filename"][0]] = snipets["highlight"]["text"]
 		ids.append(int(snipets['_id']))
 		scores.append(float(snipets['_score']))
 		for snip in snipets["highlight"]["text"]:
@@ -264,7 +260,6 @@ def elastic_search_highlight(query):
 	hit_count_list = list(hit_count_dict.values())
 
 	return (ids, scores, hit_count_list, highlight_list) 
-
 
 
 if __name__ == "__main__":
@@ -284,4 +279,3 @@ if __name__ == "__main__":
 	# 	scores.append(float(hit['_score']))
 
 	#print(ids)
-
