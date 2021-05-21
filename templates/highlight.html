@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=1024">
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="-1" />
+    <link rel = "icon" href =  "https://www.ucdavis.edu/sites/all/themes/ucd_one/favicon.ico" type = "image/x-icon">
+
+    <title>Results Highlighted</title>
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="/static/cssjs/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/static/cssjs/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="/static/cssjs/css/general-template.css">
+    <link rel="stylesheet" type="text/css" href="/static/cssjs/css/highlight-result.css">
+
+  </head>
+  
+  <body onload="display_result(result, new_filename)">
+
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky">
+      <nav class="main-nav">
+        <div class="video-overlay header-text">
+          <div class="threed">
+            <center>
+              <a href="results.html" class="logo" style=" color:white;">California General Plan <em> Database Mapping Tool </em></a></center>
+          </div>
+        </div> 
+        <a class='menu-trigger'>
+            <span>Menu</span>
+        </a>
+      </nav>
+    </header>
+    <!-- ***** Header Area End ***** -->
+
+    <!-- ***** Results Area Begin *****-->
+    <section class="section" id="results">
+      <div class="section-heading">
+      <h2>Results for: {{words | safe}}</h2>
+      <h3>In: {{city | safe}}</h3>
+      <div id="hilite-res">
+        
+      </div>
+      <button id="download-button">
+        <a href="/outp/{{pdf|safe}}/{{words|safe}}" target="_blank">View and Download PDF here!</a>
+      </button>
+      </div>
+    </section>
+    <!-- ***** Results Area End *****-->
+
+  </body>
+
+
+  <!-- ***** Footer Start ***** -->
+  <footer>
+    <p>Cite as: Dexter Antonio, Mirthala Lopez, Lindsay Poirier, Sujoy Ghosh, Makena Dettmann, & Catherine Brinkley. (2021, February 24). General Plan Database Mapping Tool (Version 2.1.2). Zenodo.<a href="http://doi.org/10.5281/zenodo.4566234">http://doi.org/10.5281/zenodo.4566234</a><br><a rel="nofollow" href=" https://critical-data-analysis.org/general-plan-map/" class="tm-text-link" target="_parent"> https://critical-data-analysis.org/general-plan-map/</a></p>
+  </footer>
+  <!-- ***** Footer End ***** -->
+
+  <script type="text/javascript">
+    var result = {{results | safe}};
+    var file_name = "{{pdf | safe}}";
+    var new_filename = file_name.replace(".pdf", ".txt");
+    console.log(result);
+    console.log(new_filename);
+
+    function display_result(result, new_filename) {
+      var hilite_file = result[new_filename];
+      if (!hilite_file) {
+        console.log("Filename not found!");   // figure out what to display if something goes wrong
+      } else {
+        for (var i = 0; i < hilite_file.length; i++) {
+          var elem = document.createElement("p");
+          var elem_text = document.createTextNode(hilite_file[i].replace( /(<([^>]+)>)/ig, ''));
+          elem.setAttribute('class','result-elems');
+          elem.appendChild(elem_text);
+          document.getElementById("hilite-res").appendChild(elem);
+        }
+      }
+    }
+  </script>
+</html>

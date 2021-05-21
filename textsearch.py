@@ -32,14 +32,14 @@ import es
 import re
 import geojson 
 
-app = Flask(__name__)                                                                                                               #create flask object
-app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0                                                                                         #avoid storing cache
-bootstrap = Bootstrap(app)                                                                                                          #create bootstrap object
+app = Flask(__name__)  # create flask object
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0  # avoid storing cache
+bootstrap = Bootstrap(app)  # create bootstrap object
 
 
-@app.route('/')                                                                                                                     #declare flask page url
-def my_form():                                                                                                                      #function for main index
-    return render_template('index.html')                                                                                            #return index page
+@app.route('/')  # declare flask page url
+def my_form():  # function for main index
+    return render_template('index.html')  # return index page
 
 
 def getResults(wordinput):                                                                                                          
@@ -47,7 +47,6 @@ def getResults(wordinput):
     and then return the results. 
     Args:
         wordinput (str): an elastic search query
-
     Returns:
         str: html doc that will be displayed 
     """    
@@ -87,11 +86,8 @@ def getResults(wordinput):
             new_result.cityType = 'county'
             new_result.county = new_result.place_name
             new_result.population = int(place_props[0])
-
-        results.append(new_result)
-
-    
         
+        results.append(new_result)
     return results
 
     
@@ -106,7 +102,7 @@ class Result:
         self.place_name = place_name
         self.plan_date = plan_date
         self.filetype = filetype
-        #search things 
+        # search things
         self.score = score
         self.hits = hits
         self.highlights = highlights
@@ -117,19 +113,17 @@ class Result:
         self.cityType = city_type
 
         self.pdf_filename = self.filename.split('.')[0] + '.pdf'
-        parsed_query = self.parse_query(query) 
-        
+        parsed_query = self.parse_query(query)
         # allows user to click on year on webpage's result table; 
         # will link to 'highlight_pdf' function
-        self.year = '<p hidden>'+self.plan_date+'</p> <a href="outp/'+self.place_name+'/'+self.pdf_filename+'/'+parsed_query+'" target="_blank">'+self.plan_date+"</a>"
-    
+        self.year = '<p hidden>'+self.plan_date+'</p> <a href="../outp/'+self.place_name+'/'+self.pdf_filename+'/'+parsed_query+'" target="_blank">'+self.plan_date+"</a>"
+        # self.year = '<p hidden>'+self.plan_date+'</p> <a href="../outp/'+self.pdf_filename+'/'+parsed_query+'" target="_blank">'+self.plan_date+"</a>"
+
     def parse_query(self, query):
         """This function parses a query to add commas between words except
         for words that are a phrase (indicated by their quotes)]
-
         Args:
             query (str): query to parse
-
         Returns:
             [type]: a parsed query that can be used in html  
         """
@@ -142,7 +136,6 @@ class Result:
     @property
     def cityName(self):
         """This is a property tag that is useful for parts of legacy code
-
         Returns:
             str: place name  
         """        
@@ -200,15 +193,14 @@ with open(os.path.join(geojson_path, 'map.geojson'), 'r') as f:
 with open(os.path.join(geojson_path, 'pop_map.geojson'), 'r') as f:  
     pop_map = json.load(f)
 
-@app.route('/', methods=['POST'])  # connect search form to html page 
-def index_search_box():                                                                
-    """The code for the search box functionality 
-
+@app.route('/results/', methods=['GET'])  # connect search form to html page
+def index_search_box():
+    """The code for the search box functionality
     Returns:
         str : html webpage
-    """    
-    wordinput=" "  # initialize string input for search
-    wordinput=request.form['u']  # get input from request form on webpage       
+    """
+    wordinput = " "  # initialize string input for search
+    wordinput = request.args.get('query')  # get input from request form on webpage
     results = getResults(wordinput)
     matched_city_names = []
     matched_county_names = []
@@ -223,14 +215,14 @@ def index_search_box():
     for res in results:
         if res.is_city:
             cityResults.append(res)
-            matched_city_names.append(res.place_name) 
+            matched_city_names.append(res.place_name)
             cityPops[res.place_name] = res.population
             if res.population > maxCityPop:
                 maxCityPop = res.population
         else:
             countyResults.append(res)
             countyPops[res.place_name] = res.population
-            matched_county_names.append(res.place_name) 
+            matched_county_names.append(res.place_name)
             if res.population > maxCountyPop:
                 maxCountyPop = res.population
     
@@ -238,75 +230,75 @@ def index_search_box():
         return render_template('noresult.html')
 
     # *************** BEGIN MAP CREATION *************** 
-    change_json_colors(my_map, results) 
+    change_json_colors(my_map, results)
     change_json_colors(pop_map, results)
     geosource = GeoJSONDataSource(geojson = json.dumps(my_map))
 
     TOOLS = ["hover", "pan", "wheel_zoom", "save"]
     p2 = figure(
-        x_axis_location=None, y_axis_location=None,
-        x_axis_type="mercator", y_axis_type="mercator",
-        tools=TOOLS,
-        tooltips=[("Name", "@name")]
+        x_axis_location = None, y_axis_location = None,
+        x_axis_type = "mercator", y_axis_type = "mercator",
+        tools = TOOLS,
+        tooltips = [("Name", "@name")]
         )
     p2.grid.grid_line_color = None
     p2.hover.point_policy = "follow_mouse"
-    p2GeoSource = GeoJSONDataSource(geojson=json.dumps(pop_map))
-    p2.patches('xs','ys',source=p2GeoSource,fill_color='color', line_color='line_color')   
-    
+    p2GeoSource = GeoJSONDataSource(geojson = json.dumps(pop_map))
+    p2.patches('xs','ys',source = p2GeoSource,fill_color = 'color', line_color = 'line_color')
+
     size = 850
     TOOLS = ["hover", "pan", "wheel_zoom", "save"]
-    p = figure( 
-        x_axis_location=None, y_axis_location=None,
-        tools=TOOLS,
-        tooltips=[("Name", "@name")])
+    p = figure(
+        x_axis_location = None, y_axis_location = None,
+        tools = TOOLS,
+        tooltips = [("Name", "@name")])
     p.grid.grid_line_color = None
     p.hover.point_policy = "follow_mouse"
-    p.patches('xs','ys', source = geosource, fill_color='color', line_color='line_color')
+    p.patches('xs','ys', source = geosource, fill_color = 'color', line_color = 'line_color')
     # *************** END MAP CREATION *************** 
 
     # *************** BEGIN TABLE CREATION *************** 
     cityData = dict(
-        names=[res.cityName for res in cityResults],
-        years=[res.year for res in cityResults],
-        types=[res.cityType for res in cityResults],
-        fNames=[res.pdf_filename for res in cityResults],
+        names = [res.cityName for res in cityResults],
+        years = [res.year for res in cityResults],
+        types = [res.cityType for res in cityResults],
+        fNames = [res.pdf_filename for res in cityResults],
         populations = [res.population for res in cityResults],
         counties = [res.county for res in cityResults],
         hits = [res.hits for res in cityResults]
         )
 
     countyData = dict(
-        names=[res.cityName for res in countyResults],
-        years=[res.year for res in countyResults],
-        types=[res.type for res in countyResults],
-        fNames=[res.pdf_filename for res in countyResults],
-        populations=[res.population for res in countyResults],
+        names = [res.cityName for res in countyResults],
+        years = [res.year for res in countyResults],
+        types = [res.type for res in countyResults],
+        fNames = [res.pdf_filename for res in countyResults],
+        populations = [res.population for res in countyResults],
         hits = [res.hits for res in countyResults]
         )
-    
+
     uniqueCities = len(set(cityData["names"]))
     uniqueCounties = len(set(countyData["names"]))
-    
-    
+
+
     citySource = ColumnDataSource(cityData)
-    
+
     columns = [
-            TableColumn(field="names", title="Name"),
-            TableColumn(field="years", title="Year", formatter=HTMLTemplateFormatter()),
-            TableColumn(field="populations", title="Population", formatter=NumberFormatter(format='0,0')),
-            TableColumn(field="counties", title="County"),
-            TableColumn(field="hits", title="Count")
+            TableColumn(field = "names", title = "Name"),
+            TableColumn(field = "years", title = "Year", formatter = HTMLTemplateFormatter()),
+            TableColumn(field = "populations", title = "Population", formatter = NumberFormatter(format = '0,0')),
+            TableColumn(field = "counties", title = "County"),
+            TableColumn(field = "hits", title = "Count")
         ]
-    city_table = DataTable(source=citySource, columns=columns, width=size, height=600,reorderable=False, index_position=None)
-    
+    city_table = DataTable(source = citySource, columns = columns, width = size, height = 600, reorderable = False, index_position = None, row_height = 40)
+
     countySource = ColumnDataSource(countyData)
-    
+
     columns = [
-            TableColumn(field="names", title="Name"),
-            TableColumn(field="years", title="Year", formatter=HTMLTemplateFormatter()),
-            TableColumn(field="populations", title="Population", formatter=NumberFormatter(format='0,0')),
-            TableColumn(field="hits", title="Count")
+            TableColumn(field = "names", title = "Name"),
+            TableColumn(field = "years", title = "Year", formatter = HTMLTemplateFormatter()),
+            TableColumn(field = "populations", title = "Population", formatter = NumberFormatter(format = '0,0')),
+            TableColumn(field = "hits", title = "Count")
         ]
     county_table = DataTable(source = countySource, columns = columns, reorderable = False, index_position = None, row_height = 40)
 
@@ -364,21 +356,19 @@ def display_results(city, pdf, words):
 
     return render_template("highlight.html",city=city,words=words,pdf=pdf,results=results)
 
-@app.route('/outp/<string:pdf>/<string:words>')  # route for page containing highlighted pdf
-def highlight_pdf(pdf, words):
-    """This function opens a pdf of a city's general plan and highlights
-    all instances of the search input. 
 
+@app.route('/outp/<string:city>/<string:words>')  # route for page containing highlighted pdf
+def highlight_pdf(city, words):
+    """Function responsible for highlighting pdf words
     Args:
         pdf (str): the name of the pdf file
         words (str): comma seperated phrases to highlight
-
     Returns:
         str: webpages
-    """    
-    complete_name = os.path.join("static/data/places", pdf)
+    """
+    complete_name = os.path.join("static/data/places", city)
     doc = fitz.open(complete_name)
-    page_count= len(doc)  # find no. of pages in pdf               
+    page_count= len(doc)  # find no. of pages in pdf
     if "," in words:
         list_split=words.split(",")
     else:
