@@ -3,6 +3,8 @@ div#hilite-res {
     margin-bottom: 2%;
     margin-left: 15%;
     margin-right: 15%;
+    height: 500px;
+    overflow: auto;
 }
 
 p.result-elems {
@@ -23,4 +25,8 @@ button#download-button {
 #download-button:hover {
     background-color: #ff8457;
     color: black;
+}
+
+mark {
+    background-color: #ff4500;
 }

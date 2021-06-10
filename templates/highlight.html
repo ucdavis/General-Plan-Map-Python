@@ -75,9 +75,8 @@
       } else {
         for (var i = 0; i < hilite_file.length; i++) {
           var elem = document.createElement("p");
-          var elem_text = document.createTextNode(hilite_file[i].replace( /(<([^>]+)>)/ig, ''));
+          elem.innerHTML = hilite_file[i];
           elem.setAttribute('class','result-elems');
-          elem.appendChild(elem_text);
           document.getElementById("hilite-res").appendChild(elem);
         }
       }
