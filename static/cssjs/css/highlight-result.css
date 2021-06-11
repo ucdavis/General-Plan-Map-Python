@@ -3,13 +3,15 @@ div#hilite-res {
     margin-bottom: 2%;
     margin-left: 15%;
     margin-right: 15%;
+    height: 500px;
+    overflow: auto;
 }
 
 p.result-elems {
     padding: 15px 10px 15px 10px;
     margin: 2.5%;
     border-left: 5px solid #FF4500;
-    background-color: grey;
+    background-color: #f0f0f0;
 }
 
 button#download-button {
@@ -23,4 +25,8 @@ button#download-button {
 #download-button:hover {
     background-color: #ff8457;
     color: black;
+}
+
+mark {
+    background-color: #ff4500;
 }

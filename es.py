@@ -222,7 +222,9 @@ def elastic_search_highlight(query):
 	Returns:
 		Tuple(List[int], List[float], List[int], Dict[str]): ids, score, hits and highlights 
 	"""	
-	size =1000
+	size = 1000
+	num_of_chars = 450
+	frag_count = 100
 	global es
 	query_json = {"_source": False,
 	"size": size,      
@@ -233,8 +235,10 @@ def elastic_search_highlight(query):
         "default_operator": "and"}
         }, 
         "highlight": {
-		   "fields": {
-			   "text": {}
+			"pre_tags" : ["<mark>"],
+    		"post_tags" : ["</mark>"],
+		   	"fields": {
+			   	"text": {"fragment_size" : num_of_chars, "number_of_fragments": frag_count}
 		}
       },
 		"fields": [ "filename" ]
@@ -253,9 +257,9 @@ def elastic_search_highlight(query):
 		scores.append(float(snipets['_score']))
 		for snip in snipets["highlight"]["text"]:
 			if id in hit_count_dict:
-				hit_count_dict[id] += snip.count("em>")//2
+				hit_count_dict[id] += snip.count("mark>")//2
 			else:
-				hit_count_dict[id] = snip.count("em>")//2
+				hit_count_dict[id] = snip.count("mark>")//2
 
 	hit_count_list = list(hit_count_dict.values())
 
