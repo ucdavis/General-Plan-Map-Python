@@ -116,8 +116,8 @@ class Result:
         parsed_query = self.parse_query(query)
         # allows user to click on year on webpage's result table; 
         # will link to 'highlight_pdf' function
-        self.year = '<p hidden>'+self.plan_date+'</p> <a href="../outp/'+self.place_name+'/'+self.pdf_filename+'/'+parsed_query+'" target="_blank">'+self.plan_date+"</a>"
-        # self.year = '<p hidden>'+self.plan_date+'</p> <a href="../outp/'+self.pdf_filename+'/'+parsed_query+'" target="_blank">'+self.plan_date+"</a>"
+        # self.year = '<p hidden>'+self.plan_date+'</p> <a href="../outp/'+self.place_name+'/'+self.pdf_filename+'/'+parsed_query+'" target="_blank">'+self.plan_date+"</a>"
+        self.year = '<p hidden>'+self.plan_date+'</p> <a href="../outp/'+self.pdf_filename+'/'+parsed_query+'" target="_blank">'+self.plan_date+"</a>"
 
     def parse_query(self, query):
         """This function parses a query to add commas between words except
