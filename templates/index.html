@@ -82,12 +82,12 @@
       <img src="/static/images/ca.jpg" style="width: 100%;">
         <div class="video-overlay header-text">
             <div class="caption">
-                <h6>GENERAL PLANS ARE REQUIRED TO SET FUTURE DEVELOPMENT GOALS AND POLICIES. USE THIS PORTAL TO ACCESS, QUERY, COMPARE, AND SPATIALLY VISUALIZE GENERAL PLANS ACROSS CALIFORNIA'S CITIES AND COUNTIES.</h6>
+                <h6>GENERAL PLANS SET DEVELOPMENT GOALS AND POLICIES. USE THIS PORTAL TO ACCESS, QUERY, COMPARE, AND SPATIALLY VISUALIZE GENERAL PLANS ACROSS CALIFORNIA’S CITIES AND COUNTIES.</h6>
                 <div class="grow">
-                    <h2>Enter <em>keywords</em> for search</h2>
+                    <h2 style="font-size: 18pt">Enter <em>keywords</em> for search</h2>
                 </div>
 				<center>
-				    <form method="GET" action="/results">
+				    <form method="GET" action="results">
 				    <input name="query" style="background-color: transparent;color:  white">
 				    <input type="submit" class="changecolor" margin-top: 10px;">
 				    </form>
@@ -97,10 +97,8 @@
     </div>
     <!-- ***** Main Banner Area End ***** -->
 
-
-
     <!-- ***** About Item Start ***** -->
-     <div class="fade">
+    <div class="fade">
         <section class="section" id="about">
             <div class="section-heading">
                 <h2>About <em>us</em></h2>
@@ -109,20 +107,79 @@
                 <li class="about-item">
                     <div class="right-content">
                         <h4>Purpose</h4>
-                        <p>The purpose of this website is to enable users to access, query, compare, and spatially visualize general plans in cities and counties across California.</p>
+                        <p>Land-use control is exerted locally through documents known as General Plans. These documents commit city and county governments to long-term planning and development goals that shape the fortunes and health of the jurisdiction through zoning regulations. There is currently little coordination across cities or at the state-level for monitoring where and which policies are adopted. This searchable database of California’s General Plans is the first of its kind. Advocates, policymakers and community members can comprehensively assess plan contents to provide feedback and coordinate efforts. This interactive map reveals how 461 cities and 58 counties in California govern land-use. The portal allows users to search across 112,052 pages of regulations, read and compare policies. The General Plan Portal will evolve as local jurisdictions update plans. <a href="https://journals.sagepub.com/doi/full/10.1177/0739456X21995890">You can read about some of the initial findings from this database here</a>. For corrections, updates, and questions, please contact the lead researcher and project coordinators, <a href="mailto:ckbrinkley@ucdavis.edu&subject=General%20Plan%20Mapper">Catherine Brinkley</a> or <a href="mailto:lnpoirier@ucdavis.edu&subject=General%20Plan%20Mapper">Lindsay Poirier</a>.</p>
+                    </div>
+                </li>
+                <li class="about-item">
+                    <div class="right-content">
+                        <h4>Background</h4>
+                        <p>Land-use control is exerted locally through documents known as General Plans. These documents commit city and county governments to long-term planning and development goals that shape the fortunes and health of the jurisdiction through zoning regulations. General plans take an average of ten years to develop. Many general plans are over 2,000 pages in length. Thanks to steady advocacy and state policy, never have more people been involved in the process of crafting their local general plan. As a result, it can take many years for communities to make their general plan due to the numerous community meetings, charrettes and public hearings required in formulating the plan.<br><br>Representative engagement is critical to more equitable outcomes, but how will people make informed suggestions? Common historic practices contributed to inequity through segregation (e.g. redlining, restrictive covenants, urban renewal). Current policies all too often perpetuate such disparities in infrastructure investment. Addressing equity necessarily requires acknowledging and undoing undergirding land-use policies that introduced and contribute to segregation, while also preventing new policies from building on top of broken foundations.<br><br> If a community wants to improve upon innovative policies, they must first understand the suite of options that neighboring communities have piloted to success. To do so, people must read and compare across many plans, not only their own. We invite you to search for topics that interest you and to learn from planning efforts in other cities and counties.</p>
                     </div>
                 </li>
                 <li class="about-item">
                     <div class="right-content">
                         <h4>Instructions</h4>
-                                                        <p>This website utilizes Elasticsearch to search through the general plans. To search for an exact phrase, enclose the exact phrase in quotes. To allow fuzzy searching do not include quotes.
-                            After entering a query, click “Search” to search across the plans. The total number of occurrences for each plan will be shown. The search hits can be sorted by count, year, city name or 2010 population. The table can also be exported to allow further research. Results are also visualized as maps that show the cities and counties with search hits. To see how many people are impacted by the plans, the search results can be visualized as a cartogram based on 2010 census population. This visualization results in places like Los Angeles County being very large while counties with smaller populations are smaller. The search returns a substring, so that if you search 'race' you will also pull up hits for 'race-based policies.' Similarly, you will pull up hits for 'marathon races'. To understand the context of the search hits, click on the year for a city or county plan to view the PDF with the highlighted keywords. Plans were added in 2020, and we are in the process of adding updates. If you have any feedback please provide it here <b>(<a href="https://docs.google.com/forms/d/e/1FAIpQLSeCpD1Dil06c8tuSLnDqHp9W_6zK3S50ho4eGQtM4MyBhYM4g/viewform">Feedback</a>)</p>
+                        <p>To search for an exact phrase, enclose the exact phrase in quotes. To allow fuzzy searching do not include quotes. After entering a query, click “Search” to search across the plans. The total number of occurrences for each plan will be shown. The search hits can be sorted by count, year, city name or 2010 population. The table can also be exported to allow further research.<br><br>Results are also visualized as maps that show the cities and counties with search hits. This visualization results in places like Los Angeles County being very large while counties with smaller populations are smaller. The search returns a substring, so that if you search 'race' you will also pull up hits for 'race-based policies.' Similarly, you will pull up hits for 'marathon races'. To understand the context of the search hits, click on the year for a city or county plan to view the PDF with the highlighted keywords. Plans were added in 2020, and we are in the process of adding updates. <a href="https://docs.google.com/forms/d/e/1FAIpQLSeCpD1Dil06c8tuSLnDqHp9W_6zK3S50ho4eGQtM4MyBhYM4g/viewform">If you have any feedback please provide it here</a>.</p>
                     </div>
                 </li>
+                <!-- <li class="about-item">
+                    <div class="right-content">
+                        <h4>Team</h4>
+                        <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center;">
+                            <figure style="padding: 10px;">
+                                <a target="_blank" href="https://github.com/dexterantonio">
+                                    <img src="https://critical-data-analysis.org/wp-content/uploads/2020/10/headshot-summer-2020-prehaircut-dexter-antonio.jpeg" alt="Dexter Antonio" style="object-fit: cover; width: 250px; height: 250px;">
+                                </a>
+                                <figcaption style="font-size: 12px; text-align: center;">Dexter Antonio<br>UC Davis M.S. Candidate<br>Chemical Engineering</figcaption>
+                            </figure>
+                            <figure style="padding: 10px;">
+                                <a target="_blank" href="https://humanecology.ucdavis.edu/catherine-brinkley">
+                                    <img src="https://humanecology.ucdavis.edu/sites/g/files/dgvnsk161/files/styles/sf_profile/public/images/person/crd_brinkley_catherine.jpg" alt="Catherine Brinkley" style="object-fit: cover; width: 250px; height: 250px;">
+                                </a>
+                                <figcaption style="font-size: 12px; text-align: center;">Catherine Brinkley<br>UC Davis Associate Professor<br>Community & Regional Development</figcaption>
+                            </figure>
+                            <figure style="padding: 10px;">
+                                <a target="_blank" href="https://www.linkedin.com/in/makenadettmann/">
+                                    <img src="https://critical-data-analysis.org/wp-content/uploads/2021/03/flat-2126876_1280-1.png" alt="Makena Dettman" style="object-fit: cover; width: 250px; height: 250px;">
+                                </a>
+                                <figcaption style="font-size: 12px; text-align: center;">Makena Dettman<br>UC Davis Ph.D. Student<br>Materials Engineering</figcaption>
+                            </figure>
+                            <figure style="padding: 10px;">
+                                <a target="_blank" href="https://www.linkedin.com/in/sujoy-ghosh-266b0181/">
+                                    <img src="https://critical-data-analysis.org/wp-content/uploads/2021/03/flat-2126876_1280-1.png" alt="Sujoy Ghosh" style="object-fit: cover; width: 250px; height: 250px;">
+                                </a>
+                                <figcaption style="font-size: 12px; text-align: center;">Sujoy Ghosh<br>UC Davis M.S. Student<br>Materials Science Engineering</figcaption>
+                            </figure>
+                            <figure style="padding: 10px;">
+                                <a target="_blank" href="https://jnjoseph.com/">
+                                    <img src="https://critical-data-analysis.org/wp-content/uploads/2020/09/prof_photo-Jared-Joseph.jpg" alt="Jared Joseph" style="object-fit: cover; width: 250px; height: 250px;">
+                                </a>
+                                <figcaption style="font-size: 12px; text-align: center;">Jared Joseph<br>UC Davis Ph.D. Candidate<br>Sociology</figcaption>
+                            </figure>
+                            <figure style="padding: 10px;">
+                                <a target="_blank" href="https://critical-data-analysis.org/projects/general-plan/">
+                                    <img src="https://critical-data-analysis.org/wp-content/uploads/2021/04/Amay-Kharbanda-Hack4CA.jpeg" alt="Amay Kharbanda" style="object-fit: cover; width: 250px; height: 250px;">
+                                </a>
+                                <figcaption style="font-size: 12px; text-align: center;">Amay Kharbanda<br>UC Davis Undergraduate<br>Statistics (Data Science track) ’21</figcaption>
+                            </figure>
+                            <figure style="padding: 10px;">
+                                <a target="_blank" href="https://www.linkedin.com/in/mirthala-lopez/">
+                                    <img src="https://critical-data-analysis.org/wp-content/uploads/2021/03/flat-2126876_1280-1.png" alt="Mirthala Lopez" style="object-fit: cover; width: 250px; height: 250px;">
+                                </a>
+                                <figcaption style="font-size: 12px; text-align: center;">Mirthala Lopez<br>UC Davis Undergraduate<br>Computer Science ’22</figcaption>
+                            </figure>
+                            <figure style="padding: 10px;">
+                                <a target="_blank" href="https://sts.ucdavis.edu/people/lpoirier">
+                                    <img src="https://critical-data-analysis.org/wp-content/uploads/2021/03/headshot2.jpg" alt="Lindsay Poirier" style="object-fit: cover; width: 250px; height: 250px;">
+                                </a>
+                                <figcaption style="font-size: 12px; text-align: center;">Lindsay Poirier<br>UC Davis Assistant Professor<br>Science & Technology Studies</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                </li> -->
             </ul>
         </section>
     </div>
-
     <!-- ***** about Item End ***** -->
 
 

@@ -4,7 +4,7 @@ from flask import flash, redirect, session, abort
 from PyPDF2 import PdfFileMerger, PdfFileReader
 import fitz
 from werkzeug.utils import secure_filename
-from flask_bootstrap import Bootstrap
+from flask_bootstrap import Bootstrap 
 from flask import Markup
 import pandas as pd
 import requests
@@ -28,51 +28,46 @@ from bokeh.models import TextInput, Button
 from bokeh.models.widgets import Panel, Tabs
 from bokeh.io import show, output_file
 import shapely.affinity
-import es
+import es 
 import re
-import geojson
+import geojson 
 
-app = Flask(__name__)                                                                                                               #create flask object
-app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0                                                                                         #avoid storing cache
-bootstrap = Bootstrap(app)                                                                                                          #create bootstrap object
-
-
-@app.route('/')                                                                                                                     #declare flask page url
-def my_form():                                                                                                                      #function for main index
-    return render_template('index.html')                                                                                            #return index page
+app = Flask(__name__)  # create flask object
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0  # avoid storing cache
+bootstrap = Bootstrap(app)  # create bootstrap object
 
 
-def getResults(wordinput):
+@app.route('/')  # declare flask page url
+def my_form():  # function for main index
+    return render_template('index.html')  # return index page
+
+
+def getResults(wordinput):                                                                                                          
     """This function is used to take word input in the searchbox, query elasticsearch,
-    and then return the results.
+    and then return the results. 
     Args:
         wordinput (str): an elastic search query
-
     Returns:
-        str: html doc that will be displayed
-    """
+        str: html doc that will be displayed 
+    """    
     results = []
     query = wordinput
 
     ids, scores, hits, highlights = es.elastic_search_highlight(query)
-    # sort by hits
+    # sort by hits 
     zipped = list(zip(ids, scores, hits, highlights))
     zipped.sort(key=lambda x: x[2], reverse=True)
-
-    if not zipped:
-        return results
-
     ids, scores, hits, highlights = zip(*zipped)
     ids = list(ids)
     scores = list(scores)
     hits = list(hits)
     highlights = list(highlights)
-
+        
 
     result_props = es.map_index_to_vals(ids)
     for score, result_prop, hit, highlight in zip(scores, result_props, hits, highlights):
         result_prop = result_prop.copy()
-        result_prop['query'] = query
+        result_prop['query'] = query 
         result_prop['score'] = score
         result_prop['hits'] = hit
         result_prop['highlights'] = highlight
@@ -81,7 +76,7 @@ def getResults(wordinput):
             place_props = es.get_place_properties(new_result.is_city, new_result.place_name)
         except:
             print('error with file %s result ignored '%new_result.filename)
-            continue
+            continue 
 
         if new_result.is_city:
             new_result.cityType = place_props[0]
@@ -91,50 +86,47 @@ def getResults(wordinput):
             new_result.cityType = 'county'
             new_result.county = new_result.place_name
             new_result.population = int(place_props[0])
-
+        
         results.append(new_result)
-
-
-
     return results
 
-
+    
 class Result:
     """This results class stores the data of a single search 'hit'.
-    """
+    """    
     def __init__(self, state, filename, is_city, place_name, plan_date, filetype,  query, county='na', population=0, city_type='na', score=0, hits=0, highlights=None):
-        # place properties
+        # place properties 
         self.state = state
         self.filename = filename
         self.is_city = is_city
         self.place_name = place_name
         self.plan_date = plan_date
         self.filetype = filetype
-        #search things
+        # search things
         self.score = score
         self.hits = hits
         self.highlights = highlights
-
-        # additional properties
+        
+        # additional properties 
         self.county = county
         self.population = 0
         self.cityType = city_type
 
         self.pdf_filename = self.filename.split('.')[0] + '.pdf'
         parsed_query = self.parse_query(query)
+
         # this self.year is the html that will be displayed around the year
         # it will link to a function that will highlight the word occurrences in the file
+
         self.year = '<p hidden>'+self.plan_date+'</p> <a href="../outp/'+self.pdf_filename+'/'+parsed_query+'" target="_blank">'+self.plan_date+"</a>"
 
     def parse_query(self, query):
         """This function parses a query to add commas between words except
         for words that are a phrase (indicated by their quotes)]
-
         Args:
             query (str): query to parse
-
         Returns:
-            [type]: a parsed query that can be used in html
+            [type]: a parsed query that can be used in html  
         """
         phrases_in_quotes = re.findall(r'\"(.+?)\"',query)
         non_quotes = re.sub(r'"',"", re.sub(r'\"(.+?)\"', '', query))
@@ -145,18 +137,17 @@ class Result:
     @property
     def cityName(self):
         """This is a property tag that is useful for parts of legacy code
-
         Returns:
-            str: place name
-        """
+            str: place name  
+        """        
         return self.place_name
-
+    
     @property
     def type(self):
         """returns a str describing the category of place
         Returns:
             str: either "City" or "county"
-        """
+        """        
         if self.is_city:
             return 'City'
         else:
@@ -177,38 +168,42 @@ def change_json_colors(json_dict, results,
             name = result.cityName + ' County'
         result_names.append(name)
         result_dict[name] = result
-
+    
     for feature in json_dict['features']:
         if feature['properties']['name'] in result_names:
             if result_dict[feature['properties']['name']].is_city:
                 feature['properties']['color'] = match_city_fill_color
                 feature['properties']['line_color'] = match_city_outline
-            else:  # a county
+            else:  # a county 
                 feature['properties']['color'] = match_county_fill_color
-                feature['properties']['line_color'] = match_county_outline
-
+                feature['properties']['line_color'] = match_county_outline 
+ 
         else: # no match
             feature['properties']['color'] = blank_city_color
             feature['properties']['line_color'] = blank_city_outline
-            # else: # a county  not yet implimtented
+            # ****** NOT YET IMPLEMENTED ******
+            # else: # a county
             #     feature['properties']['color'] = blank_county_color
             #     feature['properties']['line_color'] = blank_county_outline
 
 geojson_path = os.path.join('static', 'data', 'CA_geojson')
+
 with open(os.path.join(geojson_path, 'map.geojson'), 'r') as f:
     my_str = f.read()
     spatial_map = json.loads(my_str)
 
-with open(os.path.join(geojson_path, 'pop_map.geojson'), 'r') as f:
+with open(os.path.join(geojson_path, 'pop_map.geojson'), 'r') as f:  
     pop_map = json.load(f)
 
-@app.route('/results/', methods=['GET'])
+
+@app.route('results/', methods=['GET'])
+
 def index_search_box():
     """The code for the search box functionality
-
     Returns:
         str : html webpage
     """
+
     #==============================================================================
     #Get results for the query
     #==============================================================================
@@ -219,6 +214,7 @@ def index_search_box():
     #==============================================================================
     #Initialize variables
     #==============================================================================
+
     matched_city_names = []
     matched_county_names = []
     cityResults = []
@@ -260,6 +256,7 @@ def index_search_box():
     #Plots for mapping results
     #==========================
     change_json_colors(spatial_map, results)
+
     change_json_colors(pop_map, results)
 
     TOOLS = ["hover", "pan", "wheel_zoom", "save"]
@@ -285,6 +282,7 @@ def index_search_box():
         y_axis_location = None,
         tools = TOOLS,
         tooltips = [("Name", "@name")])
+
     p_spatial_map.grid.grid_line_color = None
     p_spatial_map.hover.point_policy = "follow_mouse"
     p_spatial_map_Geosource = GeoJSONDataSource(geojson = json.dumps(spatial_map))
@@ -301,6 +299,7 @@ def index_search_box():
     #==============================================================================
     #Create dictionary and data frame of results for summary, timeline, and chart
     #==============================================================================
+
     cityData = dict(
         names = [res.cityName for res in cityResults],
         years_href = [res.year for res in cityResults],
@@ -458,6 +457,7 @@ def index_search_box():
     countyTab = Panel(title = "Counties", child = county_table)
     tabs = Tabs(tabs = [cityTab, countyTab], css_classes=["table-results-div"], margin = (30, 0, 30, 0))
 
+
     #====================================================
     #Layout of the page
     #====================================================
@@ -470,45 +470,48 @@ def index_search_box():
     return render_template('results.html', lScript = lScript, lDiv = lDiv)
 
 @app.route('/outp/<string:city>/<string:words>')
+
 def highlight_pdf(city, words):
     """Function responsible for highlighting pdf words
-
     Args:
-        city (str): the name of the city
+        pdf (str): the name of the pdf file
         words (str): comma seperated phrases to highlight
-
     Returns:
         str: webpages
     """
-    complete_name = os.path.join("static/data/places", city)                                                                        #path for city pdf file
-    doc = fitz.open(complete_name)                                                                                                  #create open pdf file object
-    page_count= len(doc)                                                                                                            #find no. of pages in pdf
+    complete_name = os.path.join("static/data/places", city)
+    doc = fitz.open(complete_name)
+    page_count= len(doc)  # find no. of pages in pdf
     if "," in words:
-        list_split=words.split(",")                                                                                                 #split wordlist by commas
+        list_split=words.split(",")
     else:
-        list_split=[words]                                                                                                          #if no commas means single word
+        list_split=[words]  # if no commas in wordlist, single word
+
     wordcount=len(list_split)
-    text_instances = [" "] * wordcount                                                                                              #occurences of a phrase in a page
+    text_instances = [" "] * wordcount  # occurences of any phrase in a page
     for i in range(page_count):
         for k in range(wordcount):
-            text_instances[k] = doc[i].searchFor(list_split[k],hit_max = 100)                                                            #search for the phrase in the page(maximum 100 occurences)
-        for k in range(wordcount):
-            for inst in text_instances[k]:
-                highlight = doc[i].addHighlightAnnot(inst)                                                                          #highlight all occurences of phrase
-    highlighted_complete_name = os.path.join("static/data/pdfoutput","output.pdf")                                                  #path for highlighted pdf
-    doc.save(highlighted_complete_name)                                                                                             #save highlighted pdf
+            text_instances[k] = doc[i].searchFor(list_split[k],hit_max = 100)  # look for search phrase in page (max. 100 occurences)   
+            if (len(text_instances[k]) != 0):
+                # list returned by searchFor can be used directly as argument to highlight
+                doc[i].addHighlightAnnot(text_instances[k])
+
+    highlighted_complete_name = os.path.join("static/data/pdfoutput","output.pdf")      
+    doc.save(highlighted_complete_name)
     doc.close()
-    fht= 'window.location.href = "/static/data/pdfoutput/output.pdf";'                                                              #send highlighted pdf link
 
-    fht = Markup(fht)                                                                                                               #make the link safe for sending to html
+    # set link for highlighted pdf and make safe to send to html
+    fht= 'window.location.href = "/static/data/pdfoutput/output.pdf";'
+    fht = Markup(fht)
+    
+    # render highlighted pdf file
+    return render_template('download.html',fht=fht)                                                                               #render pdf file with the higlighted pdflink as argument
 
-    return render_template('download.html',fht=fht)                                                                                 #render pdf file with the higlighted pdflink as argument
-
-
-
-if __name__ == "__main__":                                                                                                          #run app on local host at port 5000 in debug mode
-
+    
+if __name__ == "__main__":
+    
     # from werkzeug.contrib.profiler import ProfilerMiddleware
     # app.config['PROFILE'] = True
     # app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[30])
     app.run(host="0.0.0.0", port=5002, debug=True)
+
