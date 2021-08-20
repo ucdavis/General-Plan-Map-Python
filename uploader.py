@@ -168,7 +168,8 @@ def upload_file1():  # function to upload file
                 location_name=request.form['county']
             
             # generate filename with select form data
-            file.filename=request.form['state']+"_"+request.form['type']+"_"+location_name+"_"+request.form['year']+".pdf"
+            # location_name.replace(" ", "-")
+            file.filename=request.form['state']+"_"+request.form['type']+"-"+location_name+"_"+request.form['year']+".pdf"
             print(file.filename)
 
             # send email for download notification
@@ -205,7 +206,10 @@ def upload_file1():  # function to upload file
             else:
                 pass
                 os.remove(completeName)
+                # try:
                 shutil.move(tempname,"static/data/places")  # move compressed tempfile to places directory is compressed file is valid
+                # except OSError as error:
+                # print(error) # need to trigger a popup in the browser window
             fname =completeName
             fnamecpy=fname
             doc = fitz.open(fname)  # open pdf file object

@@ -65,7 +65,7 @@
                     <h2>Upload <em>file</em></h2>
                 </div>
                 <center>
-                    <form action = "http://206.189.72.223:5001//upload"  enctype="multipart/form-data" method = "POST" style="width:30%;height: 100%;">
+                    <form action = "/upload"  enctype="multipart/form-data" method = "POST" style="width:30%;height: 100%;">
                     
                         <select name="state" id="state" style="font-size: 2.5vh;width:100%;height: 5vh;margin-bottom: 4vh;">
                         	<option value="Select state">Select state</option>
@@ -154,7 +154,7 @@
                     <h2>Choose<em> a file</em></h2>
                 </div>
                 <center>
-                    <form action = "http://206.189.72.223:5001//delete" method = "POST" >
+                    <form action = "/delete" method = "POST" >
                         <select name="deleter" id="deleter" style="font-size: 2.5vh;">
                         	<option value="Select file">Select file</option>
                             {{del_list}}
