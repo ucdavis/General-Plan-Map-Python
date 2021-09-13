@@ -17,6 +17,7 @@ import PyPDF2
 import bcrypt
 from datetime import datetime
 import es
+import cv2
 
 
 app = Flask(__name__)  # create flask object
@@ -141,11 +142,12 @@ def delete_file():  # function to delete file from list
     except:
         print("not found")
 
-    drive = GoogleDrive(gauth)  # rebuild the drive object
-    top_list = drive.ListFile({'q': "'root' in parents and trashed=false"}).GetList()  # generate list of files in drive
-    for fileu in top_list:
-        if fileu['originalFilename'] == del_req:  # delete file matching the delete request from drive
-            fileu.Delete()
+    ########### GOOGLE DRIVE AUTH STUFF ##################
+    # drive = GoogleDrive(gauth)  # rebuild the drive object
+    # top_list = drive.ListFile({'q': "'root' in parents and trashed=false"}).GetList()  # generate list of files in drive
+    # for fileu in top_list:
+    #     if fileu['originalFilename'] == del_req:  # delete file matching the delete request from drive
+    #         fileu.Delete()
 
 
     return redirect(url_for('delete_page_update'))
@@ -167,21 +169,27 @@ def upload_file1():  # function to upload file
             else:
                 location_name=request.form['county']
             
-            # generate filename with select form data
+            # generate filename with select form data; need to discover why underscore and not dash is needed
             file.filename=request.form['state']+"_"+request.form['type']+"_"+location_name+"_"+request.form['year']+".pdf"
+
             print(file.filename)
 
+            ########### GOOGLE DRIVE AUTH STUFF ##################
             # send email for download notification
-            msg = Message('General Plan file upload', sender = 'generalplanserver@gmail.com', recipients = ['ckbrinkley@ucdavis.edu'])
-            msg.body = "Dear Admin,\n\nA file named "+file.filename+" has been uploaded to the server by: "+request.form['email']+" .\n\nGeneral Plan Server"
-            mail.send(msg)  # send mail for file upload to server
+            # msg = Message('General Plan file upload', sender = 'generalplanserver@gmail.com', recipients = ['ckbrinkley@ucdavis.edu'])
+            # msg.body = "Dear Admin,\n\nA file named "+file.filename+" has been uploaded to the server by: "+request.form['email']+" .\n\nGeneral Plan Server"
+            # mail.send(msg)  # send mail for file upload to server
+
             completeName = os.path.join("static/data/places",file.filename)
 
             print(completeName)
             # temporary copy file in case compression is not possible
             tempname=os.path.join("static/data/temp",secure_filename(file.filename)) 
+            print("hello.",tempname)
             file.save(completeName)  # save file to server
             arg1= '-sOutputFile='+ tempname  # path for output file after compression to reduce pdf size
+
+            # path to ghostscript in user's OS has to be changed
             p = subprocess.Popen(['/usr/bin/gs',
                                   '-sDEVICE=pdfwrite','-dCompatibilityLevel=1.4',
                                   '-dPDFSETTINGS=/screen','-dNOPAUSE', '-dBATCH',  '-dQUIET',
@@ -199,6 +207,7 @@ def upload_file1():  # function to upload file
                 check=PyPDF2.PdfFileReader(fh)  # check if pdf is valid file
                 fh.close()
             except:
+                fh= open(tempname, "rb")
                 print("invalid PDF file")
                 fh.close()
                 os.remove(tempname)  # remove temp file if compressed pdf is corrupt and causes exception
@@ -215,6 +224,7 @@ def upload_file1():  # function to upload file
                 if not page.getText():  # check if pdf contains scanned data or text
                     imornot=imornot+1
 
+            text_file_name = fname + ".txt"
             if imornot > int(length/2):  # if more than half pages of pdf are scanned convert to text pdf through OCR
                 fname=fname.replace('.pdf', '')
                 text_file_name = fname + ".txt"
@@ -225,7 +235,20 @@ def upload_file1():  # function to upload file
                     pix.writePNG(pixn)  # save page image as png
                     pdfn=os.path.join("static/data/places","page-"+str(page.number)+".pdf")
                     with open(pdfn, 'w+b') as f:
-                        text = pytesseract.image_to_string(pixn)  # obtain text from image
+                        # ********* UPDATED OCR CODE *********** # 
+                        # Grayscale, Gaussian blur, Otsu's threshold
+                        image = cv2.imread(pixn)
+                        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+                        blur = cv2.GaussianBlur(gray, (3,3), 0)
+                        thresh = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
+                        # Morph open to remove noise and invert image
+                        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3,3))
+                        opening = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel, iterations=1)
+                        invert = 255 - opening
+                        # Perform text extraction
+                        text = pytesseract.image_to_string(invert, lang='eng', config='--psm 6')
+                        print(data)
+                        # *******************
                         textfile.write(text)  # write text from the image to text file
                         pdf = pytesseract.image_to_pdf_or_hocr(pixn, extension='pdf')  # convert image to pdf
                         f.write(pdf)  # create pdf for the page
@@ -258,10 +281,11 @@ def upload_file1():  # function to upload file
 
             doc.close()
 
-        drive = GoogleDrive(gauth)  # rebuild drive object
-        file1=drive.CreateFile({'title':file.filename})  # name the drive file
-        file1.SetContentFile(completeName)  # obtain contents of the pdf
-        file1.Upload()  # upload the file to drive
+        ########### GOOGLE DRIVE AUTH STUFF ##################
+        # drive = GoogleDrive(gauth)  # rebuild drive object
+        # file1=drive.CreateFile({'title':file.filename})  # name the drive file
+        # file1.SetContentFile(completeName)  # obtain contents of the pdf
+        # file1.Upload()  # upload the file to drive
 
 
     up="Files Uploaded Successfully!"
