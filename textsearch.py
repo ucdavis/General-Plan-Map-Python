@@ -30,7 +30,13 @@ from bokeh.io import show, output_file
 import shapely.affinity
 import es
 import re
-import geojson
+import geojson 
+### BELOW NEEDED TO EXPORT BOKEH IMAGE FILES
+# from bokeh.io import export_png
+# from bokeh.io.export import get_screenshot_as_png
+# from selenium import webdriver
+# import chromedriver_binary
+# import base64
 
 app = Flask(__name__)  # create flask object
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0  # avoid storing cache
@@ -115,11 +121,12 @@ class Result:
         self.pdf_filename = self.filename.split('.')[0] + '.pdf'
         parsed_query = self.parse_query(query)
 
-        # this self.year is the html that will be displayed around the year
-        # it will link to a function that will highlight the word occurrences in the file
-
+        # allows user to click on year on webpage's result table; 
+        #### uncomment below in order to link to 'highlight_pdf' function
         self.year = '<p hidden>'+self.plan_date+'</p> <a href="../outp/'+self.pdf_filename+'/'+parsed_query+'" target="_blank">'+self.plan_date+"</a>"
-
+        #### uncomment below in order to link to 'display_results' function
+        # self.year = '<p hidden>'+self.plan_date+'</p> <a href="../outp/'+self.place_name+'/'+self.pdf_filename+'/'+parsed_query+'" target="_blank">'+self.plan_date+"</a>"
+        
     def parse_query(self, query):
         """This function parses a query to add commas between words except
         for words that are a phrase (indicated by their quotes)]
@@ -207,9 +214,13 @@ def index_search_box():
     #==============================================================================
     #Get results for the query
     #==============================================================================
-    wordinput = " "
-    wordinput = request.args.get('query')
-    results = getResults(wordinput)
+    wordinput = " "  # initialize string input for search
+    wordinput = request.args.get('query')  # get input from request form on webpage
+
+    try:
+        results = getResults(wordinput)
+    except ValueError:  # appears when getResults tries to zip no results
+        return render_template('noresult.html')
 
     #==============================================================================
     #Initialize variables
@@ -245,12 +256,6 @@ def index_search_box():
             matched_county_names.append(res.place_name)
             if res.population > maxCountyPop:
                 maxCountyPop = res.population
-
-    #==============================================================================
-    #Check if there are matches and display no result page if not
-    #==============================================================================
-    if len(results) < 1:
-        return render_template('noresult.html')
 
     #==========================
     #Plots for mapping results
@@ -326,9 +331,8 @@ def index_search_box():
     #====================================================
     shareDiv = Div(text = """
                         <h1> Share Results: </h1>
-                        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-show-count="false">
-                        Tweet
-                        </a>""",
+                        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-text="{} out of {} California cities mention &#39;{}&#39; in their General Plans." data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                        """.format(uniqueCities, numCities, wordinput),
                         margin = (0, 0, 0, 30),
                         css_classes = ["share-div"])
     uniqueCities = len(set(cityData["names"]))
@@ -457,7 +461,6 @@ def index_search_box():
     countyTab = Panel(title = "Counties", child = county_table)
     tabs = Tabs(tabs = [cityTab, countyTab], css_classes=["table-results-div"], margin = (30, 0, 30, 0))
 
-
     #====================================================
     #Layout of the page
     #====================================================
@@ -505,7 +508,7 @@ def highlight_pdf(city, words):
     fht = Markup(fht)
 
     # render highlighted pdf file
-    return render_template('download.html',fht=fht)                                                                               #render pdf file with the higlighted pdflink as argument
+    return render_template('download.html',fht=fht)
 
 
 if __name__ == "__main__":
