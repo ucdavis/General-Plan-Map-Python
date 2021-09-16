@@ -340,8 +340,8 @@ def index_search_box():
                         margin = (0, 0, 0, 30),
                         css_classes = ["share-div"])
     resultsDiv = Div(text = """
-                     <span class='darker-text-color'>{} </span><span class='white-text-color'>out of </span><span class='darker-text-color'>{} </span><span class='white-text-color'>cities mention </span><span class='darker-text-color'>'{}'.</span><br/><br/>
-                     <span class='darker-text-color'>{} </span><span class='white-text-color'>out of </span><span class='darker-text-color'>{} </span><span class='white-text-color'>counties mention </span><span class='darker-text-color'>'{}'.</span>
+                     <span class='darker-text-color'>{} </span><span class='white-text-color'>out of </span><span class='darker-text-color'>{} </span><span class='white-text-color'>cities mention </span><span class='darker-text-color'>'{}'</span><br/><br/>
+                     <span class='darker-text-color'>{} </span><span class='white-text-color'>out of </span><span class='darker-text-color'>{} </span><span class='white-text-color'>counties mention </span><span class='darker-text-color'>'{}'</span>
                      """.format(uniqueCities, numCities, wordinput, uniqueCounties, numCounties, wordinput),
                      margin = (30, 0, 20, 30),
                      css_classes=["results-div"])
