@@ -395,8 +395,8 @@ def index_search_box():
     ]
 
     #Create timeline figure
-    p_timeline = figure(plot_height = 300,
-                        plot_width = 350,
+    p_timeline = figure(plot_height = 400,
+                        plot_width = 450,
                         toolbar_location = None,
                         x_axis_label = "Year",
                         y_axis_label = "Plans Mentioning '" + wordinput + "'",
@@ -465,7 +465,7 @@ def index_search_box():
     #Layout of the page
     #====================================================
 
-    page_layout = layout(column([row([column(mapTabs), column([shareDiv, resultsDiv, p_timeline])]), tabs]))
+    page_layout = layout(column([row([column(mapTabs), column([shareDiv, resultsDiv])]), tabs, p_timeline]))
     lScript,lDiv = components(page_layout)
     cdn_js = CDN.js_files
     cdn_css = CDN.css_files
