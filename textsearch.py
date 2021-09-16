@@ -337,13 +337,13 @@ def index_search_box():
                         <h1> Share Results: </h1>
                         <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-text="{} out of {} California cities mention &#39;{}&#39; in their General Plans." data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                         """.format(uniqueCities, numCities, wordinput),
-                        margin = (0, 0, 0, 30),
+                        margin = (0, 0, 0, 40),
                         css_classes = ["share-div"])
     resultsDiv = Div(text = """
                      <span class='darker-text-color'>{} </span><span class='white-text-color'>out of </span><span class='darker-text-color'>{} </span><span class='white-text-color'>cities mention </span><span class='darker-text-color'>'{}'</span><br/><br/>
                      <span class='darker-text-color'>{} </span><span class='white-text-color'>out of </span><span class='darker-text-color'>{} </span><span class='white-text-color'>counties mention </span><span class='darker-text-color'>'{}'</span>
                      """.format(uniqueCities, numCities, wordinput, uniqueCounties, numCounties, wordinput),
-                     margin = (30, 0, 20, 30),
+                     margin = (40, 0, 20, 30),
                      css_classes=["results-div"])
 
     #====================================================
