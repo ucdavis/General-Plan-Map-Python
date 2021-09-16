@@ -395,7 +395,7 @@ def index_search_box():
     ]
 
     #Create timeline figure
-    p_timeline = figure(plot_height = 400,
+    p_timeline = figure(plot_height = 600,
                         plot_width = 450,
                         toolbar_location = None,
                         x_axis_label = "Year",
