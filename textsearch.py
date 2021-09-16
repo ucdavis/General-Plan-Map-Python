@@ -203,7 +203,7 @@ with open(os.path.join(geojson_path, 'pop_map.geojson'), 'r') as f:
     pop_map = json.load(f)
 
 
-@app.route('/results/', methods=['GET'])
+@app.route('/general-plan-map/results/', methods=['GET'])
 
 def index_search_box():
     """The code for the search box functionality
