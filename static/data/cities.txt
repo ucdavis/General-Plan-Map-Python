@@ -1,31 +1,31 @@
 Acton
 Adelanto
-Agoura Hills
+Agoura-Hills
 Alameda
 Alamo
 Albany
 Alhambra
-Aliso Viejo
+Aliso-Viejo
 Almanor
-Alondra Park
+Alondra-Park
 Alpaugh
 Alpine
-Alpine Village
+Alpine-Village
 Altadena
-Alta Sierra
+Alta-Sierra
 Alturas
-Alum Rock
-Amador City
-American Canyon
+Alum-Rock
+Amador-City
+American-Canyon
 Amesti
 Anaheim
 Anderson
-Angels City
+Angels-City
 Angwin
 Antioch
-Apple Valley
+Apple-Valley
 Aptos
-Aptos Hills-Larkin Valley
+Aptos-Hills-Larkin-Valley
 Arbuckle
 Arcadia
 Arcata
@@ -33,7 +33,7 @@ Arden-Arcade
 Armona
 Arnold
 Aromas
-Arroyo Grande
+Arroyo-Grande
 Artesia
 Arvin
 Ashland
@@ -46,76 +46,76 @@ August
 Avalon
 Avenal
 Avery
-Avocado Heights
+Avocado-Heights
 Azusa
 Bakersfield
-Baldwin Park
+Baldwin-Park
 Banning
 Barstow
-Bay Point
+Bay-Point
 Bayview
 Bayview-Montalvin
 Baywood-Los Osos
-Beale AFB
-Bear Valley
-Bear Valley Springs
+Beale-AFB
+Bear-Valley
+Bear-Valley-Springs
 Beaumont
 Beckwourth
 Belden
 Bell
 Bellflower
-Bell Gardens
+Bell-Gardens
 Belmont
 Belvedere
 Benicia
-Ben Lomond
+Ben-Lomond
 Berkeley
-Bermuda Dunes
+Bermuda-Dunes
 Bertsch-Oceanview
-Bethel Island
-Beverly Hills
-Big Bear City
-Big Bear Lake
-Big Bend
+Bethel-Island
+Beverly-Hills
+Big-Bear-City
+Big-Bear-Lake
+Big-Bend
 Biggs
-Big Pine
-Big River
+Big-Pine
+Big-River
 Biola
 Bishop
-Blackhawk-Camino Tassajara
-Black Point-Green Point
+Blackhawk-Camino-Tassajara
+Black-Point-Green-Point
 Blairsden
 Bloomington
-Blue Lake
+Blue-Lake
 Bluewater
 Blythe
-Bodega Bay
+Bodega-Bay
 Bodfish
 Bolinas
-Bombay Beach
-Bonadelle Ranchos-Madera Ranchos
+Bombay-Beach
+Bonadelle-Ranchos-Madera-Ranchos
 Bonita
 Bonsall
 Bootjack
 Boron
 Boronda
-Borrego Springs
+Borrego-Springs
 Bostonia
-Boulder Creek
+Boulder-Creek
 Bowles
-Boyes Hot Springs
+Boyes-Hot-Springs
 Bradbury
 Bradley
 Brawley
 Brea
 Brentwood
-Bret Harte
+Bret-Harte
 Brisbane
 Broadmoor
-Bucks Lake
+Bucks-Lake
 Buellton
-Buena Park
-Buena Vista
+Buena-Park
+Buena-Vista
 Burbank
 Burbank
 Burlingame
@@ -126,61 +126,61 @@ Bystrom
 Cabazon
 Calabasas
 Calexico
-California City
+California-City
 Calimesa
 Calipatria
 Calistoga
 Calwa
 Camarillo
 Cambria
-Cambrian Park
-Cameron Park
+Cambrian-Park
+Cameron-Park
 Campbell
-Camp Pendleton North
-Camp Pendleton South
-Cantua Creek
+Camp-Pendleton-North
+Camp-Pendleton-South
+Cantua-Creek
 Canyondam
-Canyon Lake
+Canyon-Lake
 Capitola
 Caribou
 Carlsbad
 Carmel-by-the-Sea
-Carmel Valley Village
+Carmel-Valley-Village
 Carmichael
 Carpinteria
 Carrick
 Carson
 Cartago
 Caruthers
-Casa Conejo
-Casa de Oro-Mount Helix
-Castro Valley
+Casa-Conejo
+Casa-de-Oro-Mount-Helix
+Castro-Valley
 Castroville
-Cathedral City
+Cathedral-City
 Cayucos
 Ceres
 Cerritos
 Challenge-Brownsville
-Channel Islands Beach
-Charter Oak
+Channel-Islands-Beach
+Charter-Oak
 Cherryland
-Cherry Valley
+Cherry-Valley
 Chester
 Chico
 Chilcoot-Vinton
-China Lake Acres
-Chinese Camp
+China-Lake-Acres
+Chinese-Camp
 Chino
-Chino Hills
+Chino-Hills
 Chowchilla
 Chualar
-Chula Vista
+Chula-Vista
 Citrus
-Citrus Heights
+Citrus-Heights
 Claremont
 Clayton
 Clearlake
-Clearlake Oaks
+Clearlake-Oaks
 Clio
 Cloverdale
 Clovis
@@ -203,105 +203,104 @@ Corning
 Corona
 Coronado
 Corralitos
-Corte Madera
-Costa Mesa
+Corte-Madera
+Costa-Mesa
 Cotati
-Coto de Caza
+Coto-de-Caza
 Cottonwood
-Country Club
+Country-Club
 Covelo
 Covina
-Crescent City
-Crescent City North
-Crescent Mills
+Crescent-City
+Crescent-City-North
+Crescent-Mills
 Crest
 Crestline
 C-Road
 Crockett
 Cromberg
 Cudahy
-Culver City
+Culver-City
 Cupertino
 Cutler
 Cutten
 Cypress
-Daly City
-Dana Point
+Daly-City
+Dana-Point
 Danville
 Darwin
 Davis
-Day Valley
-Deer Park
-Del Aire
+Day-Valley
+Deer-Park
+Del-Aire
 Delano
 Delhi
 Delleker
-Del Mar
-Del Monte Forest
-Del Rey
-Del Rey Oaks
-Del Rio
+Del-Mar
+Del-Monte-Forest
+Del-Rey
+Del-Rey-Oaks
+Del-Rio
 Denair
-Derby Acres
-Desert Hot Springs
-Desert Shores
-Desert View Highlands
+Derby-Acres
+Desert-Hot-Springs
+Desert-Shores
+Desert-View-Highlands
 Diablo
-Diamond Bar
-Diamond Springs
-Dillon Beach
+Diamond-Bar
+Diamond-Springs
+Dillon-Beach
 Dinuba
-Discovery Bay
+Discovery-Bay
 Dixon
-Dixon Lane-Meadow Creek
-Dollar Point
+Dixon-Lane-Meadow-Creek
+Dollar-Point
 Dorrington
 Dorris
-Dos Palos
+Dos-Palos
 Downey
 Duarte
 Dublin
 Ducor
 Dunsmuir
 Durham
-Dustin Acres
+Dustin-Acres
 Earlimart
-East Blythe
-East Compton
-East Foothills
-East Hemet
-East La Mirada
-East Los Angeles
-East Oakdale
+East-Blythe
+East-Compton
+East-Foothills
+East-Hemet
+East-La-Mirada
+East-Los-Angeles
+East-Oakdale
 Easton
-East Orosi
-East Palo Alto
-East Pasadena
-East Porterville
-East Quincy
-East Richmond Heights
-East San Gabriel
-East Shore
-East Sonora
+East-Orosi
+East-Palo-Alto
+East-Pasadena
+East-Porterville
+East-Quincy
+East-Richmond-Heights
+East-San-Gabriel
+East-Shore
+East-Sonora
 Edgewood
-Edwards AFB
-El Cajon
-El Centro
-El Cerrito
-El Cerrito
-El Dorado Hills
+Edwards-AFB
+El-Cajon
+El-Centro
+El-Cerrito
+El-Cerrito
+El-Dorado-Hills
 Eldridge
-El Granada
-Elk Grove
+El-Granada
+Elk-Grove
 Elkhorn
 Elmira
-El Monte
-El Paso de Robles (Paso Robles)
-El Rio
-El Segundo
-El Sobrante
-El Verano
-Emerald Lake Hills
+El-Monte
+El-Rio
+El-Segundo
+El-Sobrante
+El-Verano
+Emerald-Lake-Hills
 Emeryville
 Empire
 Encinitas
@@ -311,90 +310,90 @@ Esparto
 Etna
 Eureka
 Exeter
-Fairbanks Ranch
+Fairbanks-Ranch
 Fairfax
 Fairfield
-Fair Oaks
+Fair-Oaks
 Fairview
 Fallbrook
-Fall River Mills
+Fall-River-Mills
 Farmersville
 Farmington
 Fellows
 Felton
 Ferndale
-Fetters Hot Springs-Agua Caliente
+Fetters-Hot-Springs-Agua-Caliente
 Fillmore
 Firebaugh
 Florence-Graham
 Florin
 Folsom
 Fontana
-Foothill Farms
-Foothill Ranch
-Ford City
+Foothill-Farms
+Foothill-Ranch
+Ford-City
 Foresthill
-Forest Meadows
+Forest-Meadows
 Forestville
-Fort Bragg
-Fort Jones
+Fort-Bragg
+Fort-Jones
 Fortuna
-Foster City
-Fountain Valley
+Foster-City
+Fountain-Valley
 Fowler
-Frazier Park
+Frazier-Park
 Freedom
 Fremont
-French Camp
-French Gulch
+French-Camp
+French-Gulch
 Fresno
 Friant
 Fruitdale
 Fullerton
-Furnace Creek
+Furnace-Creek
 Galt
 Gardena
-Garden Acres
-Garden Grove
+Garden-Acres
+Garden-Grove
 Gazelle
 Georgetown
-Gerber-Las Flores
+Gerber-Las-Flores
 Gilroy
-Glen Avon
+Glen-Avon
 Glendale
 Glendora
-Glen Ellen
-Golden Hills
-Gold River
+Glen-Ellen
+Golden-Hills
+Gold-River
 Goleta
 Gonzales
 Goshen
 Graeagle
-Grand Terrace
-Granite Bay
-Granite Hills
-Grass Valley
+Grand-Terrace
+Granite-Bay
+Granite-Hills
+Grass-Valley
 Graton
 Grayson
 Greenfield
 Greenhorn
-Green Valley
+Green-Valley
 Greenview
 Greenville
 Grenada
 Gridley
-Groveland-Big Oak Flat
-Grover Beach
+Groveland-Big-Oak-Flat
+Grover-Beach
 Guadalupe
 Guerneville
 Gustine
-Hacienda Heights
-Half Moon Bay
-Hamilton Branch
-Hamilton City
+Hacienda-Heights
+Half-Moon-Bay
+Hamilton-Branch
+Hamilton-City
 Hanford
-Harbison Canyon
-Hawaiian Gardens
+Harbison-Canyon
+Hawaiian-Gardens
 Hawthorne
 Hayfork
 Hayward
@@ -402,36 +401,36 @@ Healdsburg
 Heber
 Hemet
 Hercules
-Hermosa Beach
+Hermosa-Beach
 Hesperia
 Hickman
-Hidden Hills
-Hidden Meadows
-Hidden Valley Lake
+Hidden-Hills
+Hidden-Meadows
+Hidden-Valley-Lake
 Highgrove
 Highland
-Highlands-Baywood Park
+Highlands-Baywood-Park
 Hillsborough
 Hilmar-Irwin
 Hollister
 Holtville
-Home Garden
-Home Gardens
+Home-Garden
+Home-Gardens
 Homeland
-Homewood Canyon-Valley Wells
+Homewood-Canyon-Valley-Wells
 Hornbrook
 Hughson
-Humboldt Hill
-Huntington Beach
-Huntington Park
+Humboldt-Hill
+Huntington-Beach
+Huntington-Park
 Huron
 Hydesville
-Idyllwild-Pine Cove
+Idyllwild-Pine-Cove
 Imperial
-Imperial Beach
+Imperial-Beach
 Independence
-Indian Falls
-Indian Wells
+Indian-Falls
+Indian-Wells
 Indio
 Industry
 Inglewood
@@ -439,10 +438,10 @@ Interlaken
 Inverness
 Inyokern
 Ione
-Iron Horse
+Iron-Horse
 Irvine
 Irwindale
-Isla Vista
+Isla-Vista
 Isleton
 Ivanhoe
 Jackson
@@ -450,7 +449,7 @@ Jamestown
 Jamul
 Johannesburg
 Johnsville
-Joshua Tree
+Joshua-Tree
 Julian
 Keddie
 Keeler
@@ -461,111 +460,111 @@ Kensington
 Kentfield
 Kerman
 Kernville
-Kettleman City
+Kettleman-City
 Keyes
-King City
-Kings Beach
+King-City
+Kings-Beach
 Kingsburg
 Kirkwood
 Klamath
 Knightsen
-La Canada Flintridge
-La Crescenta-Montrose
-Ladera Heights
+La-Canada-Flintridge
+La-Crescenta-Montrose
+Ladera-Heights
 Lafayette
 Laguna
-Laguna Beach
-Laguna Hills
-Laguna Niguel
-Laguna West-Lakeside
-Laguna Woods
-Lagunitas-Forest Knolls
-La Habra
-La Habra Heights
-Lake Almanor Country Club
-Lake Almanor Peninsula
-Lake Almanor West
-Lake Arrowhead
-Lake Davis
-Lake Elsinore
-Lake Forest
+Laguna-Beach
+Laguna-Hills
+Laguna-Niguel
+Laguna-West-Lakeside
+Laguna-Woods
+Lagunitas-Forest-Knolls
+La-Habra
+La-Habra-Heights
+Lake-Almanor-Country-Club
+Lake-Almanor-Peninsula
+Lake-Almanor-West
+Lake-Arrowhead
+Lake-Davis
+Lake-Elsinore
+Lake-Forest
 Lakehead-Lakeshore
-Lake Isabella
-Lakeland Village
-Lake Los Angeles
-Lake Nacimiento
-Lake of the Pines
-Lake of the Woods
+Lake-Isabella
+Lakeland-Village
+Lake-Los-Angeles
+Lake-Nacimiento
+Lake-of-the-Pines
+Lake-of-the-Woods
 Lakeport
-Lake San Marcos
+Lake-San-Marcos
 Lakeside
 Lakeview
-Lake Wildwood
+Lake-Wildwood
 Lakewood
-La Mesa
-La Mirada
+La-Mesa
+La-Mirada
 Lamont
 Lanare
 Lancaster
-La Palma
-La Porte
-La Presa
-La Puente
-La Quinta
-La Riviera
+La-Palma
+La-Porte
+La-Presa
+La-Puente
+La-Quinta
+La-Riviera
 Larkfield-Wikiup
 Larkspur
-Las Flores
-Las Lomas
+Las-Flores
+Las-Lomas
 Lathrop
 Laton
-La Verne
+La-Verne
 Lawndale
 Laytonville
 Lebec
-Le Grand
-Lemon Cove
-Lemon Grove
+Le-Grand
+Lemon-Cove
+Lemon-Grove
 Lemoore
-Lemoore Station
+Lemoore-Station
 Lennox
 Lenwood
 Lewiston
-Lexington Hills
+Lexington-Hills
 Lincoln
-Lincoln Village
+Lincoln-Village
 Linda
 Linden
 Lindsay
-Little Grass Valley
+Little-Grass-Valley
 Littlerock
-Live Oak
-Live Oak
+Live-Oak
+Live-Oak
 Livermore
 Livingston
 Lockeford
 Lodi
-Loma Linda
-Loma Rica
+Loma-Linda
+Loma-Rica
 Lomita
 Lompoc
 London
-Lone Pine
-Long Beach
+Lone-Pine
+Long-Beach
 Loomis
-Los Alamitos
-Los Alamos
-Los Altos
-Los Altos Hills
-Los Angeles
-Los Banos
-Los Gatos
-Los Molinos
-Lost Hills
-Lower Lake
+Los-Alamitos
+Los-Alamos
+Los-Altos
+Los-Altos-Hills
+Los-Angeles
+Los-Banos
+Los-Gatos
+Los-Molinos
+Lost-Hills
+Lower-Lake
 Loyalton
 Loyola
-Lucas Valley-Marinwood
+Lucas-Valley-Marinwood
 Lucerne
 Lynwood
 McArthur
@@ -575,52 +574,52 @@ McFarland
 McKinleyville
 McKittrick
 Madera
-Madera Acres
+Madera-Acres
 Magalia
 Malibu
-Mammoth Lakes
-Manhattan Beach
+Mammoth-Lakes
+Manhattan-Beach
 Manteca
 Manton
-March AFB
+March-AFB
 Maricopa
 Marina
-Marina del Rey
+Marina-del-Rey
 Mariposa
 Markleeville
 Martinez
 Marysville
-Mayflower Village
+Mayflower-Village
 Maywood
-Meadow Valley
-Meadow Vista
+Meadow-Valley
+Meadow-Vista
 Mecca
-Meiners Oaks
+Meiners-Oaks
 Mendocino
 Mendota
-Menlo Park
+Menlo-Park
 Mentone
 Merced
 Mesa
-Mesa Vista
+Mesa-Vista
 Mettler
 Middletown
 Millbrae
-Mill Valley
+Mill-Valley
 Millville
 Milpitas
 Mineral
-Mira Loma
-Mira Monte
-Mission Canyon
-Mission Hills
-Mission Viejo
-Mi-Wuk Village
+Mira-Loma
+Mira-Monte
+Mission-Canyon
+Mission-Hills
+Mission-Viejo
+Mi-Wuk-Village
 Modesto
-Mohawk Vista
+Mohawk-Vista
 Mojave
-Mokelumne Hill
-Mono Vista
+Mokelumne-Hill
+Mono-Vista
 Monrovia
 Montague
 Montara
@@ -628,52 +627,52 @@ Montclair
 Montebello
 Montecito
 Monterey
-Monterey Park
-Monte Rio
-Monte Sereno
-Montgomery Creek
+Monterey-Park
+Monte-Rio
+Monte-Sereno
+Montgomery-Creek
 Moorpark
 Morada
 Moraga
-Moreno Valley
-Morgan Hill
-Morongo Valley
-Morro Bay
-Moss Beach
-Moss Landing
-Mountain Mesa
-Mountain Ranch
-Mountain View
-Mountain View
-Mountain View Acres
-Mount Hebron
-Mount Shasta
-Muir Beach
+Moreno-Valley
+Morgan-Hill
+Morongo-Valley
+Morro-Bay
+Moss-Beach
+Moss-Landing
+Mountain-Mesa
+Mountain-Ranch
+Mountain-View
+Mountain-View
+Mountain-View-Acres
+Mount-Hebron
+Mount-Shasta
+Muir-Beach
 Murphys
 Murrieta
-Murrieta Hot Springs
+Murrieta-Hot-Springs
 Muscoy
 Myrtletown
 Napa
-National City
-Nebo Center
+National-City
+Nebo-Center
 Needles
-Nevada City
+Nevada-City
 Newark
 Newman
-Newport Beach
-Newport Coast
+Newport-Beach
+Newport-Coast
 Nice
 Niland
 Nipomo
 Norco
-North Auburn
-North Edwards
-North El Monte
-North Fair Oaks
-North Highlands
-North Lakeport
-North Woodbridge
+North-Auburn
+North-Edwards
+North-El-Monte
+North-Fair-Oaks
+North-Highlands
+North-Lakeport
+North-Woodbridge
 Norwalk
 Novato
 Nuevo
@@ -681,8 +680,8 @@ Oakdale
 Oakhurst
 Oakland
 Oakley
-Oak Park
-Oak View
+Oak-Park
+Oak-View
 Occidental
 Oceano
 Oceanside
@@ -693,119 +692,120 @@ Olancha
 Olivehurst
 Ontario
 Onyx
-Opal Cliffs
+Opal-Cliffs
 Orange
-Orange Cove
+Orange-Cove
 Orangevale
 Orcutt
 Orinda
 Orland
 Orosi
 Oroville
-Oroville East
+Oroville-East
 Oxnard
 Pacheco
 Pacifica
-Pacific Grove
+Pacific-Grove
 Pajaro
 Palermo
 Palmdale
-Palm Desert
-Palm Springs
-Palo Alto
-Palo Cedro
-Palos Verdes Estates
-Palo Verde
+Palm-Desert
+Palm-Springs
+Palo-Alto
+Palo-Cedro
+Palos-Verdes-Estates
+Palo-Verde
 Paradise
 Paramount
 Parksdale
-Parkway-South Sacramento
+Parkway-South-Sacramento
 Parkwood
 Parlier
 Pasadena
+Paso-Robles
 Patterson
 Paxton
 Pearsonville
 Pedley
-Penn Valley
+Penn-Valley
 Perris
 Petaluma
-Phoenix Lake-Cedar Ridge
-Pico Rivera
+Phoenix-Lake-Cedar-Ridge
+Pico-Rivera
 Piedmont
-Pine Hills
-Pine Mountain Club
-Pine Valley
+Pine-Hills
+Pine-Mountain-Club
+Pine-Valley
 Pinole
 Piru
-Pismo Beach
+Pismo-Beach
 Pittsburg
 Pixley
 Placentia
 Placerville
 Planada
-Pleasant Hill
+Pleasant-Hill
 Pleasanton
-Plumas Eureka
+Plumas-Eureka
 Plymouth
-Point Arena
-Point Reyes Station
-Pollock Pines
+Point-Arena
+Point-Reyes-Station
+Pollock-Pines
 Pomona
-Poplar-Cotton Center
-Port Costa
+Poplar-Cotton-Center
+Port-Costa
 Porterville
-Port Hueneme
+Port-Hueneme
 Portola
-Portola Hills
-Portola Valley
+Portola-Hills
+Portola-Valley
 Poway
 Prattville
 Prunedale
-Quail Valley
-Quartz Hill
+Quail-Valley
+Quartz-Hill
 Quincy
-Rail Road Flat
+Rail-Road-Flat
 Rainbow
-Raisin City
+Raisin-City
 Ramona
-Rancho Calaveras
-Rancho Cordova
-Rancho Cucamonga
-Rancho Mirage
-Rancho Murieta
-Rancho Palos Verdes
-Rancho San Diego
-Rancho Santa Fe
-Rancho Santa Margarita
-Rancho Tehama Reserve
+Rancho-Calaveras
+Rancho-Cordova
+Rancho-Cucamonga
+Rancho-Mirage
+Rancho-Murieta
+Rancho-Palos-Verdes
+Rancho-San-Diego
+Rancho-Santa-Fe
+Rancho-Santa-Margarita
+Rancho-Tehama-Reserve
 Randsburg
-Red Bluff
+Red-Bluff
 Redding
 Redlands
-Redondo Beach
+Redondo-Beach
 Redway
-Redwood City
+Redwood-City
 Reedley
 Rialto
 Richgrove
 Richmond
 Ridgecrest
 Ridgemark
-Rio Dell
-Rio del Mar
-Rio Linda
-Rio Vista
+Rio-Dell
+Rio-del-Mar
+Rio-Linda
+Rio-Vista
 Ripon
 Riverbank
 Riverdale
-Riverdale Park
+Riverdale-Park
 Riverside
 Rocklin
 Rodeo
-Rohnert Park
-Rolling Hills
-Rolling Hills Estates
+Rohnert-Park
+Rolling-Hills
+Rolling-Hills-Estates
 Rollingwood
 Romoland
 Rosamond
@@ -816,161 +816,160 @@ Rosemont
 Roseville
 Ross
 Rossmoor
-Round Mountain
-Round Valley
-Rowland Heights
+Round-Mountain
+Round-Valley
+Rowland-Heights
 Rubidoux
-Running Springs
+Running-Springs
 Sacramento
-St. Helena
+St.Helena
 Salida
 Salinas
-Salton City
-Salton Sea Beach
-San Andreas
-San Anselmo
-San Antonio Heights
-San Ardo
-San Bernardino
-San Bruno
-San Buenaventura (Ventura)
-San Carlos
-San Clemente
-Sand City
-San Diego
-San Diego Country Estates
-San Dimas
-San Fernando
-San Francisco
-San Gabriel
+Salton-City
+Salton-Sea-Beach
+San-Andreas
+San-Anselmo
+San-Antonio-Heights
+San-Ardo
+San-Bernardino
+San-Bruno
+San-Carlos
+San-Clemente
+Sand-City
+San-Diego
+San-Diego-Country-Estates
+San-Dimas
+San-Fernando
+San-Francisco
+San-Gabriel
 Sanger
-San Geronimo
-San Jacinto
-San Joaquin
-San Joaquin Hills
-San Jose
-San Juan Bautista
-San Juan Capistrano
-San Leandro
-San Lorenzo
-San Lucas
-San Luis Obispo
-San Marcos
-San Marino
-San Martin
-San Mateo
-San Miguel
-San Pablo
-San Rafael
-San Ramon
-Santa Ana
-Santa Barbara
-Santa Clara
-Santa Clarita
-Santa Cruz
-Santa Fe Springs
-Santa Maria
-Santa Monica
-Santa Paula
-Santa Rosa
-Santa Venetia
-Santa Ynez
+San-Geronimo
+San-Jacinto
+San-Joaquin
+San-Joaquin-Hills
+San-Jose
+San-Juan-Bautista
+San-Juan-Capistrano
+San-Leandro
+San-Lorenzo
+San-Lucas
+San-Luis-Obispo
+San-Marcos
+San-Marino
+San-Martin
+San-Mateo
+San-Miguel
+San-Pablo
+San-Rafael
+San-Ramon
+Santa-Ana
+Santa-Barbara
+Santa-Clara
+Santa-Clarita
+Santa-Cruz
+Santa-Fe-Springs
+Santa-Maria
+Santa-Monica
+Santa-Paula
+Santa-Rosa
+Santa-Venetia
+Santa-Ynez
 Santee
 Saratoga
 Sausalito
-Scotts Valley
-Seal Beach
-Searles Valley
+Scotts-Valley
+Seal-Beach
+Searles-Valley
 Seaside
 Sebastopol
-Sedco Hills
+Sedco-Hills
 Seeley
 Selma
-Seven Trees
+Seven-Trees
 Shackelford
 Shafter
 Shandon
-Shasta Lake
-Shaver Lake
-Shingle Springs
+Shasta-Lake
+Shaver-Lake
+Shingle-Springs
 Shingletown
 Shoshone
-Sierra Madre
-Signal Hill
-Simi Valley
-Solana Beach
+Sierra-Madre
+Signal-Hill
+Simi-Valley
+Solana-Beach
 Soledad
 Solvang
 Sonoma
 Sonora
 Soquel
 Soulsbyville
-South Dos Palos
-South El Monte
-South Gate
-South Lake Tahoe
-South Oroville
-South Pasadena
-South San Francisco
-South San Gabriel
-South San Jose Hills
-South Taft
-South Whittier
-South Woodbridge
-South Yuba City
+South-Dos-Palos
+South-El-Monte
+South-Gate
+South-Lake-Tahoe
+South-Oroville
+South-Pasadena
+South-San-Francisco
+South-San-Gabriel
+South-San-Jose-Hills
+South-Taft
+South-Whittier
+South-Woodbridge
+South-Yuba-City
 Spreckels
-Spring Garden
-Spring Valley
+Spring-Garden
+Spring-Valley
 Springville
-Squaw Valley
-Squirrel Mountain Valley
-Stallion Springs
+Squaw-Valley
+Squirrel-Mountain-Valley
+Stallion-Springs
 Stanford
 Stanton
-Stinson Beach
+Stinson-Beach
 Stockton
 Storrie
 Stratford
 Strathmore
 Strawberry
-Suisun City
+Suisun-City
 Summerland
-Sun City
-Sunnyside-Tahoe City
+Sun-City
+Sunnyside-Tahoe-City
 Sunnyslope
 Sunnyvale
 Sunol
 Sunol-Midtown
 Susanville
 Sutter
-Sutter Creek
+Sutter-Creek
 Taft
-Taft Heights
-Taft Mosswood
-Tahoe Vista
+Taft-Heights
+Taft-Mosswood
+Tahoe-Vista
 Talmage
-Tamalpais-Homestead Valley
-Tara Hills
+Tamalpais-Homestead-Valley
+Tara-Hills
 Taylorsville
 Tecopa
 Tehachapi
 Tehama
 Temecula
 Temelec
-Temple City
+Temple-City
 Templeton
 Tennant
-Terra Bella
+Terra-Bella
 Thermalito
-Thousand Oaks
-Thousand Palms
-Three Rivers
+Thousand-Oaks
+Thousand-Palms
+Three-Rivers
 Tiburon
-Tierra Buena
+Tierra-Buena
 Tipton
 Tobin
 Tomales
-Toro Canyon
+Toro-Canyon
 Torrance
 Tracy
 Tranquillity
@@ -979,47 +978,47 @@ Trinidad
 Truckee
 Tulare
 Tulelake
-Tuolumne City
+Tuolumne-City
 Tupman
 Turlock
 Tustin
-Tustin Foothills
+Tustin-Foothills
 Twain
-Twain Harte
-Twentynine Palms
-Twentynine Palms Base
-Twin Lakes
+Twain-Harte
+Twentynine-Palms
+Twentynine-Palms-Base
+Twin-Lakes
 Ukiah
-Union City
+Union-City
 Upland
-Upper Lake
+Upper-Lake
 Vacaville
 Valinda
 Vallecito
 Vallejo
-Valle Vista
-Valley Acres
-Valley Center
-Valley Ranch
-Valley Springs
-Val Verde
-Vandenberg AFB
-Vandenberg Village
+Valle-Vista
+Valley-Acres
+Valley-Center
+Valley-Ranch
+Valley-Springs
+Val-Verde
+Vandenberg-AFB
+Vandenberg-Village
 Vernon
 Victorville
-View Park-Windsor Hills
-Villa Park
+View-Park-Windsor-Hills
+Villa-Park
 Vincent
-Vine Hill
+Vine-Hill
 Vineyard
 Visalia
 Vista
 Waldon
 Wallace
 Walnut
-Walnut Creek
-Walnut Grove
-Walnut Park
+Walnut-Creek
+Walnut-Grove
+Walnut-Park
 Wasco
 Waterford
 Watsonville
@@ -1027,24 +1026,24 @@ Weaverville
 Weed
 Weedpatch
 Weldon
-West Athens
-West Bishop
-West Carson
-West Compton
-West Covina
+West-Athens
+West-Bishop
+West-Carson
+West-Compton
+West-Covina
 Westhaven-Moonstone
-West Hollywood
-Westlake Village
+West-Hollywood
+Westlake-Village
 Westley
-West Menlo Park
+West-Menlo-Park
 Westminster
-West Modesto
+West-Modesto
 Westmont
 Westmorland
-West Point
-West Puente Valley
-West Sacramento
-West Whittier-Los Nietos
+West-Point
+West-Puente-Valley
+West-Sacramento
+West-Whittier-Los-Nietos
 Westwood
 Wheatland
 Whitehawk
@@ -1054,16 +1053,16 @@ Wilkerson
 Williams
 Willits
 Willowbrook
-Willow Creek
+Willow-Creek
 Willows
 Wilton
 Winchester
 Windsor
-Winter Gardens
+Winter-Gardens
 Winterhaven
 Winters
 Winton
-Wofford Heights
+Wofford-Heights
 Woodacre
 Woodcrest
 Woodlake
@@ -1071,11 +1070,12 @@ Woodland
 Woodside
 Woodville
 Wrightwood
-Yorba Linda
-Yosemite Lakes
-Yosemite Valley
+Ventura
+Yorba-Linda
+Yosemite-Lakes
+Yosemite-Valley
 Yountville
 Yreka
-Yuba City
+Yuba-City
 Yucaipa
-Yucca Valley
+Yucca-Valley
