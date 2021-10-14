@@ -24,7 +24,7 @@ def parse_filename(filename: str) -> str:
 	filename format expected is CA_City-Rolling-Hills-Estates_2014.txt
 	Args:
 		filename (str): a filename (basepath of a filepath) that has the 
-		format StateCode_CityORcounty_Place-Name_PlanYear.filetype
+		format StateCode_CityORcounty-Place-Name_PlanYear.filetype
 	Returns:
 		Dict: Dictionarty containing filepath information 
 		the keys are state, filename, is_city, place_name,
@@ -32,7 +32,7 @@ def parse_filename(filename: str) -> str:
 	"""		
 
 	search_result = re.search(r'([A-z]{2})_(City|county)-([A-z-]*)_([0-9]{4}|nd).(txt|pdf|PDF.txt)', filename)
-	assert search_result, 'invalid filename, must follow format State_CityORcounty_Place-Name_PlanYear.filetype'
+	assert search_result, 'invalid filename, must follow format State_CityORcounty-Place-Name_PlanYear.filetype'
 
 	state = search_result.group(1)
 	is_city = True if search_result.group(2) == 'City' else False
