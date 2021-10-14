@@ -170,7 +170,7 @@ def upload_file1():  # function to upload file
                 location_name=request.form['county']
             
             # generate filename with select form data
-            # location_name.replace(" ", "-")
+            location_name.replace(" ", "-")
             file.filename=request.form['state']+"_"+request.form['type']+"-"+location_name+"_"+request.form['year']+".pdf"
             print(file.filename)
 
