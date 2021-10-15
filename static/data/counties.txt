@@ -4,9 +4,9 @@ Amador
 Butte
 Calaveras
 Colusa
-Contra Costa
-Del Norte
-El Dorado
+Contra-Costa
+Del-Norte
+El-Dorado
 Fresno
 Glenn
 Humboldt
@@ -16,7 +16,7 @@ Kern
 Kings
 Lake
 Lassen
-Los Angeles
+Los-Angeles
 Madera
 Marin
 Mariposa
@@ -32,16 +32,16 @@ Placer
 Plumas
 Riverside
 Sacramento
-San Benito
-San Bernardino
-San Diego
-San Francisco
-San Joaquin
-San Luis Obispo
-San Mateo
-Santa Barbara
-Santa Clara
-Santa Cruz
+San-Benito
+San-Bernardino
+San-Diego
+San-Francisco
+San-Joaquin
+San-Luis-Obispo
+San-Mateo
+Santa-Barbara
+Santa-Clara
+Santa-Cruz
 Shasta
 Sierra
 Siskiyou
