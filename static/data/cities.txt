@@ -117,7 +117,6 @@ Buellton
 Buena-Park
 Buena-Vista
 Burbank
-Burbank
 Burlingame
 Burney
 Buttonwillow
@@ -283,11 +282,11 @@ East-Richmond-Heights
 East-San-Gabriel
 East-Shore
 East-Sonora
+Eastvale
 Edgewood
 Edwards-AFB
 El-Cajon
 El-Centro
-El-Cerrito
 El-Cerrito
 El-Dorado-Hills
 Eldridge
@@ -451,6 +450,7 @@ Johannesburg
 Johnsville
 Joshua-Tree
 Julian
+Jurupa-Valley
 Keddie
 Keeler
 Keene
@@ -538,7 +538,6 @@ Linden
 Lindsay
 Little-Grass-Valley
 Littlerock
-Live-Oak
 Live-Oak
 Livermore
 Livingston
@@ -642,7 +641,6 @@ Moss-Beach
 Moss-Landing
 Mountain-Mesa
 Mountain-Ranch
-Mountain-View
 Mountain-View
 Mountain-View-Acres
 Mount-Hebron
