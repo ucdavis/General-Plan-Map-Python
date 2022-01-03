@@ -55,6 +55,7 @@ nohup.out
 passw
 pass_generator.py
 mycreds.txt
+.env
 
 #data files 
 static/backup/*
