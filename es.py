@@ -159,7 +159,7 @@ def elastic_search(query) -> Tuple[List[int], List[float]]:
         "fields": ["text"],
         "default_operator": "and"
     }}}
-	search = es.search(index='test_4' ,body=query_json) 
+	search = es.search(index='test_4' ,body=query_json, request_timeout=60) 
 	ids = []
 	scores = []
 	for hit in search['hits']['hits']:
