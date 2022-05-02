@@ -2,7 +2,7 @@
 
 ## How to Access
 
-You can access a working version of this application [here](https://critical-data-analysis.org/general-plan-map/).
+You can access a working version of this application [here](https://critical-data-analysis.org/general-plan-map/). 
 
 ## About
 
