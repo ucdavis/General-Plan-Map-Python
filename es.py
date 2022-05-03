@@ -145,23 +145,6 @@ def index_everything():
 		json.dump(hash_to_prop_mapping, fp)
 	index_to_info_map = None
 
-# def check_lists():
-# 	plan_df = pd.read_json('key_hash_mapping.json', orient='index')
-# 	plan_df = plan_df.sort_values(by='plan_date', ascending=False)
-# 	plan_df = plan_df.sort_values(by='place_name')
-
-# 	city_df = plan_df[plan_df.is_city == 'true']
-# 	county_df = plan_df[plan_df.is_city == 'false']
-
-# 	print(city_df)
-# 	print(county_df)
-
-
-
-# @app.route('/recentplans/', methods=['GET'])
-# def get_recentyear() -> 
-
-
 def elastic_search(query) -> Tuple[List[int], List[float]]:
 	"""Puts a query into elasticsearch and returns the ids and score
 	Args:
