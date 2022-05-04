@@ -9,7 +9,6 @@ from collections import namedtuple
 import csv 
 from typing import Dict, List, Tuple
 from collections import OrderedDict
-from dfply import * 
 import pandas as pd
 #when you load this pacakge these global variables are defined 
 #es = Elasticsearch('http://localhost:9200')
@@ -143,7 +142,20 @@ def index_everything():
 		i += 1
 	with open('key_hash_mapping.json', 'w') as fp:
 		json.dump(hash_to_prop_mapping, fp)
+	create_csv()
 	index_to_info_map = None
+
+def create_csv():
+	with open('key_hash_mapping.json', 'r') as key_hash:
+		json_df = pd.read_json(key_hash, orient='index')
+	
+	json_df = json_df.drop(json_df.columns[[0, 1, 5]], axis=1)
+	json_df.rename(columns={"is_city": "city/county"}, inplace=True)
+	json_df = json_df.replace({'city/county':{True:'city', False:'county'}})
+
+	path_for_csv = 'static/data/names-and-years-in-database.csv'
+	json_df.to_csv(path_for_csv)
+	print(".csv file saved!")
 
 def elastic_search(query) -> Tuple[List[int], List[float]]:
 	"""Puts a query into elasticsearch and returns the ids and score
