@@ -9,7 +9,6 @@ from collections import namedtuple
 import csv 
 from typing import Dict, List, Tuple
 from collections import OrderedDict
-from dfply import * 
 import pandas as pd
 #when you load this pacakge these global variables are defined 
 #es = Elasticsearch('http://localhost:9200')
@@ -144,6 +143,24 @@ def index_everything():
 	with open('key_hash_mapping.json', 'w') as fp:
 		json.dump(hash_to_prop_mapping, fp)
 	index_to_info_map = None
+
+def get_recentyears():
+	plan_df = pd.read_json('key_hash_mapping.json', orient='index')
+	plan_df.drop(['state','filename','filetype'], axis=1, inplace=True)
+
+	city_df = plan_df[plan_df.is_city == True]
+	county_df = plan_df[plan_df.is_city == False]
+	city_df.sort_values(by='plan_date', ascending=False, inplace=True)
+	city_df.sort_values(by='place_name', inplace=True)
+	county_df.sort_values(by='plan_date', ascending=False, inplace=True)
+	county_df.sort_values(by='place_name', inplace=True)
+	print(city_df)
+	print(county_df)
+
+# @app.route('/recentplans/', methods=['GET'])
+# def get_recentyears() ->
+
+
 
 def elastic_search(query) -> Tuple[List[int], List[float]]:
 	"""Puts a query into elasticsearch and returns the ids and score
