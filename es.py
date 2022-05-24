@@ -9,7 +9,9 @@ from collections import namedtuple
 import csv 
 from typing import Dict, List, Tuple
 from collections import OrderedDict
+from httplib2 import RedirectLimit
 import pandas as pd
+from datetime import date
 #when you load this pacakge these global variables are defined 
 #es = Elasticsearch('http://localhost:9200')
 # es = Elasticsearch(
@@ -150,17 +152,33 @@ def get_recentyears():
 
 	city_df = plan_df[plan_df.is_city == True]
 	county_df = plan_df[plan_df.is_city == False]
-	city_df.sort_values(by='plan_date', ascending=False, inplace=True)
-	city_df.sort_values(by='place_name', inplace=True)
-	county_df.sort_values(by='plan_date', ascending=False, inplace=True)
-	county_df.sort_values(by='place_name', inplace=True)
+	city_df.sort_values(by=['place_name','plan_date'], ascending=[True,False], inplace=True)
+	city_df.drop_duplicates(subset='place_name', keep='first', inplace=True)
+	city_df["color"] = city_df["plan_date"].apply(assign_color)
+	county_df.sort_values(by=['place_name','plan_date'], ascending=[True,False], inplace=True)
+	county_df.drop_duplicates(subset='place_name', keep='first', inplace=True)
+	county_df["color"] = county_df["plan_date"].apply(assign_color)
+
 	print(city_df)
 	print(county_df)
 
-# @app.route('/recentplans/', methods=['GET'])
-# def get_recentyears() ->
-
-
+# Color Key: 1 - Green, 
+# 2 - Yellow, 3 - Orange
+# 4 - Red, 5 - Purple
+def assign_color(plan_year: int):
+	curr_year = date.today().year
+	diff_in_year = curr_year - plan_year
+	if (diff_in_year <= 3):
+		return 1
+	elif (diff_in_year > 3 and diff_in_year <= 5):
+		return 2
+	elif (diff_in_year > 5 and diff_in_year <= 8):
+		return 3
+	elif (diff_in_year > 8 and diff_in_year <= 15):
+		return 4
+	elif (diff_in_year > 15):
+		return 5
+	
 
 def elastic_search(query) -> Tuple[List[int], List[float]]:
 	"""Puts a query into elasticsearch and returns the ids and score
