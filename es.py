@@ -159,8 +159,10 @@ def get_recentyears():
 	county_df.drop_duplicates(subset='place_name', keep='first', inplace=True)
 	county_df["color"] = county_df["plan_date"].apply(assign_color)
 
-	print(city_df)
-	print(county_df)
+	path_to_recentcity = 'static/data/recent-cityplans.csv'
+	path_to_recentcounty = 'static/data/recent-countyplans.csv'
+	city_df.to_csv(path_to_recentcity)
+	county_df.to_csv(path_to_recentcounty)
 
 # Color Key: 1 - Green, 
 # 2 - Yellow, 3 - Orange
