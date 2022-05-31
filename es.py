@@ -9,6 +9,7 @@ from collections import namedtuple
 import csv 
 from typing import Dict, List, Tuple
 from collections import OrderedDict
+import pandas as pd
 #when you load this pacakge these global variables are defined 
 #es = Elasticsearch('http://localhost:9200')
 # es = Elasticsearch(
@@ -89,7 +90,7 @@ def add_to_index(filepath:str) -> None:
 		filepath (str): a filepath to a txt file general plan
 	"""	
 	
-	i = get_max_index() 
+	i = get_max_index()
 
 	try: 
 		filename = os.path.basename(filepath)
@@ -118,6 +119,7 @@ def index_everything():
 	"""Adds all of the txt files in the data directory to the elasticsearch index
 	"""	
 	global es
+	global index_to_info_map
 	wd = os.getcwd()
 	data_dir = os.path.join(wd, 'static', 'data', 'places')
 	filepaths = glob.glob(data_dir+'/*.txt')
@@ -138,9 +140,22 @@ def index_everything():
 		hash_to_prop_mapping[keyhash] = parsed_filename
 		es.index(index='test_4', id=keyhash, body={'text': txt, 'filename': filename}, )
 		i += 1
-
 	with open('key_hash_mapping.json', 'w') as fp:
 		json.dump(hash_to_prop_mapping, fp)
+	create_csv()
+	index_to_info_map = None
+
+def create_csv():
+	with open('key_hash_mapping.json', 'r') as key_hash:
+		json_df = pd.read_json(key_hash, orient='index')
+	
+	json_df = json_df.drop(json_df.columns[[0, 1, 5]], axis=1)
+	json_df.rename(columns={"is_city": "city/county"}, inplace=True)
+	json_df = json_df.replace({'city/county':{True:'city', False:'county'}})
+
+	path_for_csv = 'static/data/names-and-years-in-database.csv'
+	json_df.to_csv(path_for_csv)
+	print(".csv file saved!")
 
 def elastic_search(query) -> Tuple[List[int], List[float]]:
 	"""Puts a query into elasticsearch and returns the ids and score
@@ -211,6 +226,7 @@ def map_index_to_vals(search_result_indices, key_to_hash_path='key_hash_mapping.
 	else:
 		my_dict = index_to_info_map
 
+	# print(index_to_info_map)
 	return list(map(lambda x:my_dict[str(x)], search_result_indices))
 
 def elastic_search_highlight(query):
