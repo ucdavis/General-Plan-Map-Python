@@ -59,7 +59,7 @@ mycreds.txt
 
 #data files 
 static/backup/*
-# static/cssjs/*
+static/cssjs/*
 static/data/*
 static/static/*
 !static/data/CA_geojson/map.geojson
