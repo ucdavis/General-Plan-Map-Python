@@ -329,6 +329,7 @@ def index_search_box():
     #====================================================
     #Div with summary counts of cities mentioning query
     #====================================================
+    twitQuery = re.sub('"','',wordinput)
     uniqueCities = len(set(cityData["names"]))
     uniqueCounties = len(set(countyData["names"]))
     numCities = 482
@@ -336,13 +337,13 @@ def index_search_box():
     shareDiv = Div(text = """
                         <h1> Share Results: </h1>
                         <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-text="{} out of {} California cities mention &#39;{}&#39; in their General Plans." data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                        """.format(uniqueCities, numCities, wordinput),
+                        """.format(uniqueCities, numCities, twitQuery),
                         margin = (0, 0, 0, 40),
                         css_classes = ["share-div"])
     resultsDiv = Div(text = """
                      <span class='darker-text-color'>{} </span><span class='white-text-color'>out of </span><span class='darker-text-color'>{} </span><span class='white-text-color'>cities mention </span><span class='darker-text-color'>'{}'</span><br/><br/>
                      <span class='darker-text-color'>{} </span><span class='white-text-color'>out of </span><span class='darker-text-color'>{} </span><span class='white-text-color'>counties mention </span><span class='darker-text-color'>'{}'</span>
-                     """.format(uniqueCities, numCities, wordinput, uniqueCounties, numCounties, wordinput),
+                     """.format(uniqueCities, numCities, twitQuery, uniqueCounties, numCounties, twitQuery),
                      margin = (40, 0, 20, 30),
                      css_classes=["results-div"])
 

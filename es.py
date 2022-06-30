@@ -9,6 +9,9 @@ from collections import namedtuple
 import csv 
 from typing import Dict, List, Tuple
 from collections import OrderedDict
+from httplib2 import RedirectLimit
+import pandas as pd
+from datetime import date
 #when you load this pacakge these global variables are defined 
 #es = Elasticsearch('http://localhost:9200')
 # es = Elasticsearch(
@@ -89,7 +92,7 @@ def add_to_index(filepath:str) -> None:
 		filepath (str): a filepath to a txt file general plan
 	"""	
 	
-	i = get_max_index() 
+	i = get_max_index()
 
 	try: 
 		filename = os.path.basename(filepath)
@@ -118,6 +121,7 @@ def index_everything():
 	"""Adds all of the txt files in the data directory to the elasticsearch index
 	"""	
 	global es
+	global index_to_info_map
 	wd = os.getcwd()
 	data_dir = os.path.join(wd, 'static', 'data', 'places')
 	filepaths = glob.glob(data_dir+'/*.txt')
@@ -138,9 +142,45 @@ def index_everything():
 		hash_to_prop_mapping[keyhash] = parsed_filename
 		es.index(index='test_4', id=keyhash, body={'text': txt, 'filename': filename}, )
 		i += 1
-
 	with open('key_hash_mapping.json', 'w') as fp:
 		json.dump(hash_to_prop_mapping, fp)
+	index_to_info_map = None
+
+def get_recentyears():
+	plan_df = pd.read_json('key_hash_mapping.json', orient='index')
+	plan_df.drop(['state','filename','filetype'], axis=1, inplace=True)
+
+	city_df = plan_df[plan_df.is_city == True]
+	county_df = plan_df[plan_df.is_city == False]
+	city_df.sort_values(by=['place_name','plan_date'], ascending=[True,False], inplace=True)
+	city_df.drop_duplicates(subset='place_name', keep='first', inplace=True)
+	city_df["color"] = city_df["plan_date"].apply(assign_color)
+	county_df.sort_values(by=['place_name','plan_date'], ascending=[True,False], inplace=True)
+	county_df.drop_duplicates(subset='place_name', keep='first', inplace=True)
+	county_df["color"] = county_df["plan_date"].apply(assign_color)
+
+	path_to_recentcity = 'static/data/recent-cityplans.csv'
+	path_to_recentcounty = 'static/data/recent-countyplans.csv'
+	city_df.to_csv(path_to_recentcity)
+	county_df.to_csv(path_to_recentcounty)
+
+# Color Key: 1 - Green, 
+# 2 - Yellow, 3 - Orange
+# 4 - Red, 5 - Purple
+def assign_color(plan_year: int):
+	curr_year = date.today().year
+	diff_in_year = curr_year - plan_year
+	if (diff_in_year <= 3):
+		return 1
+	elif (diff_in_year > 3 and diff_in_year <= 5):
+		return 2
+	elif (diff_in_year > 5 and diff_in_year <= 8):
+		return 3
+	elif (diff_in_year > 8 and diff_in_year <= 15):
+		return 4
+	elif (diff_in_year > 15):
+		return 5
+	
 
 def elastic_search(query) -> Tuple[List[int], List[float]]:
 	"""Puts a query into elasticsearch and returns the ids and score
@@ -159,7 +199,7 @@ def elastic_search(query) -> Tuple[List[int], List[float]]:
         "fields": ["text"],
         "default_operator": "and"
     }}}
-	search = es.search(index='test_4' ,body=query_json) 
+	search = es.search(index='test_4' ,body=query_json, request_timeout=60) 
 	ids = []
 	scores = []
 	for hit in search['hits']['hits']:
@@ -211,6 +251,7 @@ def map_index_to_vals(search_result_indices, key_to_hash_path='key_hash_mapping.
 	else:
 		my_dict = index_to_info_map
 
+	# print(index_to_info_map)
 	return list(map(lambda x:my_dict[str(x)], search_result_indices))
 
 def elastic_search_highlight(query):

@@ -18,6 +18,7 @@ import bcrypt
 from datetime import datetime
 import es
 import cv2
+from decouple import config
 
 
 app = Flask(__name__)  # create flask object
@@ -81,11 +82,12 @@ def do_admin_login():  # function to collect username & password
             del blockip[str(request.remote_addr)+"t"]
     else:
 
-        filep=open("passw",'r')
-        hashed=filep.read().encode('utf-8')
-        filep.close()
+        userID = config('userID',default='')
+        password = config('passw',default='')
+
+        hashed=password.encode('utf-8')
         pwd=request.form['password'].encode('utf-8')  # store password and encode to UTF-8
-        if bcrypt.checkpw(pwd, hashed) and request.form['username'] == 'admin':  # check username and password
+        if bcrypt.checkpw(pwd, hashed) and request.form['username'] == userID:  # check username and password
             if str(request.remote_addr) in blockip:
                 del blockip[str(request.remote_addr)]
             session['logged_in'] = True
