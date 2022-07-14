@@ -4,7 +4,7 @@ This guide will walk you through the process of installing a local version of th
 
 # 1. Clone the repo
 
-Start by cloning the repo to your local machine. You can do this by calling `git pull git@github.com:Hack-for-California/General-Plan-Map-Python.git` if you have an ssh key associated with your Github account, otherwise you can use `git pull https://github.com/Hack-for-California/General-Plan-Map-Python.git`, but know with this method you will need to sign in every time you want to push or pull your code. You should not download the repo in zip format, as that will sever the connection between the files and the Github repo, making it more troublesome to push or pull later.
+Start by cloning the repo to your local machine. You can do this by calling `git pull git@github.com:Hack-for-California/General-Plan-Map-Python.git` if you have an ssh key associated with your Github account, otherwise you can use `git clone https://github.com/Hack-for-California/General-Plan-Map-Python.git`, but know with this method you will need to sign in every time you want to push or pull your code. You should not download the repo in zip format, as that will sever the connection between the files and the Github repo, making it more troublesome to push or pull later.
 
 # 2. Set up your working branch
 
