@@ -118,6 +118,15 @@
                 </li>
                 <li class="about-item">
                     <div class="right-content">
+                        <h4>The Plans</h4>
+                        <center name="results">
+                            {{lScript | safe}}
+                            {{lDiv | safe}}
+                        </center>
+                    </div>
+                </li>
+                <li class="about-item">
+                    <div class="right-content">
                         <h4>Instructions</h4>
                         <p>To search for an exact phrase, enclose the exact phrase in quotes. To allow fuzzy searching do not include quotes. After entering a query, click “Search” to search across the plans. The total number of occurrences for each plan will be shown. The search hits can be sorted by count, year, city name or 2010 population. The table can also be exported to allow further research.<br><br>Results are also visualized as maps that show the cities and counties with search hits. This visualization results in places like Los Angeles County being very large while counties with smaller populations are smaller. The search returns a substring, so that if you search 'race' you will also pull up hits for 'race-based policies.' Similarly, you will pull up hits for 'marathon races'. To understand the context of the search hits, click on the year for a city or county plan to view the PDF with the highlighted keywords. Plans were added in 2020, and we are in the process of adding updates. <a href="https://docs.google.com/forms/d/e/1FAIpQLSeCpD1Dil06c8tuSLnDqHp9W_6zK3S50ho4eGQtM4MyBhYM4g/viewform">If you have any feedback please provide it here</a>.</p>
                     </div>
@@ -204,6 +213,9 @@
     <script src="/static/cssjs/js/jquery.counterup.min.js"></script>
     <script src="/static/cssjs/js/imgfix.min.js"></script>
     <script src="/static/cssjs/js/mixitup.js"></script>
+    <script src="/static/cssjs/js/bokeh-2.4.2.min.js" crossorigin="anonymous"></script>
+    <script src="/static/cssjs/js/bokeh-widgets-2.4.2.min.js" crossorigin="anonymous"></script>
+    <script src="/static/cssjs/js/bokeh-tables-2.4.2.min.js" crossorigin="anonymous"></script>
 
     <!-- Global Init -->
     <script src="/static/cssjs/js/custom.js"></script>

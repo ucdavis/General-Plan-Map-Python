@@ -16,6 +16,7 @@ import geopandas as gpd
 from bokeh.models import GeoJSONDataSource
 import json
 from bokeh.io import show, curdoc
+from bokeh.models import GeoJSONDataSource, LinearColorMapper, ColorBar, NumeralTickFormatter
 from bokeh.models import LogColorMapper, ColumnDataSource, DataTable, DateFormatter, TableColumn, NumberFormatter, HTMLTemplateFormatter, Div, SingleIntervalTicker, Range1d
 from bokeh.palettes import Viridis6 as palette
 from bokeh.sampledata.unemployment import data as unemployment
@@ -30,7 +31,11 @@ from bokeh.io import show, output_file
 import shapely.affinity
 import es
 import re
-import geojson 
+import geojson
+
+from datetime import date
+from bokeh.models import Legend, LegendItem
+from bokeh.models import FixedTicker
 ### BELOW NEEDED TO EXPORT BOKEH IMAGE FILES
 # from bokeh.io import export_png
 # from bokeh.io.export import get_screenshot_as_png
@@ -43,9 +48,215 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0  # avoid storing cache
 bootstrap = Bootstrap(app)  # create bootstrap object
 
 
-@app.route('/')  # declare flask page url
+@app.route('/', methods=['GET'])  # declare flask page url
 def my_form():  # function for main index
-    return render_template('index.html')  # return index page
+
+    # Defining the color coding for the cities.
+    color1 = "#2ca25f" # Green : Cities with plan updated less than 5 years ago.
+    color2 = "#fec44f" # Yellow : Cities with plan updated 5-10 years ago.
+    color3 = "#de2d26" # Red : Cities with plan updated 10-15 years ago.
+    color4 = "#8856a7" # Purple : Cities with plan updated 15+ years ago.
+    color0 = "#bdbdbd" # Grey : Cities with no data available.
+
+    # Creating a mapper to map color_code -> color
+    color_mapper = {
+        0 : color0,
+        1 : color1,
+        2 : color2,
+        3 : color3,
+        4 : color4
+    }
+
+    map_json = None
+    geojson_path = os.path.join('static', 'data', 'CA_geojson')
+    map_json = create_city_plans_json(color_mapper)
+
+    if os.path.exists(os.path.join(geojson_path, 'city_plans.geojson')):
+        # city_plans.geojson exists, use it.
+        with open(os.path.join(geojson_path, 'city_plans.geojson'), 'r') as f:
+            map_json = geojson.load(f)
+    else:
+        # create city_plans.geojson, and save it to avoid unnecessary computation.
+        map_json = create_city_plans_json(color_mapper)
+
+
+    # Defining the bokeh map, with source as city_plans json file.
+
+    TOOLS = ["hover", "pan", "wheel_zoom", "save"]
+
+    city_map = figure(
+        title = "Map showing when cities were last updated:",
+        x_axis_location = None,
+        y_axis_location = None,
+        tools = TOOLS,
+        active_scroll = "wheel_zoom",
+        tooltips = [("", "@county_name"), ("", "@city_name"), ("", "@last_year_updated_city")])
+
+    # Here, the tooltips are being made like this because all data is only for cities.
+    # So the required data is appended to the city_plans geojson during the fill_city_colors() execution.
+    # The data is simply printed using tooltips.
+
+    colors = [color_mapper[1]]*5 + [color_mapper[2]]*5 + [color_mapper[3]]*5 + [color_mapper[4]]*5
+    mapper = LinearColorMapper(palette=colors, low=0, high=20)
+    ticker = FixedTicker(ticks=[0,5,10,15,20])
+
+    # ColorBar acts like a legend to show the color coding.
+    color_bar = ColorBar(
+        title = "How many years since the plans were last updated?",
+        title_standoff = 20,
+        color_mapper=mapper,
+        major_label_text_font_size="13px",
+        ticker=ticker,
+        label_standoff=8, 
+        border_line_color="#000000"
+    )
+
+    city_map.add_layout(color_bar, 'right')
+    city_map.grid.grid_line_color = None
+    city_map.hover.point_policy = "follow_mouse"
+    city_map_Geosource = GeoJSONDataSource(geojson = json.dumps(map_json))
+    city_map.patches('xs',
+                    'ys',
+                    source = city_map_Geosource,
+                    fill_color = 'color',
+                    line_color = 'line_color')
+
+
+    cityPanel = Panel(title = "City Data", child = city_map)
+
+    tabs = Tabs(tabs = [cityPanel], css_classes=["table-results-div"], margin = (0, 0, 0, 0))
+    lScript, lDiv = components(layout(tabs))
+    cdn_js = CDN.js_files
+    cdn_css = CDN.css_files
+
+    return render_template('index.html', lScript = lScript, lDiv = lDiv)  # return index page
+
+
+def create_city_plans_json(color_mapper):
+    """This function will create the city_plans.geojson file iff it does not exist. It takes the color_mapper
+    as input
+    Args:
+        color_mapper (dict): the color coding mapped in dictionary format
+    Returns:
+        city_plans (geojson): city_plans geojson data for the bokeh map
+    """
+    geojson_path = os.path.join('static', 'data', 'CA_geojson')
+    map_json = None
+
+    with open(os.path.join(geojson_path, 'map.geojson'), 'r') as f:
+        my_str = f.read()
+        map_json = json.loads(my_str)
+
+    city = gpd.read_file("static/data/city_plans_files/ca-places-boundaries/CA_Places_TIGER2016.shp")
+    city.to_crs("EPSG:4326")
+
+    county = gpd.read_file("static/data/city_plans_files/CA_Counties/CA_Counties_TIGER2016.shp")
+    county.to_crs("EPSG:4326")
+
+    combined = pd.read_csv("static/data/city_plans_files/California_Incorporated_Cities_2022.csv")
+
+    gp = pd.read_csv("static/data/city_plans_files/Cities.csv")
+
+    city.drop('geometry', inplace=True, axis=1)
+    county.drop('geometry', inplace=True, axis=1)
+
+    city1 = city.filter(['NAME'])
+    city1['NAME'] = city1['NAME'].str.upper()
+    city1.columns = ['CITY']
+
+    county1 = county.filter(['NAME'])
+    county1['NAME'] = county1['NAME'].str.upper()
+    county1.columns = ['COUNTY']
+
+    combined['CITY'] = combined['CITY'].str.upper()
+    combined['COUNTY'] = combined['COUNTY'].str.upper()
+    combined = combined.filter(['COUNTY', 'CITY'])
+    combined = combined.merge(city1, on='CITY', how='left')
+    combined = combined.merge(county1, on='COUNTY', how='left')
+    combined = combined.drop_duplicates(['CITY','COUNTY'],keep='first')
+
+
+    todays_date = date.today()
+    gp['updated'] = 1
+    gp_clean = gp.filter(['City_Names', 'updated', 'GP_Last_Updated'])
+    gp_clean.rename(columns = {'City_Names':'CITY', 'GP_Last_Updated':'year_updated'}, inplace = True)
+    gp_clean['CITY'] = gp_clean['CITY'].str.upper()
+    gp_clean['year_updated'] = pd.to_numeric(gp_clean['year_updated'], errors='coerce')
+    gp_clean['last_updated'] = todays_date.year - gp_clean['year_updated']
+    gp_clean['last_updated_color'] = gp_clean.apply(lambda row: get_range_color(row), axis=1)
+
+    final_combined = combined.merge(gp_clean, on='CITY', how='left')
+    final_combined = final_combined.drop_duplicates(['CITY','COUNTY'],keep='first')
+    final_combined = final_combined.filter(['CITY', 'year_updated','last_updated_color'])
+
+    map_json = fill_city_colors(map_json, final_combined, color_mapper)
+
+    with open(os.path.join(geojson_path, 'city_plans.geojson'), 'w') as f:
+        geojson.dump(map_json, f)
+
+    return map_json
+
+def get_range_color(row):
+    """This function will provide the color code for a particular city. 
+    Args:
+        row (dataframe): a row containing info about one city of the final_combined dataframe
+    Returns:
+        int: color code of the city
+    """
+    if pd.isnull(row['last_updated']):
+        return 0
+    elif row['last_updated'] >= 15:
+        return 4
+    elif row['last_updated'] < 15 and row['last_updated'] >= 10:
+        return 3
+    elif row['last_updated'] < 10 and row['last_updated'] >= 5:
+        return 2
+    else:
+        return 1
+
+
+def fill_city_colors(json_dict, final_combined, color_mapper,
+                        blank_county_color = 'white', blank_county_outline = '#b3b3b3'):
+    """This function is used to take word input in the searchbox, query elasticsearch,
+    and then return the results.
+    Args:
+        json_dict (dict): map geojson
+        final_combined (dataframe): details about all the cities (cleaned)
+        color_mapper (dict): the color coding mapped in dictionary format
+    Returns:
+        json_dict (dict): updated geojson according to color_mapper and final_combined
+    """
+    mapper = {}
+    for index, row in final_combined.iterrows():
+        # Getting the last year updated for every city from the dataframe.
+        year = ""
+        if pd.isna(row['year_updated']):
+            year = "No data found"
+        else:
+            year = str(int(row['year_updated']))
+        mapper[row['CITY']] = [row['last_updated_color'], year]
+        
+    city_names = mapper.keys()
+
+    for feature in json_dict['features']:
+        if feature['properties']['name'].upper() in city_names:
+            feature['properties']['city_name'] = "City name: " + feature['properties']['name']
+            feature['properties']['county_name'] = ""
+            feature['properties']['last_year_updated_city'] = "Last Year updated: " + mapper[feature['properties']['name'].upper()][1]
+            feature['properties']['color'] = color_mapper[mapper[feature['properties']['name'].upper()][0]]
+            feature['properties']['line_color'] = blank_county_outline
+        
+        else:
+            feature['properties']['city_name'] = ""
+            feature['properties']['county_name'] = "County name: " + feature['properties']['name']
+            feature['properties']['last_year_updated_city'] = ""
+            feature['properties']['color'] = blank_county_color
+            feature['properties']['line_color'] = blank_county_outline
+
+        # city_name , county_name and last_year_updated_city are new fields being added so they can
+        # be used to print values through tooltips in bokeh map code.
+
+    return json_dict
 
 
 def getResults(wordinput):
