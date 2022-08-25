@@ -41,6 +41,18 @@
     </script>
     <!-- End Matomo Code -->
 
+        <style> 
+            #leftbox{
+                display:table-cell;
+                width:75%;
+            }
+            #rightbox{
+                display:table-cell;
+                vertical-align:middle;
+                width:25%;
+            }
+        </style>
+
     </head>
 
 
@@ -119,9 +131,14 @@
                 <li class="about-item">
                     <div class="right-content">
                         <h4>The Plans</h4>
-                        <center name="results">
-                            {{lScript | safe}}
-                            {{lDiv | safe}}
+                        <center>
+                            <div id="leftbox">
+                                {{lScript | safe}}
+                                {{lDiv | safe}}
+                            </div>
+                            <div id="rightbox">
+                                <img src="/static/images/legend.png" style="width:100%" alt="Legend">
+                            </div>
                         </center>
                     </div>
                 </li>
