@@ -41,7 +41,30 @@
     </script>
     <!-- End Matomo Code -->
 
-        <style> 
+        <style>
+            .styled-table {
+                border-collapse: collapse;
+                margin: 25px 0;
+                font-size: 0.9em;
+                font-family: sans-serif;
+                min-width: 400px;
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+                border:1px solid black;
+            }
+            .styled-table th,
+            .styled-table td {
+                padding: 12px 15px;
+                border:1px solid black;
+            }
+
+            .styled-table tr {
+                border-bottom: 1px solid #dddddd;
+            }
+
+            .styled-table tr:nth-of-type(even) {
+                background-color: #f3f3f3;
+            }
+
             #leftbox{
                 display:table-cell;
                 width:75%;
@@ -119,22 +142,22 @@
                 <li class="about-item">
                     <div class="right-content">
                         <h4>Purpose</h4>
-                        <p>Land-use control is exerted locally through documents known as General Plans. These documents commit city and county governments to long-term planning and development goals that shape the fortunes and health of the jurisdiction through zoning regulations. There is currently little coordination across cities or at the state-level for monitoring where and which policies are adopted. This searchable database of California’s General Plans is the first of its kind. Advocates, policymakers and community members can comprehensively assess plan contents to provide feedback and coordinate efforts. This interactive map reveals how 461 cities and 58 counties in California govern land-use. The portal allows users to search across 112,052 pages of regulations, read and compare policies. The General Plan Portal will evolve as local jurisdictions update plans. <a href="https://journals.sagepub.com/doi/full/10.1177/0739456X21995890">You can read about some of the initial findings from this database here</a>. For corrections, updates, and questions, please contact the lead researcher and project coordinators, <a href="mailto:ckbrinkley@ucdavis.edu&subject=General%20Plan%20Mapper">Catherine Brinkley</a> or <a href="mailto:lnpoirier@ucdavis.edu&subject=General%20Plan%20Mapper">Lindsay Poirier</a>.</p>
+                        <p>Land-use design in California is controlled by local communities through documents known as General Plans. These documents commit city and county governments to long-term planning and development goals that shape the fortunes and health of the jurisdiction through zoning regulations. There is currently little coordination across cities or at the state-level for monitoring where and which policies are adopted. This searchable database of California’s General Plans is the first of its kind. Advocates, policymakers and community members can comprehensively assess plan contents to provide feedback and coordinate efforts. This interactive map reveals how cities and counties in California govern land-use. The portal allows users to search across thousands of pages of regulations, read and compare policies. The General Plan Portal will evolve as local jurisdictions update plans. <a href="https://journals.sagepub.com/doi/full/10.1177/0739456X21995890">You can read about some of the initial findings from this database here</a>. For corrections, updates, and questions, please contact the lead researcher and project coordinators, <a href="mailto:ckbrinkley@ucdavis.edu&subject=General%20Plan%20Mapper">Catherine Brinkley</a> or <a href="mailto:lnpoirier@ucdavis.edu&subject=General%20Plan%20Mapper">Lindsay Poirier</a>.</p>
                     </div>
                 </li>
                 <li class="about-item">
                     <div class="right-content">
                         <h4>Background</h4>
-                        <p>Land-use control is exerted locally through documents known as General Plans. These documents commit city and county governments to long-term planning and development goals that shape the fortunes and health of the jurisdiction through zoning regulations. General plans take an average of ten years to develop. Many general plans are over 2,000 pages in length. Thanks to steady advocacy and state policy, never have more people been involved in the process of crafting their local general plan. As a result, it can take many years for communities to make their general plan due to the numerous community meetings, charrettes and public hearings required in formulating the plan.<br><br>Representative engagement is critical to more equitable outcomes, but how will people make informed suggestions? Common historic practices contributed to inequity through segregation (e.g. redlining, restrictive covenants, urban renewal). Current policies all too often perpetuate such disparities in infrastructure investment. Addressing equity necessarily requires acknowledging and undoing undergirding land-use policies that introduced and contribute to segregation, while also preventing new policies from building on top of broken foundations.<br><br> If a community wants to improve upon innovative policies, they must first understand the suite of options that neighboring communities have piloted to success. To do so, people must read and compare across many plans, not only their own. We invite you to search for topics that interest you and to learn from planning efforts in other cities and counties.</p>
+                        <p>General plans often take an average of ten years to develop. Many general plans are thousands of pages in length. Thanks to steady advocacy and state policy, never have more people been involved in the process of crafting their local general plan. As a result, it can take many years for communities to make their general plan due to the numerous community meetings, charrettes and public hearings required in formulating the plan. Representative engagement is critical to more equitable outcomes. The goal of this database is to help people make informed suggestions for their own planning processes.<br><br> If a community wants to improve upon innovative policies, they must first understand the suite of options that neighboring communities have piloted to success. To do so, people must read and compare across many plans, not only their own. We invite you to search for topics that interest you and to learn from planning efforts in other cities and counties.</p>
                     </div>
                 </li>
                 <li class="about-item">
                     <div class="right-content">
-                        <h4>The Plans</h4>
+                        <h4>Which plans are in the database?</h4>
                         <center>
                             <div id="leftbox">
-                                {{lScript | safe}}
-                                {{lDiv | safe}}
+                                {{scripts[0] | safe}}
+                                {{divs[0] | safe}}
                             </div>
                             <div id="rightbox">
                                 <img src="/static/images/legend.png" style="width:100%" alt="Legend">
@@ -144,8 +167,83 @@
                 </li>
                 <li class="about-item">
                     <div class="right-content">
+                        <center>
+                            {{scripts[1] | safe}}
+                            {{divs[1] | safe}}
+                        </center>
+                    </div>
+                </li>
+                <li class="about-item">
+                    <div class="right-content">
+                        <center>
+                            {{scripts[2] | safe}}
+                            {{divs[2] | safe}}
+                        </center>
+                    </div>
+                </li>
+                <li class="about-item">
+                    <div class="right-content">
+                        <center>
+                            {{scripts[3] | safe}}
+                            {{divs[3] | safe}}
+                        </center>
+                    </div>
+                </li>
+                <!-- Guide for table: https://dev.to/dcodeyt/creating-beautiful-html-tables-with-css-428l -->
+                <!-- Guide for the looping and conditionals, just search your query for jinja or jinja2 template -->
+                <li class="about-item">
+                    <div class="right-content">
+                        <h4>Data represented:</h4>
+                        <table class="styled-table">
+                            <tr>
+                                <td nowrap="nowrap">Total number of files (# of pdfs)</td>
+                                <td>{{stats[0] | safe}}</td>
+                            </tr>
+                            <tr>
+                                <td nowrap="nowrap">Total number of pages</td>
+                                <td>{{stats[1] | safe}}</td>
+                            </tr>
+                            <tr>
+                                <td nowrap="nowrap">Total number of words</td>
+                                <td>{{stats[2] | safe}}</td>
+                            </tr>
+                            <tr>
+                                <td nowrap="nowrap">Cities missing from the database</td>
+                                <td>
+                                    {% for i in range(0, (stats[3] | length)) %}
+                                        {% if i < (stats[3] | length) - 1 %}
+                                            {{ stats[3][i] | safe}},
+                                            <!-- {% if i > 0 and i % 5 == 0 %}
+                                                <br>
+                                            {% endif %} -->
+                                        {% else %}
+                                            {{ stats[3][i] | safe}}
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td nowrap="nowrap">Counties missing from the database</td>
+                                <td>
+                                    {% for i in range(0, (stats[4] | length)) %}
+                                        {% if i < (stats[4] | length) - 1 %}
+                                            {{ stats[4][i] | safe}},
+                                            {% if i > 0 and i % 5 == 0 %}
+                                                <br>
+                                            {% endif %}
+                                        {% else %}
+                                            {{ stats[4][i] | safe}}
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </li>
+                <li class="about-item">
+                    <div class="right-content">
                         <h4>Instructions</h4>
-                        <p>To search for an exact phrase, enclose the exact phrase in quotes. To allow fuzzy searching do not include quotes. After entering a query, click “Search” to search across the plans. The total number of occurrences for each plan will be shown. The search hits can be sorted by count, year, city name or 2010 population. The table can also be exported to allow further research.<br><br>Results are also visualized as maps that show the cities and counties with search hits. This visualization results in places like Los Angeles County being very large while counties with smaller populations are smaller. The search returns a substring, so that if you search 'race' you will also pull up hits for 'race-based policies.' Similarly, you will pull up hits for 'marathon races'. To understand the context of the search hits, click on the year for a city or county plan to view the PDF with the highlighted keywords. Plans were added in 2020, and we are in the process of adding updates. <a href="https://docs.google.com/forms/d/e/1FAIpQLSeCpD1Dil06c8tuSLnDqHp9W_6zK3S50ho4eGQtM4MyBhYM4g/viewform">If you have any feedback please provide it here</a>.</p>
+                        <p>To search for a single term or an exact phrase, simply type in the word/s.  After entering a query, click “Search” to search across the plans. The total number of occurrences that the word appears for each plan will be shown. The search returns a substring, so that if you search 'race' you will also pull up hits for 'race-based policies.'  The search hits can be sorted by count, year, city name or 2010 population. The table can also be exported to allow further research.<br><br>Results are also visualized as maps that show the cities and counties with search hits. Similarly, you will pull up hits for 'marathon races'. To understand the context of the search hits, click on the year for a city or county plan to view the PDF with the highlighted keywords. New plans were added in 2022, and we are still in the process of adding updates. If a city is missing a plan or there is a more up-to-date plan, please reach out to the team so that we can add this plan to the database. <a href="https://docs.google.com/forms/d/e/1FAIpQLSeCpD1Dil06c8tuSLnDqHp9W_6zK3S50ho4eGQtM4MyBhYM4g/viewform">If you have any feedback please provide it here</a>.</p>
                     </div>
                 </li>
                 <li class="about-item">
@@ -157,6 +255,12 @@
                                     <img src="https://critical-data-analysis.org/wp-content/uploads/2020/10/headshot-summer-2020-prehaircut-dexter-antonio.jpeg" alt="Dexter Antonio" style="object-fit: cover; width: 250px; height: 250px;">
                                 </a>
                                 <figcaption style="font-size: 12px; text-align: center;">Dexter Antonio<br>UC Davis M.S. Candidate<br>Chemical Engineering</figcaption>
+                            </figure>
+                            <figure style="padding: 10px;">
+                                <a target="_blank" href="https://github.com/aniketb97">
+                                    <img src="https://avatars.githubusercontent.com/u/21080653?v=4" alt="Aniket Banginwar" style="object-fit: cover; width: 250px; height: 250px;">
+                                </a>
+                                <figcaption style="font-size: 12px; text-align: center;">Aniket Banginwar<br>U.C. Davis M.S. Graduate<br>Computer Science Engineering</figcaption>
                             </figure>
                             <figure style="padding: 10px;">
                                 <a target="_blank" href="https://humanecology.ucdavis.edu/catherine-brinkley">

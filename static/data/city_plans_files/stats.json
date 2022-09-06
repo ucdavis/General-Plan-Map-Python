@@ -1,0 +1,43 @@
+{
+    "file_count": 8,
+    "total_pages": 962,
+    "total_words": 309224,
+    "missing_cities": [
+        "Aliso Viejo",
+        "Alturas",
+        "Amador City",
+        "Artesia",
+        "Bellflower",
+        "Blue Lake",
+        "California City",
+        "Del Rey Oaks",
+        "Delano",
+        "Dos Palos",
+        "Eastvale",
+        "Fort Bragg",
+        "Gridley",
+        "Kingsburg",
+        "Laguna Woods",
+        "Live Oak",
+        "Maricopa",
+        "Martinez",
+        "Maywood",
+        "Menifee",
+        "Milpitas",
+        "Montclair",
+        "Ontario",
+        "Orange Cove",
+        "Palm Springs",
+        "Porterville",
+        "Rancho Cucamonga",
+        "Sand City",
+        "Susanville",
+        "Tulelake",
+        "Wildomar",
+        "Willits",
+        "Los Gatos"
+    ],
+    "missing_counties": [
+        "Ventura"
+    ]
+}

@@ -36,6 +36,10 @@ import geojson
 from datetime import date
 from bokeh.models import Legend, LegendItem
 from bokeh.models import FixedTicker
+
+from bokeh.models import BasicTickFormatter
+from bokeh.transform import linear_cmap,factor_cmap
+import textract
 ### BELOW NEEDED TO EXPORT BOKEH IMAGE FILES
 # from bokeh.io import export_png
 # from bokeh.io.export import get_screenshot_as_png
@@ -67,8 +71,8 @@ def my_form():  # function for main index
         4 : color4
     }
 
-    city_df = pd.read_csv('static/data/city_plans_files/city_updated_years.csv')
-    county_df = pd.read_csv('static/data/city_plans_files/county_updated_years.csv')
+    city_df = pd.read_csv('static/data/city_plans_files/city_updated_years_new.csv')
+    county_df = pd.read_csv('static/data/city_plans_files/county_updated_years_new.csv')
 
     with open(os.path.join(geojson_path, 'map.geojson'), 'r') as f:
         my_str = f.read()
@@ -84,7 +88,7 @@ def my_form():  # function for main index
 
     # Defining county map
     county_spatial_map = figure(
-        title="Map showing when counties were last updated:",
+        title="Map showing most recently updated plans in database:",
         x_axis_location = None,
         y_axis_location = None,
         tools = TOOLS,
@@ -100,11 +104,11 @@ def my_form():  # function for main index
                             fill_color = 'color',
                             line_color = 'line_color')
 
-    countyPanel = Panel(title = "County Data", child = county_spatial_map)
+    county_panel = Panel(title = "County Data", child = county_spatial_map)
 
     # Defining city map
     city_spatial_map = figure(
-        title="Map showing when cities were last updated:",
+        title="Map showing most recently updated plans in database:",
         x_axis_location = None,
         y_axis_location = None,
         tools = TOOLS,
@@ -120,14 +124,260 @@ def my_form():  # function for main index
                             fill_color = 'color',
                             line_color = 'line_color')
 
-    cityPanel = Panel(title = "City Data", child = city_spatial_map)
+    city_panel = Panel(title = "City Data", child = city_spatial_map)
 
-    tabs = Tabs(tabs = [cityPanel, countyPanel], css_classes=["table-results-div"], margin = (0, 0, 0, 0))
-    lScript, lDiv = components(layout(tabs))
+    map_tabs = Tabs(tabs = [city_panel, county_panel], css_classes=["table-results-div"], margin = (0, 0, 0, 0))
+    map_layout = layout(column(map_tabs))
+    map_script, map_div = components(map_layout)
+
+    # Data for bar graphs
+    city_plans_count = get_categories(city_df, 0)
+    county_plans_count = get_categories(county_df, 0)
+    city_population_count = get_categories(city_df, 1)
+    county_population_count = get_categories(county_df, 1)
+    city_area_count = get_categories(city_df, 2)
+    county_area_count = get_categories(county_df, 2)
+
+    colors = [color1, color2, color3, color4, color0]
+    categories = ['0 - 5', '5 - 10', '10 - 15', '15 +', 'No data available']
+
+    # PLOT 1
+    source = ColumnDataSource(data=dict(categories=categories, city_plans_count=city_plans_count))
+    plot1 = figure(x_range=categories, height=300, toolbar_location=None, title="Number of plans vs year most recently updated:",
+              tools="hover", tooltips="Number of cities: @city_plans_count")
+    plot1.vbar(x='categories', top='city_plans_count', width=0.9, source=source, line_color='white',
+           fill_color=factor_cmap('categories', palette=colors, factors=categories))
+    plot1.xgrid.grid_line_color = None
+    plot1.yaxis.formatter = BasicTickFormatter(use_scientific=False)
+    plot1.y_range.start = 0
+
+    # PLOT 2
+    source = ColumnDataSource(data=dict(categories=categories, county_plans_count=county_plans_count))
+    plot2 = figure(x_range=categories, height=300, toolbar_location=None, title="Number of plans vs year most recently updated:",
+              tools="hover", tooltips="Number of counties: @county_plans_count")
+    plot2.vbar(x='categories', top='county_plans_count', width=0.9, source=source, line_color='white',
+           fill_color=factor_cmap('categories', palette=colors, factors=categories))
+    plot2.xgrid.grid_line_color = None
+    plot2.yaxis.formatter = BasicTickFormatter(use_scientific=False)
+    plot2.y_range.start = 0
+
+    # PLOT 3
+    source = ColumnDataSource(data=dict(categories=categories, city_population_count=city_population_count))
+    plot3 = figure(x_range=categories, height=300, toolbar_location=None, title="Population vs year most recently updated:",
+              tools="hover", tooltips="Population count: @city_population_count")
+    plot3.vbar(x='categories', top='city_population_count', width=0.9, source=source, line_color='white',
+           fill_color=factor_cmap('categories', palette=colors, factors=categories))
+    plot3.xgrid.grid_line_color = None
+    plot3.yaxis.formatter = BasicTickFormatter(use_scientific=False)
+    plot3.y_range.start = 0
+
+    # PLOT 4
+    source = ColumnDataSource(data=dict(categories=categories, county_population_count=county_population_count))
+    plot4 = figure(x_range=categories, height=300, toolbar_location=None, title="Population vs year most recently updated:",
+              tools="hover", tooltips="Population count: @county_population_count")
+    plot4.vbar(x='categories', top='county_population_count', width=0.9, source=source, line_color='white',
+           fill_color=factor_cmap('categories', palette=colors, factors=categories))
+    plot4.xgrid.grid_line_color = None
+    plot4.yaxis.formatter = BasicTickFormatter(use_scientific=False)
+    plot4.y_range.start = 0
+
+    # PLOT 5
+    source = ColumnDataSource(data=dict(categories=categories, city_area_count=city_area_count))
+    plot5 = figure(x_range=categories, height=300, toolbar_location=None, title="Land area vs year most recently updated:",
+              tools="hover", tooltips="Land covered (km. sq.): @city_area_count")
+    plot5.vbar(x='categories', top='city_area_count', width=0.9, source=source, line_color='white',
+           fill_color=factor_cmap('categories', palette=colors, factors=categories))
+    plot5.xgrid.grid_line_color = None
+    plot5.yaxis.formatter = BasicTickFormatter(use_scientific=False)
+    plot5.y_range.start = 0
+
+    # PLOT 6
+    source = ColumnDataSource(data=dict(categories=categories, county_area_count=county_area_count))
+    plot6 = figure(x_range=categories, height=300, toolbar_location=None, title="Land area vs year most recently updated:",
+              tools="hover", tooltips="Land covered (km. sq.): @county_area_count")
+    plot6.vbar(x='categories', top='county_area_count', width=0.9, source=source, line_color='white',
+           fill_color=factor_cmap('categories', palette=colors, factors=categories))
+    plot6.xgrid.grid_line_color = None
+    plot6.yaxis.formatter = BasicTickFormatter(use_scientific=False)
+    plot6.y_range.start = 0
+
+    bar_panel_1 = Panel(title = "City Data", child = plot1)
+    bar_panel_2 = Panel(title = "County Data", child = plot2)
+    bar_panel_3 = Panel(title = "City Data", child = plot3)
+    bar_panel_4 = Panel(title = "County Data", child = plot4)
+    bar_panel_5 = Panel(title = "City Data", child = plot5)
+    bar_panel_6 = Panel(title = "County Data", child = plot6)
+
+    bar_tab_1_2 = Tabs(tabs = [bar_panel_1, bar_panel_2], css_classes=["table-results-div"], margin = (0, 0, 0, 0))
+    bar_tab_3_4 = Tabs(tabs = [bar_panel_3, bar_panel_4], css_classes=["table-results-div"], margin = (0, 0, 0, 0))
+    bar_tab_5_6 = Tabs(tabs = [bar_panel_5, bar_panel_6], css_classes=["table-results-div"], margin = (0, 0, 0, 0))
+
+    # STATS
+    # Get stats
+    stats_dict = get_stats(city_df, county_df)
+
+    # Creating the scripts and divs to render on HTML
+    layout_plot_1_2 = layout(column(bar_tab_1_2))
+    layout_plot_3_4 = layout(column(bar_tab_3_4))
+    layout_plot_5_6 = layout(column(bar_tab_5_6))
+
+    plot_1_2_script, plot_1_2_div = components(layout_plot_1_2)
+    plot_3_4_script, plot_3_4_div = components(layout_plot_3_4)
+    plot_5_6_script, plot_5_6_div = components(layout_plot_5_6)
+
     cdn_js = CDN.js_files
     cdn_css = CDN.css_files
 
-    return render_template('index.html', lScript = lScript, lDiv = lDiv)  # return index page
+    return render_template('index.html', 
+        scripts = [map_script, plot_1_2_script, plot_3_4_script, plot_5_6_script], 
+        divs = [map_div, plot_1_2_div, plot_3_4_div, plot_5_6_div], 
+        stats = [stats_dict["file_count"], stats_dict["total_pages"], stats_dict["total_words"], 
+        stats_dict["missing_cities"], stats_dict["missing_counties"]])  # return index page
+
+
+def get_stats(city_df, county_df):
+    missing_cities = []
+    missing_counties = []
+
+    #check if the stats file exists
+    path_to_file = "static/data/city_plans_files/stats.json"
+    file_exists = os.path.exists(path_to_file)
+
+    if file_exists :
+        with open(path_to_file, 'r') as openfile:
+            stats_dict = json.load(openfile)
+
+    else:
+        # List and count of files
+        DIR = "static/data/places"
+        list_of_pdfs = [name for name in os.listdir(DIR) if os.path.isfile(os.path.join(DIR, name)) and 
+        (name.endswith(".pdf") or name.endswith(".PDF"))]
+        file_count = len(list_of_pdfs)
+
+        # Page count
+        total_pages = 0
+        for name in list_of_pdfs:
+            file = open(os.path.join(DIR, name), 'rb')
+            read_pdf = PdfFileReader(file)
+            total_pages += read_pdf.numPages
+
+        # Word count
+        total_words = 0
+        for name in list_of_pdfs:
+            text = textract.process(os.path.join(DIR, name)).decode('utf-8')
+            words = re.findall(r"[^\W_]+", text, re.MULTILINE)
+            total_words += len(words)
+
+        # Finding missing cities and counties
+        with open("static/data/city_plans_files/complete_cities_counties.json", 'r') as openfile:
+            complete_city_county_dict = json.load(openfile)
+
+        complete_county_list = complete_city_county_dict['counties']
+        complete_city_list = complete_city_county_dict['cities']
+
+        # In case of cities, the missing cities are the cities whose 'last_updated_color' is 0 i.e. there
+        # is no data available for them. So we need to iterate through whole city_df and select such cities
+        # If the city name is not in the present list, then obviously we dont have its data and we add it to 
+        # the missing_cities list too.
+        # SAME LOGIC for counties
+
+        present_county_list = list(county_df.iloc[:, 1]) # Get the county list from county_df
+        present_city_list = list(city_df.iloc[:, 1]) # Get the city list from city_df
+
+        for city in complete_city_list:
+            try:
+                index = present_city_list.index(city)
+                # check if this city has no data available
+                if city_df.at[index, 'last_updated_color'] == 0:
+                    missing_cities.append(city)
+            except:
+                # city not in list so implies it is missing
+                missing_cities.append(city)
+
+        for county in complete_county_list:
+            try:
+                index = present_county_list.index(county)
+                # check if this city has no data available
+                if county_df.at[index, 'last_updated_color'] == 0:
+                    missing_counties.append(county)
+            except:
+                # city not in list so implies it is missing
+                missing_counties.append(county)
+
+        # Coverting the city and county names from caps to title format.
+        missing_cities = [item.title() for item in missing_cities]
+        missing_counties = [item.title() for item in missing_counties]
+        
+        # Create the dictionary and save to local
+        stats_dict = {
+            "file_count" : file_count,
+            "total_pages" : total_pages,
+            "total_words" : total_words,
+            "missing_cities" : missing_cities,
+            "missing_counties" : missing_counties
+        }
+
+        stats_json_object = json.dumps(stats_dict, indent=4)
+        with open(path_to_file, "w") as outfile:
+            outfile.write(stats_json_object)
+
+    return stats_dict
+
+
+def get_categories(df, mode):
+    counts = [0, 0, 0, 0, 0]
+    total_population = 0
+    total_area = 0
+    todays_date = date.today()
+    
+    # mode = 0 is for the number of plans up to date
+    if mode == 0:
+        for index, row in df.iterrows():
+            update_range = todays_date.year - row['year_updated']
+            if pd.isnull(row['year_updated']):
+                counts[4] += 1
+            elif update_range >= 15:
+                counts[3] += 1
+            elif update_range < 15 and update_range >= 10:
+                counts[2] += 1
+            elif update_range < 10 and update_range >= 5:
+                counts[1] += 1
+            elif update_range < 5 and update_range >= 0:
+                counts[0] += 1
+    
+    # mode = 1 is for the population distribution among these up to date plans
+    elif mode == 1:
+        for index, row in df.iterrows():
+            update_range = todays_date.year - row['year_updated']
+            total_population += int(row['population'])
+            if pd.isnull(row['year_updated']):
+                counts[4] += int(row['population'])
+            elif update_range >= 15:
+                counts[3] += int(row['population'])
+            elif update_range < 15 and update_range >= 10:
+                counts[2] += int(row['population'])
+            elif update_range < 10 and update_range >= 5:
+                counts[1] += int(row['population'])
+            elif update_range < 5 and update_range >= 0:
+                counts[0] += int(row['population'])
+    
+    # mode = 2 is for the land area covered by the up to date plans
+    else:
+        for index, row in df.iterrows():
+            update_range = todays_date.year - row['year_updated']
+            total_area += int(row['area'])
+            if pd.isnull(row['year_updated']):
+                counts[4] += int(row['area'])
+            elif update_range >= 15:
+                counts[3] += int(row['area'])
+            elif update_range < 15 and update_range >= 10:
+                counts[2] += int(row['area'])
+            elif update_range < 10 and update_range >= 5:
+                counts[1] += int(row['area'])
+            elif update_range < 5 and update_range >= 0:
+                counts[0] += int(row['area'])
+            
+    return counts
 
 
 def create_city_plans_json(color_mapper):
