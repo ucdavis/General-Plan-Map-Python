@@ -258,15 +258,21 @@ def get_stats(city_df, county_df):
         total_pages = 0
         for name in list_of_pdfs:
             file = open(os.path.join(DIR, name), 'rb')
-            read_pdf = PdfFileReader(file)
-            total_pages += read_pdf.numPages
+            try:
+                read_pdf = PdfFileReader(file)
+                total_pages += read_pdf.numPages
+            except:
+                continue
 
         # Word count
         total_words = 0
         for name in list_of_pdfs:
-            text = textract.process(os.path.join(DIR, name)).decode('utf-8')
-            words = re.findall(r"[^\W_]+", text, re.MULTILINE)
-            total_words += len(words)
+            try:
+                text = textract.process(os.path.join(DIR, name)).decode('utf-8')
+                words = re.findall(r"[^\W_]+", text, re.MULTILINE)
+                total_words += len(words)
+            except:
+                continue
 
         # Finding missing cities and counties
         with open("static/data/city_plans_files/complete_cities_counties.json", 'r') as openfile:
