@@ -71,6 +71,7 @@ def my_form():  # function for main index
         4 : color4
     }
 
+    # These dfs have the latest color for the places and their population and area too
     city_df = pd.read_csv('static/data/city_plans_files/city_updated_years_new.csv')
     county_df = pd.read_csv('static/data/city_plans_files/county_updated_years_new.csv')
 
@@ -138,10 +139,12 @@ def my_form():  # function for main index
     city_area_count = get_categories(city_df, 2)
     county_area_count = get_categories(county_df, 2)
 
+    # Defining the colors and categories for the bar plots
     colors = [color1, color2, color3, color4, color0]
     categories = ['0 - 5', '5 - 10', '10 - 15', '15 +', 'No data available']
 
     # PLOT 1
+    # Number of plans vs year most recently updated: (city)
     source = ColumnDataSource(data=dict(categories=categories, city_plans_count=city_plans_count))
     plot1 = figure(x_range=categories, height=300, toolbar_location=None, title="Number of plans vs year most recently updated:",
               tools="hover", tooltips="Number of cities: @city_plans_count")
@@ -152,6 +155,7 @@ def my_form():  # function for main index
     plot1.y_range.start = 0
 
     # PLOT 2
+    # Number of plans vs year most recently updated: (county)
     source = ColumnDataSource(data=dict(categories=categories, county_plans_count=county_plans_count))
     plot2 = figure(x_range=categories, height=300, toolbar_location=None, title="Number of plans vs year most recently updated:",
               tools="hover", tooltips="Number of counties: @county_plans_count")
@@ -162,6 +166,7 @@ def my_form():  # function for main index
     plot2.y_range.start = 0
 
     # PLOT 3
+    # Population vs year most recently updated: (city)
     source = ColumnDataSource(data=dict(categories=categories, city_population_count=city_population_count))
     plot3 = figure(x_range=categories, height=300, toolbar_location=None, title="Population vs year most recently updated:",
               tools="hover", tooltips="Population count: @city_population_count")
@@ -172,6 +177,7 @@ def my_form():  # function for main index
     plot3.y_range.start = 0
 
     # PLOT 4
+    # Population vs year most recently updated: (county)
     source = ColumnDataSource(data=dict(categories=categories, county_population_count=county_population_count))
     plot4 = figure(x_range=categories, height=300, toolbar_location=None, title="Population vs year most recently updated:",
               tools="hover", tooltips="Population count: @county_population_count")
@@ -182,6 +188,7 @@ def my_form():  # function for main index
     plot4.y_range.start = 0
 
     # PLOT 5
+    # Land area vs year most recently updated: (city)
     source = ColumnDataSource(data=dict(categories=categories, city_area_count=city_area_count))
     plot5 = figure(x_range=categories, height=300, toolbar_location=None, title="Land area vs year most recently updated:",
               tools="hover", tooltips="Land covered (km. sq.): @city_area_count")
@@ -192,6 +199,7 @@ def my_form():  # function for main index
     plot5.y_range.start = 0
 
     # PLOT 6
+    # Land area vs year most recently updated: (county)
     source = ColumnDataSource(data=dict(categories=categories, county_area_count=county_area_count))
     plot6 = figure(x_range=categories, height=300, toolbar_location=None, title="Land area vs year most recently updated:",
               tools="hover", tooltips="Land covered (km. sq.): @county_area_count")
@@ -201,6 +209,7 @@ def my_form():  # function for main index
     plot6.yaxis.formatter = BasicTickFormatter(use_scientific=False)
     plot6.y_range.start = 0
 
+    # Defining panels for each plot
     bar_panel_1 = Panel(title = "City Data", child = plot1)
     bar_panel_2 = Panel(title = "County Data", child = plot2)
     bar_panel_3 = Panel(title = "City Data", child = plot3)
@@ -208,6 +217,7 @@ def my_form():  # function for main index
     bar_panel_5 = Panel(title = "City Data", child = plot5)
     bar_panel_6 = Panel(title = "County Data", child = plot6)
 
+    # Defining tabs for city and county plots together
     bar_tab_1_2 = Tabs(tabs = [bar_panel_1, bar_panel_2], css_classes=["table-results-div"], margin = (0, 0, 0, 0))
     bar_tab_3_4 = Tabs(tabs = [bar_panel_3, bar_panel_4], css_classes=["table-results-div"], margin = (0, 0, 0, 0))
     bar_tab_5_6 = Tabs(tabs = [bar_panel_5, bar_panel_6], css_classes=["table-results-div"], margin = (0, 0, 0, 0))
@@ -236,6 +246,13 @@ def my_form():  # function for main index
 
 
 def get_stats(city_df, county_df):
+    """This function will create the city_plans.geojson file iff it does not exist. It takes the color_mapper
+    as input (unused function, now creating the maps using city_updated_years.csv and same for county)
+    Args:
+        color_mapper (dict): the color coding mapped in dictionary format
+    Returns:
+        city_plans (geojson): city_plans geojson data for the bokeh map
+    """
     missing_cities = []
     missing_counties = []
 
@@ -331,6 +348,14 @@ def get_stats(city_df, county_df):
 
 
 def get_categories(df, mode):
+    """This function will take in dataframe of cities or counties and return the required information array counts 
+    according to the mode passed along it.
+    Args:
+        df : city_df or county_df
+        mode : 0,1,2; refer comments below to get to know about each mode.
+    Returns:
+        counts (array): the required count for each category. (0-5, 5-10, 10-15, 15+, No data available)
+    """
     counts = [0, 0, 0, 0, 0]
     total_population = 0
     total_area = 0
