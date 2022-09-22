@@ -281,9 +281,13 @@ def elastic_search_highlight(query):
 			"pre_tags" : ["<mark>"],
     		"post_tags" : ["</mark>"],
 		   	"fields": {
-			   	"text": {"fragment_size" : num_of_chars, "number_of_fragments": frag_count, "max_analyzed_offset": max_offset}
-		}
-      },
+			   	"text": {
+			   		"fragment_size" : num_of_chars,
+			   		"number_of_fragments": frag_count,
+			   		"max_analyzed_offset": max_offset
+			   	}
+			}
+      	},
 		"fields": [ "filename" ]
 	}
 
