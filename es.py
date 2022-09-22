@@ -123,6 +123,7 @@ def index_everything():
 	global es
 	global index_to_info_map
 	wd = os.getcwd()
+	es.indices.delete(index='test_4', ignore=[400, 404])
 	data_dir = os.path.join(wd, 'static', 'data', 'places')
 	filepaths = glob.glob(data_dir+'/*.txt')
 	hash_to_prop_mapping = {}
