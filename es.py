@@ -284,7 +284,7 @@ def elastic_search_highlight(query):
 			   	"text": {
 			   		"fragment_size" : num_of_chars,
 			   		"number_of_fragments": frag_count,
-			   		"max_analyzed_offset": max_offset
+			   		# "max_analyzed_offset": max_offset
 			   	}
 			}
       	},
