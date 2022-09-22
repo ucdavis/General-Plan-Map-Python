@@ -267,6 +267,7 @@ def elastic_search_highlight(query):
 	size = 1000
 	num_of_chars = 450
 	frag_count = 100
+	max_offset = 100000000
 	global es
 	query_json = {"_source": False,
 	"size": size,      
@@ -280,7 +281,7 @@ def elastic_search_highlight(query):
 			"pre_tags" : ["<mark>"],
     		"post_tags" : ["</mark>"],
 		   	"fields": {
-			   	"text": {"fragment_size" : num_of_chars, "number_of_fragments": frag_count}
+			   	"text": {"fragment_size" : num_of_chars, "number_of_fragments": frag_count, "max_analyzed_offset": max_offset}
 		}
       },
 		"fields": [ "filename" ]
