@@ -55,7 +55,7 @@ bootstrap = Bootstrap(app)  # create bootstrap object
 @app.route('/', methods=['GET'])  # declare flask page url
 def my_form():  # function for main index
 
-    return render_template('maintenance_progress.html')
+    # return render_template('maintenance_progress.html')
 
     # Defining the color coding for the cities.
     color1 = "#2ca25f" # Green : Cities with plan updated less than 5 years ago.

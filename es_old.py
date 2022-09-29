@@ -22,12 +22,6 @@ from datetime import date
 # )
 es = Elasticsearch('http://localhost:9200')
 
-# Global data path variable for server (select and deselect appropriate for dev/main)
-# for dev_server
-data_path = ""
-# for local or main
-# data path = 
-
 def parse_filename(filename: str) -> str:
 	"""	This function uses regular expressions to parse a filename. 
 	filename format expected is CA_City-Rolling-Hills-Estates_2014.txt
@@ -59,8 +53,7 @@ def build_pop_dicts() -> None:
 	"""	
 	global county_dict
 	global city_dict
-	global data_path
-	data_dir = os.path.join(data_path, 'static', 'data') 
+	data_dir = os.path.join('static', 'data') 
 	dict_dict = {}
 	for filename in ['cityPopulations.csv', 'countyPopulations.csv']:
 		file_dir = os.path.join(data_dir, filename)
@@ -94,13 +87,11 @@ def get_max_index() -> int:
 	return es.search(index='test_4', body={"_source": False})['hits']['total']['value']
 
 def add_to_index(filepath:str) -> None:
-	"""Adds a new file to the elasticsearch index (to be used with uploader.py)
+	"""Adds a new file to the elasticsearch index
 	Args:
 		filepath (str): a filepath to a txt file general plan
 	"""	
-
-	#TODO: Change file path name here too.
-	global data_path
+	
 	i = get_max_index()
 
 	try: 
@@ -131,10 +122,9 @@ def index_everything():
 	"""	
 	global es
 	global index_to_info_map
-	global data_path
-	es.indices.delete(index='test_4', ignore=[400, 404])
 	wd = os.getcwd()
-	data_dir = os.path.join(data_path, 'static', 'data', 'places')
+	es.indices.delete(index='test_4', ignore=[400, 404])
+	data_dir = os.path.join(wd, 'static', 'data', 'places')
 	filepaths = glob.glob(data_dir+'/*.txt')
 	hash_to_prop_mapping = {}
 	i = 0
@@ -158,8 +148,6 @@ def index_everything():
 	index_to_info_map = None
 
 def get_recentyears():
-	# NOT NEEDED
-	global data_path
 	plan_df = pd.read_json('key_hash_mapping.json', orient='index')
 	plan_df.drop(['state','filename','filetype'], axis=1, inplace=True)
 
@@ -172,8 +160,8 @@ def get_recentyears():
 	county_df.drop_duplicates(subset='place_name', keep='first', inplace=True)
 	county_df["color"] = county_df["plan_date"].apply(assign_color)
 
-	path_to_recentcity = data_path + 'static/data/recent-cityplans.csv'
-	path_to_recentcounty = data_path + 'static/data/recent-countyplans.csv'
+	path_to_recentcity = 'static/data/recent-cityplans.csv'
+	path_to_recentcounty = 'static/data/recent-countyplans.csv'
 	city_df.to_csv(path_to_recentcity)
 	county_df.to_csv(path_to_recentcounty)
 
@@ -212,7 +200,7 @@ def elastic_search(query) -> Tuple[List[int], List[float]]:
         "fields": ["text"],
         "default_operator": "and"
     }}}
-	search = es.search(index='test_4' ,body=query_json, request_timeout=90) 
+	search = es.search(index='test_4' ,body=query_json, request_timeout=60) 
 	ids = []
 	scores = []
 	for hit in search['hits']['hits']:
@@ -243,7 +231,6 @@ def map_keys_to_values(search_result_indices, key_to_hash_path='key_hash_mapping
 	Returns:
 		dict of info values realting to the keys, such as filename: [
 	"""	
-	print("ENTERING map_keys_to_values")
 	global index_to_info_map
 	if index_to_info_map is None:
 		with open(key_to_hash_path, 'r') as fp:
@@ -256,8 +243,6 @@ def map_keys_to_values(search_result_indices, key_to_hash_path='key_hash_mapping
 	return list(map(lambda x:my_dict[str(x)]['filename'], search_result_indices))
 
 def map_index_to_vals(search_result_indices, key_to_hash_path='key_hash_mapping.json'):
-	# Takes in the list of ids from testsearch.py
-	print("ENTERING map_index_to_vals")
 	global index_to_info_map
 	if index_to_info_map is None:
 		with open(key_to_hash_path, 'r') as fp:
@@ -279,66 +264,53 @@ def elastic_search_highlight(query):
 	Returns:
 		Tuple(List[int], List[float], List[int], Dict[str]): ids, score, hits and highlights 
 	"""	
+	size = 1000
+	num_of_chars = 450
+	frag_count = 100
+	max_offset = 100000000
 	global es
-	words = query.lower().split()
-	# div_value = len(words)
-	div_value = 1
-	expected_highlight = ""
-
-	for word in words:
-		expected_highlight += "<#>"+word+"</#>"+" "
-	expected_highlight = expected_highlight.strip()
-
-
-	query_json = {
-	"_source": False,
-	"size": 1000,
-	"query": {
-	    "match_phrase": {
-	      	"text": {
-	        	"query": query,
-	        	"slop": 0
-	      		}
-	    	}
-	  	},
-		"highlight": {
-	    	"pre_tags": [
-	      		"<#>"
-	    	],
-	    	"post_tags": [
-	      		"</#>"
-	    	],
-	    	"fields": {
-	      		"text": {
-	        		"number_of_fragments": 0
-	      		}
-	    	}
-		},
-	   "fields":[
-	      "filename"
-	   ]
+	query_json = {"_source": False,
+	"size": size,      
+	"query":{
+    "simple_query_string" : {
+        "query": query,
+        "fields": ["text"],
+        "default_operator": "and"}
+        }, 
+        "highlight": {
+			"pre_tags" : ["<mark>"],
+    		"post_tags" : ["</mark>"],
+		   	"fields": {
+			   	"text": {
+			   		"fragment_size" : num_of_chars,
+			   		"number_of_fragments": frag_count,
+			   		# "max_analyzed_offset": max_offset
+			   	}
+			}
+      	},
+		"fields": [ "filename" ]
 	}
 
-	# import pdb; pdb.set_trace()
-
-	search_with_highlights = es.search(index='test_4' ,body=query_json, request_timeout=90) 
+	search_with_highlights = es.search(index='test_4' ,body=query_json, request_timeout=30) 
 	hit_count_dict = OrderedDict()
 	highlight_list = {}
 	ids = []
 	scores = []
 	for snipets in search_with_highlights["hits"]["hits"]:
 		id = snipets["_id"]
+		# highlight_list.append(snipets["highlight"]["text"])
 		highlight_list[snipets["fields"]["filename"][0]] = snipets["highlight"]["text"]
 		ids.append(int(snipets['_id']))
 		scores.append(float(snipets['_score']))
-		hit_count_dict[id] = 0
 		for snip in snipets["highlight"]["text"]:
 			if id in hit_count_dict:
-				hit_count_dict[id] += snip.count(expected_highlight)
+				hit_count_dict[id] += snip.count("mark>")//2
+			else:
+				hit_count_dict[id] = snip.count("mark>")//2
 
 	hit_count_list = list(hit_count_dict.values())
-	hit_count_list = [number // div_value for number in hit_count_list]
-	return (ids, scores, hit_count_list, highlight_list)
+
+	return (ids, scores, hit_count_list, highlight_list) 
 
 
 if __name__ == "__main__":
