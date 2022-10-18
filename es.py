@@ -309,6 +309,7 @@ def elastic_search_highlight(query):
 	      		"</#>"
 	    	],
 	    	"fields": {
+	    		"max_analysed_offset" : 100000000,
 	      		"text": {
 	        		"number_of_fragments": 0
 	      		}
