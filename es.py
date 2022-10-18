@@ -302,7 +302,7 @@ def elastic_search_highlight(query):
 	    	}
 	  	},
 		"highlight": {
-			"max_analysed_offset" : 100000000,
+			"max_analyzed_offset" : 100000000,
 	    	"pre_tags": [
 	      		"<#>"
 	    	],
