@@ -302,6 +302,7 @@ def elastic_search_highlight(query):
 	    	}
 	  	},
 		"highlight": {
+			"max_analysed_offset" : 100000000,
 	    	"pre_tags": [
 	      		"<#>"
 	    	],
@@ -309,7 +310,6 @@ def elastic_search_highlight(query):
 	      		"</#>"
 	    	],
 	    	"fields": {
-	    		"max_analysed_offset" : 100000000,
 	      		"text": {
 	        		"number_of_fragments": 0
 	      		}
