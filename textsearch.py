@@ -1024,7 +1024,7 @@ def highlight_pdf(city, words):
     Returns:
         str: webpages
     """
-    import pdb; pdb.set_trace()
+    # import pdb; pdb.set_trace()
     complete_name = os.path.join("static/data/places", city)
     doc = fitz.open(complete_name)
     page_count= len(doc)  # find no. of pages in pdf
