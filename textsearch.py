@@ -1042,6 +1042,7 @@ def highlight_pdf(city, words):
                 # list returned by searchFor can be used directly as argument to highlight
                 doc[i].addHighlightAnnot(text_instances[k])
 
+    breakpoint()
     highlighted_complete_name = os.path.join("static/data/pdfoutput","output.pdf")
     doc.save(highlighted_complete_name)
     doc.close()
