@@ -676,6 +676,7 @@ class Result:
         Returns:
             [type]: a parsed query that can be used in html
         """
+        query = "\"" + query + "\""
         phrases_in_quotes = re.findall(r'\"(.+?)\"',query)
         non_quotes = re.sub(r'"',"", re.sub(r'\"(.+?)\"', '', query))
         all_words = re.findall('[A-z]+', non_quotes)
