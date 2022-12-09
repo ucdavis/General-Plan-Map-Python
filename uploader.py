@@ -48,7 +48,7 @@ mail = Mail(app)  # build object again
 blockip = {  # dictionary with list of ips to block
   "": 0,
 }
-@app.route('/')
+@app.route('/admin')
 def home():
     """This function renders and controls login screen
 
