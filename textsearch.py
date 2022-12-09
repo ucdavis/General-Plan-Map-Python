@@ -1054,7 +1054,7 @@ def highlight_pdf(city, words):
                 doc[i].addHighlightAnnot(text_instances[k])
 
     # breakpoint()
-    pdf_output_filename = city + '_' + ''.join(random.choices(string.ascii_uppercase + string.digits, k=10)) + '.pdf'
+    pdf_output_filename = city[:-4] + '_' + ''.join(random.choices(string.ascii_uppercase + string.digits, k=10)) + '.pdf'
     highlighted_complete_name = os.path.join("static/data/pdfoutput",pdf_output_filename)
     doc.save(highlighted_complete_name)
     doc.close()
