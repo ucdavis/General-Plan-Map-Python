@@ -70,7 +70,7 @@ def home():
 
 
 
-@app.route('/', methods=['POST'])
+@app.route('/admin', methods=['POST'])
 def do_admin_login():  # function to collect username & password
     global blockip
     if str(request.remote_addr)+"t" in blockip:  # check if the ip has exceeded the 10 try mark
