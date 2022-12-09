@@ -40,6 +40,9 @@ from bokeh.models import FixedTicker
 from bokeh.models import BasicTickFormatter
 from bokeh.transform import linear_cmap,factor_cmap
 import textract
+
+import random
+import glob
 ### BELOW NEEDED TO EXPORT BOKEH IMAGE FILES
 # from bokeh.io import export_png
 # from bokeh.io.export import get_screenshot_as_png
@@ -1026,6 +1029,12 @@ def highlight_pdf(city, words):
         str: webpages
     """
     # import pdb; pdb.set_trace()
+
+    # remove files from the pdfoutput folder first
+    files = glob.glob('static/data/pdfoutput/*')
+    for f in files:
+        os.remove(f)
+
     complete_name = os.path.join("static/data/places", city)
     doc = fitz.open(complete_name)
     page_count= len(doc)  # find no. of pages in pdf
@@ -1044,7 +1053,8 @@ def highlight_pdf(city, words):
                 doc[i].addHighlightAnnot(text_instances[k])
 
     # breakpoint()
-    highlighted_complete_name = os.path.join("static/data/pdfoutput","output.pdf")
+    pdf_output_filename = city + '_' + ''.join(random.choices(string.ascii_uppercase + string.digits, k=10)) + '.pdf'
+    highlighted_complete_name = os.path.join("static/data/pdfoutput",pdf_output_filename)
     doc.save(highlighted_complete_name)
     doc.close()
 
