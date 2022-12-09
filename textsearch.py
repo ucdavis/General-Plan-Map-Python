@@ -1060,7 +1060,7 @@ def highlight_pdf(city, words):
     doc.close()
 
     # set link for highlighted pdf and make safe to send to html
-    fht= 'window.location.href = "/static/data/pdfoutput/output.pdf";'
+    fht= 'window.location.href = "/static/data/pdfoutput/' + pdf_output_filename + '";' 
     fht = Markup(fht)
 
     # render highlighted pdf file
