@@ -43,6 +43,7 @@ import textract
 
 import random
 import glob
+import string
 ### BELOW NEEDED TO EXPORT BOKEH IMAGE FILES
 # from bokeh.io import export_png
 # from bokeh.io.export import get_screenshot_as_png
