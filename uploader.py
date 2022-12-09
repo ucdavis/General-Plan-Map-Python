@@ -119,7 +119,7 @@ def do_admin_login():  # function to collect username & password
 
 
 
-@app.route('/delpg')
+@app.route('/admin/delpg')
 def delete_page_update():  # to update page list
     session['logged_in'] = True
     return redirect(url_for('home'))
