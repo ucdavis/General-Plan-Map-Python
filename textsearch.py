@@ -1037,7 +1037,12 @@ def highlight_pdf(city, words):
         os.remove(f)
 
     complete_name = os.path.join("static/data/places", city)
-    doc = fitz.open(complete_name)
+
+    # Some PDFs have ending as .PDF and some have .pdf, to manage that using try except
+    try:
+        doc = fitz.open(complete_name)
+    except:
+        doc = fitz.open(complete_name[:-4] + ".PDF")
     page_count= len(doc)  # find no. of pages in pdf
     if "," in words:
         list_split=words.split(",")
