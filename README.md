@@ -2,7 +2,7 @@
 
 ## How to Access
 
-You can access a working version of this application [here](https://critical-data-analysis.org/general-plan-map/). 
+You can access a working version of this application [here](http://plansearch.caes.ucdavis.edu/). 
 
 ## About
 
@@ -18,6 +18,7 @@ The General Plan Database Mapping Tool provides access to the text of California
 <!-- ALL-CONTRIBUTORS-LIST:START -->
 | Contributions | Name |
 | ----: | :---- |
+| [💻](# "Code") [🚇](# "Infrastructure") [📖](# "Documentation") [🤔](# "Ideas and Planning") | [Aniket Banginwar](https://www.linkedin.com/in/aniketbanginwar/)
 | [💻](# "Code") [🚇](# "Infrastructure") [🤔](# "Ideas and Planning") | [Dexter Antonio](https://github.com/dexterantonio)
 | [💻](# "Code") [📖](# "Documentation") [🤔](# "Ideas and Planning") | [Mirthala Lopez](https://www.linkedin.com/in/mirthala-lopez/)
 | [📆](# "Project Management") [🧑‍🏫](# "Mentoring") [🚇](# "Infrastructure") [📖](# "Documentation") [🤔](# "Ideas and Planning") | [Lindsay Poirier](https://sts.ucdavis.edu/people/lpoirier)
@@ -43,7 +44,7 @@ The General Plan Database Mapping Tool provides access to the text of California
 
 ## Architecture
 
-textsearch.py contains most of the code for searching the pdfs, creating the maps and tables, and displaying the maps and tables. upload.py contins the code for uploading new pdfs, emailing the recipient of choice, and generating the searchable text document. 
+textsearch.py contains most of the code for searching the pdfs, creating the maps and tables, and displaying the maps and tables. uploader.py contains the code for uploading new pdfs, emailing the recipient of choice, and generating the searchable text document. 
 
 The data, including the shapefiles and population data for both the cities and counties are found in /static/data/. The code also looks for a folder named places inside /static/data/ which is where .pdfs and their corresponding .txt documents will be stored.
 
