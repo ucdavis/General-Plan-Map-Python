@@ -42,8 +42,9 @@
         <nav class="main-nav">
             <a href="" class="logo">California General Plan  <em> Database Mapping Tool </em></a>
             <ul class="nav">
-                <li class="scroll-to-section"><a href="/admin/delpg" id="del" class="active" >Delete</a></li>  
-                <li class="scroll-to-section"><a href="#top" id="up"  >Upload</a></li>     
+                <li class="scroll-to-section"><a href="#top" id="up"  class="active" >Upload</a></li>
+                <li class="scroll-to-section"><a href="#top" id="del">Delete</a></li>
+                <li class="scroll-to-section"><a href="/admin/reindex" id="reindex">Re-index</a></li>
                 <li class="scroll-to-section"><a href="https://docs.google.com/forms/d/e/1FAIpQLSeCpD1Dil06c8tuSLnDqHp9W_6zK3S50ho4eGQtM4MyBhYM4g/viewform">Feedback</a></li>
             </ul>        
             <a class='menu-trigger'>
@@ -60,7 +61,7 @@
     <div class="main-banner" id="top">
       <img src="/static/images/ca.jpg" style="width: 100%;">
         <div class="video-overlay header-text">
-            <div class="caption" id="upload" style="display: none;">
+            <div class="caption" id="upload">
                 <div class="grow">
                     <h2>Upload <em>file</em></h2>
                 </div>
@@ -145,7 +146,7 @@
                     </form>
                 </center>           
             </div>
-            <div class="caption" id="delete"  >
+            <div class="caption" id="delete" style="display: none;">
                 <div class="grow">
                     <h2>Choose<em> a file</em></h2>
                 </div>
@@ -173,8 +174,18 @@
     
     <script type="text/javascript"> 
 
+        userType = {{userType}}
+
+        if(userType == 0)
+        {
+
+            document.getElementById("del").style.display = "none"; 
+            document.getElementById("reindex").style.display = "none"; 
+
+        }
+
         document.getElementById("up").onclick = function() 
-        { 
+        {   
 
             document.getElementById("upload").style.display = "block"; 
             document.getElementById("delete").style.display = "none"; 

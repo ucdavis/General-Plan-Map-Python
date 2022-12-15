@@ -45,6 +45,9 @@ app.config['MAIL_USE_SSL'] = True
 
 mail = Mail(app)  # build object again
 
+# 0 means normal admin and 1 means superuser
+userType = 0
+
 blockip = {  # dictionary with list of ips to block
   "": 0,
 }
@@ -55,7 +58,7 @@ def home():
     Returns:
         str: webpages
     """
-
+    global userType
     del_list=""  # list of files in delete section
     for filename in sorted(os.listdir("static/data/places")):
         if filename.endswith(".txt"):
@@ -66,13 +69,13 @@ def home():
         return render_template('login.html')
     else:
         session['logged_in'] = False
-        return render_template('upload_index.html',del_list=del_list)  # if logged in, update file list
+        return render_template('upload_index.html',del_list=del_list, userType = userType)  # if logged in, update file list
 
 
 
 @app.route('/admin', methods=['POST'])
 def do_admin_login():  # function to collect username & password
-    global blockip
+    global blockip, userType
     if str(request.remote_addr)+"t" in blockip:  # check if the ip has exceeded the 10 try mark
         if (datetime.now()-blockip[str(request.remote_addr)+"t"]).total_seconds() <1800:
             cal=(1800-(datetime.now()-blockip[str(request.remote_addr)+"t"]).total_seconds())/60
@@ -83,14 +86,22 @@ def do_admin_login():  # function to collect username & password
     else:
         # import pdb; pdb.set_trace()
         userID = config('userID',default='')
-        password = config('passw',default='')
+        password = config('passw',default='')        
+        superUserID = config('superUserID',default='')
+        superUserPassword = config('superUserPassw',default='')
 
-        hashed=password.encode('utf-8')
+        pwHashed = password.encode('utf-8')
+        superPwHashed = superUserPassword.encode('utf-8')
         pwd=request.form['password'].encode('utf-8')  # store password and encode to UTF-8
-        if bcrypt.checkpw(pwd, hashed) and request.form['username'] == userID:  # check username and password
+        if (bcrypt.checkpw(pwd, pwHashed) and request.form['username'] == userID) or (bcrypt.checkpw(pwd, superPwHashed) and request.form['username'] == superUserID):  # check username and password
             if str(request.remote_addr) in blockip:
                 del blockip[str(request.remote_addr)]
             session['logged_in'] = True
+
+            if request.form['username'] == userID:
+                userType = 0
+            else:
+                userType = 1
         else:
             if str(request.remote_addr) in blockip:
 
@@ -123,6 +134,13 @@ def do_admin_login():  # function to collect username & password
 def delete_page_update():  # to update page list
     session['logged_in'] = True
     return redirect(url_for('home'))
+
+@app.route('/admin/reindex')
+def reindex_data():  # to update page list
+    session['logged_in'] = True
+    # es.index_everything()
+    msg = "Files re-indexed Successfully!"
+    return render_template('upload_reindex_done.html', msg=msg) 
 
 @app.route('/delete', methods = ['POST'])
 def delete_file():  # function to delete file from list

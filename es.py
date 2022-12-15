@@ -98,8 +98,6 @@ def add_to_index(filepath:str) -> None:
 	Args:
 		filepath (str): a filepath to a txt file general plan
 	"""	
-
-	#TODO: Change file path name here too.
 	global data_path
 	i = get_max_index()
 
@@ -194,7 +192,6 @@ def assign_color(plan_year: int):
 	elif (diff_in_year > 15):
 		return 5
 	
-
 def elastic_search(query) -> Tuple[List[int], List[float]]:
 	"""Puts a query into elasticsearch and returns the ids and score
 	Args:
@@ -232,7 +229,6 @@ def elastic_search(query) -> Tuple[List[int], List[float]]:
 	# 	f.write(webpage)
 	print(search)
 	return ids , scores
-
 
 index_to_info_map = None
 def map_keys_to_values(search_result_indices, key_to_hash_path='key_hash_mapping.json'):
