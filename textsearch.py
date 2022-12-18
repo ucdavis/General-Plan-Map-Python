@@ -1041,8 +1041,18 @@ def highlight_pdf(city, words):
                 os.remove(f)
                 print("Deleting:", f)
         except:
-            print("Error in file name")
+            print("Error in file name:", f)
             os.remove(f)
+
+    # If number of files in pdfoutput exceed 100, delete the first 50 files.
+    try:
+        if len(files) >= 100:
+            files.sort(key = os.path.getmtime)
+            for i in range(50):
+                print("Removed:", files[i])
+                os.remove(files[i])
+    except:
+        print("Some error occured.")
 
     complete_name = os.path.join("static/data/places", city)
 
