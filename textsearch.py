@@ -33,7 +33,7 @@ import es
 import re
 import geojson
 
-from datetime import date
+from datetime import date, datetime
 from bokeh.models import Legend, LegendItem
 from bokeh.models import FixedTicker
 
@@ -1031,10 +1031,18 @@ def highlight_pdf(city, words):
     """
     # import pdb; pdb.set_trace()
 
-    # remove files from the pdfoutput folder first
+    # remove files from the pdfoutput folder first (files generated on previous day)
+    current_date = datetime.now().strftime("%Y-%m-%d")
     files = glob.glob('static/data/pdfoutput/*')
     for f in files:
-        os.remove(f)
+        file_date = f.split("/")[3].split("_")[0]
+        try:
+            if datetime.strptime(file_date, "%Y-%m-%d") < datetime.strptime(current_date, "%Y-%m-%d"):
+                os.remove(f)
+                print("Deleting:", f)
+        except:
+            print("Error in file name")
+            os.remove(f)
 
     complete_name = os.path.join("static/data/places", city)
 
@@ -1060,7 +1068,7 @@ def highlight_pdf(city, words):
                 doc[i].addHighlightAnnot(text_instances[k])
 
     # breakpoint()
-    pdf_output_filename = city[:-4] + '_' + ''.join(random.choices(string.ascii_uppercase + string.digits, k=10)) + '.pdf'
+    pdf_output_filename = current_date + "_" + city[:-4] + '_' + ''.join(random.choices(string.ascii_uppercase + string.digits, k=10)) + '.pdf'
     highlighted_complete_name = os.path.join("static/data/pdfoutput",pdf_output_filename)
     doc.save(highlighted_complete_name)
     doc.close()
