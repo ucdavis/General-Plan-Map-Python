@@ -154,19 +154,11 @@ def index_everything():
 
 	# changing max offset for highlights
 	es.indices.put_settings(index="test_4", body={"highlight.max_analyzed_offset" : 60000000})
-	
+
 	with open('key_hash_mapping.json', 'w') as fp:
 		json.dump(hash_to_prop_mapping, fp)
 	index_to_info_map = None
 
-"""
-RUN THIS COMMAND ON CMD PROMPT AFTER EVERY RE_INDEXING
-	curl -XPUT "localhost:9200/test_4/_settings" -H 'Content-Type: application/json' -d' {
-    "index" : {
-        "highlight.max_analyzed_offset" : 60000000
-    }
-}'
-"""
 
 def get_recentyears():
 	# NOT NEEDED
