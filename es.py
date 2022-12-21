@@ -151,6 +151,10 @@ def index_everything():
 		hash_to_prop_mapping[keyhash] = parsed_filename
 		es.index(index='test_4', id=keyhash, body={'text': txt, 'filename': filename}, request_timeout=90)
 		i += 1
+
+	# changing max offset for highlights
+	es.indices.put_settings(index="test_4", body={"highlight.max_analyzed_offset" : 60000000})
+	
 	with open('key_hash_mapping.json', 'w') as fp:
 		json.dump(hash_to_prop_mapping, fp)
 	index_to_info_map = None

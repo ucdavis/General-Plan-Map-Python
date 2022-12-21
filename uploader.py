@@ -144,7 +144,7 @@ def upload_page_update():
 @app.route('/admin/reindex')
 def reindex_data():  # to update page list
     session['logged_in'] = True
-    # es.index_everything()
+    es.index_everything()
     msg = "Files re-indexed Successfully!"
     return render_template('upload_reindex_done.html', msg=msg) 
 
@@ -156,7 +156,6 @@ def delete_file():  # function to delete file from list
     rempdftemp=rempdf.replace("places","temp")
     remtxt= rempdf.replace(".pdf",".txt")
 
-    # TODO: Will fail for .PDF, work in progress
     completeName = rempdf
     ###### Updating the stats.json ######
     stats_dict = open('static/data/city_plans_files/stats.json')
@@ -181,7 +180,7 @@ def delete_file():  # function to delete file from list
     stats_data["file_count"] -= 1
     print("Number of files after:", stats_data["file_count"])
 
-    # TODO: Update missing cities and counties
+    # TODO: Update missing cities and counties (FUTURE WORK)
 
     # Update the stats.json with new values
     stats_json_object = json.dumps(stats_data, indent=4)
@@ -378,7 +377,7 @@ def upload_file1():  # function to upload file
     stats_data["file_count"] += 1
     print("Number of files after:", stats_data["file_count"])
 
-    # TODO: Update missing cities and counties
+    # TODO: Update missing cities and counties (FUTURE WORK)
 
     # Update the stats.json with new values
     stats_json_object = json.dumps(stats_data, indent=4)
