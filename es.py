@@ -74,7 +74,7 @@ def build_pop_dicts() -> None:
 	city_dict = dict_dict['cityPopulations.csv'] 	
 
 def get_place_properties(is_city: bool, place_name: str) -> Dict:
-	"""gets a place's properties
+	"""gets a place's properties (Used by textsearch.py during results)
 	Args:
 		is_city (bool): A boolean for if the name belongs to a city or county
 		place_name (str): the name of the place 
@@ -149,11 +149,20 @@ def index_everything():
 		print(i, filename)
 		keyhash = i
 		hash_to_prop_mapping[keyhash] = parsed_filename
-		es.index(index='test_4', id=keyhash, body={'text': txt, 'filename': filename}, )
+		es.index(index='test_4', id=keyhash, body={'text': txt, 'filename': filename}, request_timeout=90)
 		i += 1
 	with open('key_hash_mapping.json', 'w') as fp:
 		json.dump(hash_to_prop_mapping, fp)
 	index_to_info_map = None
+
+"""
+RUN THIS COMMAND ON CMD PROMPT AFTER EVERY RE_INDEXING
+	curl -XPUT "localhost:9200/test_4/_settings" -H 'Content-Type: application/json' -d' {
+    "index" : {
+        "highlight.max_analyzed_offset" : 60000000
+    }
+}'
+"""
 
 def get_recentyears():
 	# NOT NEEDED

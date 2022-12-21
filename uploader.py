@@ -19,6 +19,7 @@ from datetime import datetime
 import es
 import cv2
 from decouple import config
+import json, textract, re
 
 
 app = Flask(__name__)  # create flask object
@@ -135,6 +136,11 @@ def delete_page_update():  # to update page list
     session['logged_in'] = True
     return redirect(url_for('home'))
 
+@app.route('/admin/upload_confirm')
+def upload_page_update():
+    session['logged_in'] = True
+    return redirect(url_for('home'))
+
 @app.route('/admin/reindex')
 def reindex_data():  # to update page list
     session['logged_in'] = True
@@ -142,13 +148,47 @@ def reindex_data():  # to update page list
     msg = "Files re-indexed Successfully!"
     return render_template('upload_reindex_done.html', msg=msg) 
 
-@app.route('/delete', methods = ['POST'])
+@app.route('/admin/delete', methods = ['POST'])
 def delete_file():  # function to delete file from list
     del_req=request.form['deleter']  # access delete button argument
     del_req=del_req+".pdf"
     rempdf = os.path.join("static/data/places", del_req)
     rempdftemp=rempdf.replace("places","temp")
     remtxt= rempdf.replace(".pdf",".txt")
+
+    # TODO: Will fail for .PDF, work in progress
+    completeName = rempdf
+    ###### Updating the stats.json ######
+    stats_dict = open('static/data/city_plans_files/stats.json')
+    stats_data = json.load(stats_dict)
+
+    # Update the number of pdf pages
+    print("Number of pages before:", stats_data["total_pages"])
+    new_pdf_file = open(completeName, 'rb')
+    read_pdf = PyPDF2.PdfFileReader(new_pdf_file)
+    stats_data["total_pages"] -= read_pdf.numPages
+    print("Number of pages after:", stats_data["total_pages"])
+
+    # Update the number of words
+    print("Number of words before:", stats_data["total_words"])
+    text = textract.process(completeName).decode('utf-8')
+    words = re.findall(r"[^\W_]+", text, re.MULTILINE)
+    stats_data["total_words"] -= len(words)
+    print("Number of words after:", stats_data["total_words"])
+
+    # Update the file count
+    print("Number of files before:", stats_data["file_count"])
+    stats_data["file_count"] -= 1
+    print("Number of files after:", stats_data["file_count"])
+
+    # TODO: Update missing cities and counties
+
+    # Update the stats.json with new values
+    stats_json_object = json.dumps(stats_data, indent=4)
+    with open('static/data/city_plans_files/stats.json', "w") as outfile:
+        outfile.write(stats_json_object)
+    #####################################
+
     try:
         os.remove(remtxt)  # remove text file followed by pdf
     except:
@@ -175,9 +215,10 @@ def delete_file():  # function to delete file from list
 
 
 
-@app.route('/upload', methods = ['GET', 'POST'])  # route to upload form in upload_index html in for getting files and posting to the server
+@app.route('/admin/upload', methods = ['GET', 'POST'])  # route to upload form in upload_index html in for getting files and posting to the server
 def upload_file1():  # function to upload file
     completeName=""
+    location_name=""
     if request.method == 'POST':  # when upload button is clicked
 
         files = request.files.getlist("file")  # get list of files uploaded in form
@@ -312,7 +353,38 @@ def upload_file1():  # function to upload file
 
 
     up="Files Uploaded Successfully!"
+    print("This file is uploaded:",completeName)
 
+    ###### Updating the stats.json ######
+    stats_dict = open('static/data/city_plans_files/stats.json')
+    stats_data = json.load(stats_dict)
+
+    # Update the number of pdf pages
+    print("Number of pages before:", stats_data["total_pages"])
+    new_pdf_file = open(completeName, 'rb')
+    read_pdf = PyPDF2.PdfFileReader(new_pdf_file)
+    stats_data["total_pages"] += read_pdf.numPages
+    print("Number of pages after:", stats_data["total_pages"])
+
+    # Update the number of words
+    print("Number of words before:", stats_data["total_words"])
+    text = textract.process(completeName).decode('utf-8')
+    words = re.findall(r"[^\W_]+", text, re.MULTILINE)
+    stats_data["total_words"] += len(words)
+    print("Number of words after:", stats_data["total_words"])
+
+    # Update the file count
+    print("Number of files before:", stats_data["file_count"])
+    stats_data["file_count"] += 1
+    print("Number of files after:", stats_data["file_count"])
+
+    # TODO: Update missing cities and counties
+
+    # Update the stats.json with new values
+    stats_json_object = json.dumps(stats_data, indent=4)
+    with open('static/data/city_plans_files/stats.json', "w") as outfile:
+        outfile.write(stats_json_object)
+    #####################################
 
     es.add_to_index(text_file_name)
 
