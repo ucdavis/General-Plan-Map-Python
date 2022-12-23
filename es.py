@@ -26,7 +26,8 @@ es = Elasticsearch('http://localhost:9200')
 
 index_to_info_map = None
 county_dict = None
-city_dict = None 
+city_dict = None
+data_path = ""
 
 
 def parse_filename(filename: str) -> str:
@@ -186,6 +187,7 @@ def map_index_to_vals(search_result_indices, key_to_hash_path='key_hash_mapping.
 	# Takes in the list of ids from testsearch.py
 	print("ENTERING map_index_to_vals")
 	global index_to_info_map
+	import pdb; pdb.set_trace()
 	if index_to_info_map is None:
 		with open(key_to_hash_path, 'r') as fp:
 			data = json.load(fp)
@@ -269,5 +271,4 @@ def elastic_search_highlight(query):
 	return (ids, scores, hit_count_list, highlight_list)
 
 
-if __name__ == "__main__":
-	# Do nothing
+# if __name__ == "__main__":
