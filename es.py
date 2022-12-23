@@ -12,6 +12,7 @@ from collections import OrderedDict
 from httplib2 import RedirectLimit
 import pandas as pd
 from datetime import date
+
 #when you load this pacakge these global variables are defined 
 #es = Elasticsearch('http://localhost:9200')
 # es = Elasticsearch(
@@ -20,13 +21,13 @@ from datetime import date
 #    scheme="https",
 #    port=9243,
 # )
+
 es = Elasticsearch('http://localhost:9200')
 
-# Global data path variable for server (select and deselect appropriate for dev/main)
-# for dev_server
-data_path = ""
-# for local or main
-# data path = 
+index_to_info_map = None
+county_dict = None
+city_dict = None 
+
 
 def parse_filename(filename: str) -> str:
 	"""	This function uses regular expressions to parse a filename. 
@@ -51,8 +52,7 @@ def parse_filename(filename: str) -> str:
 
 	return {'state': state, 'filename': filename,'is_city': is_city,'place_name': place_name, 'plan_date': plan_date, 'filetype': filetype}
 
-county_dict = None
-city_dict = None 
+
 def build_pop_dicts() -> None:
 	"""Loads country csv and city csv into memory and builds 
 	   a dictionary to map between place name and population
@@ -73,6 +73,7 @@ def build_pop_dicts() -> None:
 	county_dict = dict_dict['countyPopulations.csv']
 	city_dict = dict_dict['cityPopulations.csv'] 	
 
+
 def get_place_properties(is_city: bool, place_name: str) -> Dict:
 	"""gets a place's properties (Used by textsearch.py during results)
 	Args:
@@ -88,10 +89,12 @@ def get_place_properties(is_city: bool, place_name: str) -> Dict:
 	else:
 		return county_dict[place_name]
 
+
 def get_max_index() -> int:
 	"""Gets the next open index
 	"""	
 	return es.search(index='test_4', body={"_source": False})['hits']['total']['value']
+
 
 def add_to_index(filepath:str) -> None:
 	"""Adds a new file to the elasticsearch index (to be used with uploader.py)
@@ -115,7 +118,6 @@ def add_to_index(filepath:str) -> None:
 	keyhash = i
 	es.index(index='test_4', id=keyhash, body={'text': txt, 'filename': filename}, )
 
-
 	with open('key_hash_mapping.json', 'r') as fp:
 		hash_to_prop_mapping = json.load(fp)
 	
@@ -124,12 +126,13 @@ def add_to_index(filepath:str) -> None:
 	with open('key_hash_mapping.json', 'w') as fp:
 		json.dump(hash_to_prop_mapping, fp)
 
+
 def index_everything():
 	"""Adds all of the txt files in the data directory to the elasticsearch index
 	"""	
 	global es
 	global index_to_info_map
-	global data_path
+	index_to_info_map = None
 	es.indices.delete(index='test_4', ignore=[400, 404])
 	wd = os.getcwd()
 	data_dir = os.path.join(data_path, 'static', 'data', 'places')
@@ -157,85 +160,8 @@ def index_everything():
 
 	with open('key_hash_mapping.json', 'w') as fp:
 		json.dump(hash_to_prop_mapping, fp)
-	index_to_info_map = None
 
 
-def get_recentyears():
-	# NOT NEEDED
-	global data_path
-	plan_df = pd.read_json('key_hash_mapping.json', orient='index')
-	plan_df.drop(['state','filename','filetype'], axis=1, inplace=True)
-
-	city_df = plan_df[plan_df.is_city == True]
-	county_df = plan_df[plan_df.is_city == False]
-	city_df.sort_values(by=['place_name','plan_date'], ascending=[True,False], inplace=True)
-	city_df.drop_duplicates(subset='place_name', keep='first', inplace=True)
-	city_df["color"] = city_df["plan_date"].apply(assign_color)
-	county_df.sort_values(by=['place_name','plan_date'], ascending=[True,False], inplace=True)
-	county_df.drop_duplicates(subset='place_name', keep='first', inplace=True)
-	county_df["color"] = county_df["plan_date"].apply(assign_color)
-
-	path_to_recentcity = data_path + 'static/data/recent-cityplans.csv'
-	path_to_recentcounty = data_path + 'static/data/recent-countyplans.csv'
-	city_df.to_csv(path_to_recentcity)
-	county_df.to_csv(path_to_recentcounty)
-
-# Color Key: 1 - Green, 
-# 2 - Yellow, 3 - Orange
-# 4 - Red, 5 - Purple
-def assign_color(plan_year: int):
-	curr_year = date.today().year
-	diff_in_year = curr_year - plan_year
-	if (diff_in_year <= 3):
-		return 1
-	elif (diff_in_year > 3 and diff_in_year <= 5):
-		return 2
-	elif (diff_in_year > 5 and diff_in_year <= 8):
-		return 3
-	elif (diff_in_year > 8 and diff_in_year <= 15):
-		return 4
-	elif (diff_in_year > 15):
-		return 5
-	
-def elastic_search(query) -> Tuple[List[int], List[float]]:
-	"""Puts a query into elasticsearch and returns the ids and score
-	Args:
-		query (str): The elasticsearch query 
-	Returns:
-		Tuple(List[int], List[float]): ids of search results and their scores 
-	"""	
-	
-	global es
-	query_json = {"_source": False,
-	"size":1000,        
-	"query": {
-    "simple_query_string" : {
-        "query": query,
-        "fields": ["text"],
-        "default_operator": "and"
-    }}}
-	search = es.search(index='test_4' ,body=query_json, request_timeout=90) 
-	ids = []
-	scores = []
-	for hit in search['hits']['hits']:
-		ids.append(int(hit['_id']))
-		scores.append(float(hit['_score']))
-
-	# writes highlites to webpage 
-	# include highlite in query
-    # "highlight": {
-	# 	"fields": {
-	# 		"text": {}
-	# 	}
-	# },
-	# ids = [int(hit['_id']) for hit in search['hits']['hits']]
-	# webpage = ' <p>'.join(search['hits']['hits'][0]['highlight']['text'])
-	# with open('/Users/dda/Desktop/mywebpage.html', 'w') as f:
-	# 	f.write(webpage)
-	print(search)
-	return ids , scores
-
-index_to_info_map = None
 def map_keys_to_values(search_result_indices, key_to_hash_path='key_hash_mapping.json'):
 	"""maps index to keys 
 	Args:
@@ -271,6 +197,7 @@ def map_index_to_vals(search_result_indices, key_to_hash_path='key_hash_mapping.
 	# print(index_to_info_map)
 	return list(map(lambda x:my_dict[str(x)], search_result_indices))
 
+
 def elastic_search_highlight(query):
 	"""Puts a query into elasticsearch and returns the ids, score, hits and highlights
 	This works by counting the number of <em> paris in the highlighted text. 
@@ -295,28 +222,28 @@ def elastic_search_highlight(query):
 	"_source": False,
 	"size": 1000,
 	"query": {
-	    "match_phrase": {
-	      	"text": {
-	        	"query": query,
-	        	"slop": 0
-	      		}
-	    	}
-	  	},
+		"match_phrase": {
+			"text": {
+				"query": query,
+				"slop": 0
+				}
+			}
+		},
 		"highlight": {
-	    	"pre_tags": [
-	      		"<#>"
-	    	],
-	    	"post_tags": [
-	      		"</#>"
-	    	],
-	    	"fields": {
-	      		"text": {
-	        		"number_of_fragments": 0
-	      		}
-	    	}
+			"pre_tags": [
+				"<#>"
+			],
+			"post_tags": [
+				"</#>"
+			],
+			"fields": {
+				"text": {
+					"number_of_fragments": 0
+				}
+			}
 		},
 	   "fields":[
-	      "filename"
+		  "filename"
 	   ]
 	}
 
@@ -343,4 +270,4 @@ def elastic_search_highlight(query):
 
 
 if __name__ == "__main__":
-	index_everything()
+	# Do nothing
