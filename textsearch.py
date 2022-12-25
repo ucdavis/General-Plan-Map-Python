@@ -1,49 +1,27 @@
-import os
-from flask import Flask, request, render_template
-from flask import flash, redirect, session, abort
-from PyPDF2 import PdfFileMerger, PdfFileReader
-import fitz
+import pandas as pd
+import geopandas as gpd
+import os, requests, shutil, json, fitz
+
 from werkzeug.utils import secure_filename
 from flask_bootstrap import Bootstrap
-from flask import Markup
-import pandas as pd
-import requests
-import shutil
+from flask import Flask, request, render_template, flash, redirect, session, abort, Markup
+from PyPDF2 import PdfFileMerger, PdfFileReader
+
 from bokeh.resources import CDN
 from bokeh.embed import components
 from bokeh.plotting import figure
-import geopandas as gpd
-from bokeh.models import GeoJSONDataSource
-import json
-from bokeh.io import show, curdoc
-from bokeh.models import GeoJSONDataSource, LinearColorMapper, ColorBar, NumeralTickFormatter
-from bokeh.models import LogColorMapper, ColumnDataSource, DataTable, DateFormatter, TableColumn, NumberFormatter, HTMLTemplateFormatter, Div, SingleIntervalTicker, Range1d
+from bokeh.io import show, curdoc, output_file
+from bokeh.models import TextInput, Button
+from bokeh.models import GeoJSONDataSource, LinearColorMapper, ColorBar, NumeralTickFormatter, NumberFormatter
+from bokeh.models import LogColorMapper, ColumnDataSource, DataTable, DateFormatter, TableColumn,  HTMLTemplateFormatter
+from bokeh.models import Legend, LegendItem, FixedTicker, BasicTickFormatter, Div, SingleIntervalTicker, Range1d
+from bokeh.models.callbacks import CustomJS
+from bokeh.models.widgets import Panel, Tabs
 from bokeh.palettes import Viridis6 as palette
-from bokeh.sampledata.unemployment import data as unemployment
 from bokeh.sampledata.us_counties import data as counties
 from bokeh.layouts import column, widgetbox, layout, row
-import shapefile
-from bokeh.models.callbacks import CustomJS
-from bokeh.io import output_file, show
-from bokeh.models import TextInput, Button
-from bokeh.models.widgets import Panel, Tabs
-from bokeh.io import show, output_file
-import shapely.affinity
-import es
-import re
-import geojson
-
-from datetime import date, datetime
-from bokeh.models import Legend, LegendItem
-from bokeh.models import FixedTicker
-
-from bokeh.models import BasicTickFormatter
 from bokeh.transform import linear_cmap,factor_cmap
-import textract
 
-import random
-import glob
-import string
 ### BELOW NEEDED TO EXPORT BOKEH IMAGE FILES
 # from bokeh.io import export_png
 # from bokeh.io.export import get_screenshot_as_png

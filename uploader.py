@@ -1,25 +1,18 @@
 from __future__ import print_function
-import shutil,os
-import sys
-from flask import Flask, request, render_template, redirect,flash, session, abort, url_for,Markup, jsonify
+
+import shutil, os, sys, subprocess, bcrypt, es
+import fitz, pytesseract, requests, cv2, textract
+import subprocess, ghostscript, PyPDF2, json, re
+
+from flask import Flask, request, render_template, redirect, flash, session, abort, url_for,Markup, jsonify
 from flask_simple_geoip import SimpleGeoIP
 from flask_mail import Mail, Message
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 from PyPDF2 import PdfFileMerger, PdfFileReader
-import fitz
-import pytesseract
 from werkzeug.utils import secure_filename
-import requests
-import subprocess
-import ghostscript
-import PyPDF2
-import bcrypt
 from datetime import datetime
-import es
-import cv2
 from decouple import config
-import json, textract, re
 
 
 app = Flask(__name__)  # create flask object
@@ -27,8 +20,6 @@ mail= Mail(app)  # create mail object
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0  # to avoid storing cache
 app.config["GEOIPIFY_API_KEY"] = "at_8RFyAJbk6JHFY9eJCUEuHOFEPMEjG"  # ip address finder API key
 simple_geoip = SimpleGeoIP(app)  # ip address finder object
-
-
 
 gauth = GoogleAuth()  # initiate google drive authentication
 gauth.LoadCredentialsFile("mycreds.txt")  # load api credential details
@@ -52,6 +43,7 @@ userType = 0
 blockip = {  # dictionary with list of ips to block
   "": 0,
 }
+
 @app.route('/admin')
 def home():
     """This function renders and controls login screen

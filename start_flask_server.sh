@@ -1,5 +1,9 @@
+# Script to start both servers after crash or reboot
+
 SESSION0="0"
 SESSION1="1"
+
+tmux kill-server
 
 tmux has-session -t $SESSION0 &> /dev/null
 if [ $? != 0 ] 
