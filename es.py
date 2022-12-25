@@ -183,7 +183,6 @@ def map_index_to_vals(search_result_indices, key_to_hash_path='key_hash_mapping.
 	# Takes in the list of ids from testsearch.py
 	print("ENTERING map_index_to_vals")
 	global index_to_info_map
-	import pdb; pdb.set_trace()
 	if index_to_info_map is None:
 		with open(key_to_hash_path, 'r') as fp:
 			data = json.load(fp)
