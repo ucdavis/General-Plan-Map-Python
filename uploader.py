@@ -377,7 +377,7 @@ def upload_file1():  # function to upload file
         outfile.write(stats_json_object)
     #####################################
 
-    es.add_to_index(text_file_name)
+    # es.add_to_index(text_file_name)
 
     return render_template('upload_confirm.html',up=up)  # render upload confirmation message page
 
