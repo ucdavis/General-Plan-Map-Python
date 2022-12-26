@@ -13,8 +13,7 @@
         <title>California General Plan Database Mapping Tool</title>
 
         <!-- Additional CSS Files -->
-        <link rel="stylesheet" href="/static/cssjs/css/bootstrap.min.css" integrity="
-        sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link rel="stylesheet" href="/static/cssjs/css/bootstrap.min.css" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="/static/cssjs/css/font-awesome.css">
         <link rel="stylesheet" href="/static/cssjs/css/general-template.css">
 
@@ -35,6 +34,25 @@
       </div>
     </div>
     <!-- ***** Preloader End ***** -->
+
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="editModalLabel">Re-Index</h4>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to re-index the database?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" id="btnUpdate" class="btn btn-default"><a href="/admin/reindex">Re-index</button>
+                </div>
+            </div>
+        </div>
+    </div>
     
     
     <!-- ***** Header Area Start ***** -->
@@ -44,7 +62,7 @@
             <ul class="nav">
                 <li class="scroll-to-section"><a href="#top" id="up"  class="active" >Upload</a></li>
                 <li class="scroll-to-section"><a href="#top" id="del">Delete</a></li>
-                <li class="scroll-to-section"><a href="/admin/reindex" id="reindex">Re-index</a></li>
+                <li class="scroll-to-section"><a href="#top" data-toggle="modal" data-target="#editModal">Re-index</a></li>
                 <li class="scroll-to-section"><a href="https://docs.google.com/forms/d/e/1FAIpQLSeCpD1Dil06c8tuSLnDqHp9W_6zK3S50ho4eGQtM4MyBhYM4g/viewform">Feedback</a></li>
             </ul>        
             <a class='menu-trigger'>
