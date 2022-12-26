@@ -1,22 +1,22 @@
-# Script to start both servers after crash or reboot
+# Bash script to start both servers (plan-search and admin) after crash or reboot
 
 SESSION0="0"
 SESSION1="1"
 
-tmux kill-server
+tmux kill-server || true
 
 tmux has-session -t $SESSION0 &> /dev/null
 if [ $? != 0 ] 
- then
-    tmux new-session -s $SESSION0 -n script -d
-    tmux send-keys -t $SESSION0 "conda activate gpenv" C-m 
-    tmux send-keys -t $SESSION0 "python textsearch.py" C-m
+ 	then
+		tmux new-session -s $SESSION0 -n script -d
+		tmux send-keys -t $SESSION0 "conda activate gpenv" C-m 
+		tmux send-keys -t $SESSION0 "python textsearch.py" C-m
 fi
 
 tmux has-session -t $SESSION1 &> /dev/null
 if [ $? != 0 ] 
- then
-    tmux new-session -s $SESSION1 -n script -d
-    tmux send-keys -t $SESSION1 "conda activate gpenv" C-m 
-    tmux send-keys -t $SESSION1 "python uploader.py" C-m
+ 	then
+		tmux new-session -s $SESSION1 -n script -d
+		tmux send-keys -t $SESSION1 "conda activate gpenv" C-m 
+		tmux send-keys -t $SESSION1 "python uploader.py" C-m
 fi

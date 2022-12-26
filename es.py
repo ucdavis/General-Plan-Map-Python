@@ -1,4 +1,22 @@
-#elasticsearch python file
+"""es.py
+
+This python file manages all the Elasticsearch operations. This file is mainly used as a
+module in textsearch.py and uploader.py which use the functions in this file to modify or search the
+Elasticsearch database.
+
+The file contains the following functions:
+    * parse_filename
+	* build_pop_dicts
+	* get_place_properties
+	* get_max_index
+	* add_to_index
+	* index_everything
+	* map_keys_to_values
+	* map_index_to_vals
+	* elastic_search_highlight
+
+"""
+
 import os, glob, re, json, csv
 import pandas as pd
 
@@ -9,8 +27,8 @@ from typing import Dict, List, Tuple
 from httplib2 import RedirectLimit
 from datetime import date
 
-#when you load this pacakge these global variables are defined 
-#es = Elasticsearch('http://localhost:9200')
+# when you load this pacakge these global variables are defined 
+# es = Elasticsearch('http://localhost:9200')
 # es = Elasticsearch(
 #    [os.environ.get('ES_HOST')],
 #    http_auth=(os.environ.get('ES_USR'), os.environ.get('ES_PWD')),
@@ -178,6 +196,7 @@ def map_keys_to_values(search_result_indices, key_to_hash_path='key_hash_mapping
 		my_dict = index_to_info_map
 
 	return list(map(lambda x:my_dict[str(x)]['filename'], search_result_indices))
+
 
 def map_index_to_vals(search_result_indices, key_to_hash_path='key_hash_mapping.json'):
 	# Takes in the list of ids from testsearch.py

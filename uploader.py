@@ -1,3 +1,22 @@
+"""uploader.py
+
+This the python file which runs the flask server for the admin portal for the plan search tool.
+It handles all the pages of the admin website i.e. 'upload', 'delete' and 'reindex'.
+
+A user with appropriate rights (admin/superadmin) can upload, delete and re-index the database using
+this portal.
+
+The file contains the following functions:
+    * home
+    * do_admin_login
+    * delete_page_update
+    * upload_page_update
+    * reindex_data
+    * delete_file
+    * upload_file1
+
+"""
+
 from __future__ import print_function
 
 import shutil, os, sys, subprocess, bcrypt, es
@@ -65,7 +84,6 @@ def home():
         return render_template('upload_index.html',del_list=del_list, userType = userType)  # if logged in, update file list
 
 
-
 @app.route('/admin', methods=['POST'])
 def do_admin_login():  # function to collect username & password
     global blockip, userType
@@ -122,16 +140,17 @@ def do_admin_login():  # function to collect username & password
     return home()
 
 
-
 @app.route('/admin/delpg')
 def delete_page_update():  # to update page list
     session['logged_in'] = True
     return redirect(url_for('home'))
 
+
 @app.route('/admin/upload_confirm')
 def upload_page_update():
     session['logged_in'] = True
     return redirect(url_for('home'))
+
 
 @app.route('/admin/reindex')
 def reindex_data():  # to update page list
@@ -139,6 +158,7 @@ def reindex_data():  # to update page list
     es.index_everything()
     msg = "Files re-indexed Successfully!"
     return render_template('upload_reindex_done.html', msg=msg) 
+
 
 @app.route('/admin/delete', methods = ['POST'])
 def delete_file():  # function to delete file from list
@@ -202,8 +222,6 @@ def delete_file():  # function to delete file from list
 
 
     return redirect(url_for('delete_page_update'))
-
-
 
 
 @app.route('/admin/upload', methods = ['GET', 'POST'])  # route to upload form in upload_index html in for getting files and posting to the server

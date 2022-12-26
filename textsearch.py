@@ -1,3 +1,29 @@
+"""textsearch.py
+
+This the main python file which runs the flask server for the plan search website.
+It handles all the pages of the website i.e. 'index page' and 'search results'.
+
+The plan search tool accepts a keyword or search phrase from the index page, and calls the
+es.py file to fetch the results from the Elasticsearch server.
+
+The file contains the following class:
+    * Result
+
+The file contains the following functions:
+    * my_form
+    * get_stats
+    * get_categories
+    * create_city_plans_json
+    * get_range_color
+    * fill_city_colors
+    * fill_county_colors
+    * getResults
+    * change_json_colors
+    * index_search_box
+    * highlight_pdf
+
+"""
+
 import os, fitz, requests, shutil, json, shapefile, shapely.affinity, es, re
 import geojson, textract, random, glob, string
 import pandas as pd
@@ -12,7 +38,6 @@ from datetime import date, datetime
 from bokeh.resources import CDN
 from bokeh.embed import components
 from bokeh.plotting import figure
-
 from bokeh.io import show, curdoc, output_file
 from bokeh.models import GeoJSONDataSource, LinearColorMapper, ColorBar, NumeralTickFormatter, NumberFormatter, Range1d
 from bokeh.models import LogColorMapper, ColumnDataSource, DataTable, DateFormatter, TableColumn, Div, SingleIntervalTicker
@@ -20,7 +45,6 @@ from bokeh.models import TextInput, Button, Legend, LegendItem, FixedTicker, Bas
 from bokeh.models.callbacks import CustomJS
 from bokeh.models.widgets import Panel, Tabs
 from bokeh.palettes import Viridis6 as palette
-from bokeh.sampledata.unemployment import data as unemployment
 from bokeh.sampledata.us_counties import data as counties
 from bokeh.layouts import column, widgetbox, layout, row
 from bokeh.transform import linear_cmap,factor_cmap
@@ -463,6 +487,7 @@ def create_city_plans_json(color_mapper):
 
     return map_json
 
+
 def get_range_color(row):
     """This function will provide the color code for a particular city. 
     Args:
@@ -732,7 +757,6 @@ with open(os.path.join(geojson_path, 'pop_map.geojson'), 'r') as f:
 
 
 @app.route('/results/', methods=['GET'])
-
 def index_search_box():
     """The code for the search box functionality
     Returns:
@@ -1002,7 +1026,6 @@ def index_search_box():
     return render_template('results.html', lScript = lScript, lDiv = lDiv)
 
 @app.route('/outp/<string:city>/<string:words>')
-
 def highlight_pdf(city, words):
     """Function responsible for highlighting pdf words
     Args:
