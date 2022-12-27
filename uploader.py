@@ -320,7 +320,6 @@ def upload_file1():  # function to upload file
                         invert = 255 - opening
                         # Perform text extraction
                         text = pytesseract.image_to_string(invert, lang='eng', config='--psm 6')
-                        print(data)
                         # *******************
                         textfile.write(text)  # write text from the image to text file
                         pdf = pytesseract.image_to_pdf_or_hocr(pixn, extension='pdf')  # convert image to pdf
