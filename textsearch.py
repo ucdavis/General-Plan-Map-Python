@@ -859,23 +859,23 @@ def index_search_box():
 
     cityData = dict(
         names = [res.cityName for res in cityResults if res.hits != 0],
-        years_href = [res.year for res in cityResults  if res.hits != 0],
-        years = [res.plan_date for res in cityResults  if res.hits != 0],
-        types = [res.cityType for res in cityResults  if res.hits != 0],
-        fNames = [res.pdf_filename for res in cityResults  if res.hits != 0],
-        populations = [res.population for res in cityResults  if res.hits != 0],
-        counties = [res.county for res in cityResults  if res.hits != 0],
-        hits = [res.hits for res in cityResults  if res.hits != 0]
+        years_href = [res.year for res in cityResults if res.hits != 0],
+        years = [res.plan_date for res in cityResults if res.hits != 0],
+        types = [res.cityType for res in cityResults if res.hits != 0],
+        fNames = [res.pdf_filename for res in cityResults if res.hits != 0],
+        populations = [res.population for res in cityResults if res.hits != 0],
+        counties = [res.county for res in cityResults if res.hits != 0],
+        hits = [res.hits for res in cityResults if res.hits != 0]
         )
 
     countyData = dict(
-        names = [res.cityName for res in countyResults  if res.hits != 0],
-        years_href = [res.year for res in countyResults  if res.hits != 0],
-        years = [res.plan_date for res in countyResults]  if res.hits != 0,
-        types = [res.type for res in countyResults]  if res.hits != 0,
-        fNames = [res.pdf_filename for res in countyResults  if res.hits != 0],
-        populations = [res.population for res in countyResults  if res.hits != 0],
-        hits = [res.hits for res in countyResults  if res.hits != 0]
+        names = [res.cityName for res in countyResults if res.hits != 0],
+        years_href = [res.year for res in countyResults if res.hits != 0],
+        years = [res.plan_date for res in countyResults if res.hits != 0],
+        types = [res.type for res in countyResults if res.hits != 0],
+        fNames = [res.pdf_filename for res in countyResults if res.hits != 0],
+        populations = [res.population for res in countyResults if res.hits != 0],
+        hits = [res.hits for res in countyResults if res.hits != 0]
         )
 
     #====================================================
