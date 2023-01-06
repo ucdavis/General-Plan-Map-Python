@@ -71,7 +71,7 @@ Please see [license](https://github.com/Hack-for-California/General-Plan-Map-Pyt
 
 ## Cite As
 
-CITATION
+Aniket Banginwar, Dexter Antonio, Mirthala Lopez, Lindsay Poirier, Sujoy Ghosh, Makena Dettmann, & Catherine Brinkley. (2023, January 6). General Plan Database Mapping Tool (v3.0). Zenodo. https://doi.org/10.5281/zenodo.7508689
 
 ## Have Questions?
 Contact [hack-for-california@ucdavis.edu](mailto:hack-for-california@ucdavis.edu)  
