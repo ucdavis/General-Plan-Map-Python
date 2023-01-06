@@ -1018,12 +1018,14 @@ def index_search_box():
     #Layout of the page
     #====================================================
 
-    page_layout = layout(column([row([column(mapTabs), column([shareDiv, resultsDiv])]), tabs, p_timeline]))
-    lScript,lDiv = components(page_layout)
+    page_layout_1 = layout(column([row([column(mapTabs), column([shareDiv, resultsDiv])])]))
+    page_layout_2 = layout(column(tabs, p_timeline))
+    lScript_1,lDiv_1 = components(page_layout_1)
+    lScript_2,lDiv_2 = components(page_layout_2)
     cdn_js = CDN.js_files
     cdn_css = CDN.css_files
 
-    return render_template('results.html', lScript = lScript, lDiv = lDiv)
+    return render_template('results.html', lScript_1 = lScript_1, lDiv_1 = lDiv_1, lScript_2 = lScript_2, lDiv_2 = lDiv_2)
 
 @app.route('/outp/<string:city>/<string:words>')
 def highlight_pdf(city, words):
