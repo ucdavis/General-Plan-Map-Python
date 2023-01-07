@@ -961,8 +961,8 @@ def index_search_box():
     p_timeline.line(x = 'years', y = 'counts', source = source_city, line_width = 2, color = "#d47500", line_alpha = 0.5)
     p_timeline.circle(x = 'years', y = 'counts', source = source_county, color = "#00a4a6", legend_label="County", name = "county_timeline")
     p_timeline.line(x = 'years', y = 'counts', source = source_county, line_width=2, color = "#00a4a6", line_alpha = 0.5)
-    p_timeline.yaxis.ticker = SingleIntervalTicker(interval = 1)
-    p_timeline.y_range = Range1d(0, maxYearCount)
+    p_timeline.yaxis.ticker = SingleIntervalTicker(interval = 5)
+    p_timeline.y_range = Range1d(0, maxYearCount + 5)
     p_timeline.xaxis.axis_label_text_font = 'poppins'
     p_timeline.xaxis.axis_label_text_font_style = 'normal'
     p_timeline.yaxis.axis_label_text_font = 'poppins'
