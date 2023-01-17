@@ -32,6 +32,7 @@ from PyPDF2 import PdfFileMerger, PdfFileReader
 from werkzeug.utils import secure_filename
 from datetime import datetime
 from decouple import config
+import smtplib
 
 
 app = Flask(__name__)  # create flask object
@@ -226,175 +227,244 @@ def delete_file():  # function to delete file from list
 
 @app.route('/admin/upload', methods = ['GET', 'POST'])  # route to upload form in upload_index html in for getting files and posting to the server
 def upload_file1():  # function to upload file
+    global userType
     completeName=""
     location_name=""
     if request.method == 'POST':  # when upload button is clicked
+        if userType == 0:
+            gauth = GoogleAuth()
 
-        files = request.files.getlist("file")  # get list of files uploaded in form
-        for file in files:  # open place pdf file
-            print(file.filename)
-            location_name=""
-            if request.form['type'] == "City":
-                location_name=request.form['City']
+            # Try to load saved client credentials
+            gauth.LoadCredentialsFile("mycreds.txt")
+              
+            if gauth.credentials is None:
+                # Authenticate if they're not there
+                gauth.LocalWebserverAuth()
+            elif gauth.access_token_expired:
+                # Refresh them if expired
+                gauth.Refresh()
             else:
-                location_name=request.form['county']
+                # Initialize the saved creds
+                gauth.Authorize()
+                
+            # Save the current credentials to a file
+            gauth.SaveCredentialsFile("mycreds.txt")
+
+            drive = GoogleDrive(gauth)
+
+            # Issues needed to kept in mind:
+            #     The authentication has to be done for the first time
+            #     Explore the settings.yaml option
+            #     What if the token expires, how to manage that?
+            #     Need to check all fields are filled and check email validity
+
+            files = request.files.getlist("file")  # get list of files uploaded in form
+            for file in files:  # open place pdf file
+                print(file.filename)
+                location_name=""
+                if request.form['type'] == "City":
+                    location_name=request.form['City']
+                else:
+                    location_name=request.form['county']
             
             # generate filename with select form data
             location_name.replace(" ", "-")
             file.filename=request.form['state']+"_"+request.form['type']+"-"+location_name+"_"+request.form['year']+".pdf"
             print(file.filename)
+            tempLocation = os.path.join("static/data/temp",file.filename)
+            file.save(tempLocation)
+            print("File uploaded to temp location")
 
-            ########### GOOGLE DRIVE AUTH STUFF ##################
-            # send email for download notification
-            # msg = Message('General Plan file upload', sender = 'generalplanserver@gmail.com', recipients = ['ckbrinkley@ucdavis.edu'])
-            # msg.body = "Dear Admin,\n\nA file named "+file.filename+" has been uploaded to the server by: "+request.form['email']+" .\n\nGeneral Plan Server"
-            # mail.send(msg)  # send mail for file upload to server
+            # Adding the file to google drive
+            upload_file_list = [tempLocation]
+            for upload_file in upload_file_list:
+                gfile = drive.CreateFile({'parents': [{'title': file.filename, 'id': '1o-BiWU94SApuxZY5serVBDBn5pA_7ZYz'}]}) # id of the folder from URL
+                # Read file and set it as the content of this instance.
+                gfile['title'] = file.filename
+                gfile.SetContentFile(upload_file)
+                gfile.Upload() # Upload the file.
+                gfile = None
+                print("File uploaded to google drive")
 
-            completeName = os.path.join("static/data/places",file.filename)
+            # Remove the uploaded file from temp
+            os.remove(tempLocation)
+            print("File deleted from temp location")
 
-            print(completeName)
-            # temporary copy file in case compression is not possible
-            tempname=os.path.join("static/data/temp",secure_filename(file.filename)) 
-            print("hello.",tempname)
-            file.save(completeName)  # save file to server
-            arg1= '-sOutputFile='+ tempname  # path for output file after compression to reduce pdf size
+            gmail_user = 'testuploader97@gmail.com'
+            gmail_password = 'gmcwtynreiqwbspo'
 
-            # path to ghostscript in user's OS has to be changed
-            p = subprocess.Popen(['/usr/bin/gs',
-                                  '-sDEVICE=pdfwrite','-dCompatibilityLevel=1.4',
-                                  '-dPDFSETTINGS=/screen','-dNOPAUSE', '-dBATCH',  '-dQUIET',
-                                  str(arg1),completeName ], stdout=subprocess.PIPE)  # function to compress pdf
+            sent_from = gmail_user
+            to = [request.form['email'], 'testuploader97@gmail.com']
+            subject = 'File uploaded for verification'
+            body = 'Dear User,\nYour file {} has been uploaded to drive for verification.'.format(file.filename)
+
+            email_text = 'To: {}\nSubject: {}\n\n{}'.format(", ".join(to), subject, body)
+
             try:
-                out, err = p.communicate(timeout=1800)  # try compression for 1800 secs max
-            except subprocess.TimeoutExpired:
-                p.kill()  # kill the process since a timeout was triggered
-                out, error = p.communicate()  # capture both standard output and standard error
-            else:
-                pass
+                smtp_server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+                smtp_server.ehlo()
+                smtp_server.login(gmail_user, gmail_password)
+                smtp_server.sendmail(sent_from, to, email_text)
+                smtp_server.close()
+                print ("Email sent successfully!")
+            except Exception as ex:
+                print ("Something went wrong….",ex)
 
-            try:
-                fh= open(tempname, "rb")
-                check=PyPDF2.PdfFileReader(fh)  # check if pdf is valid file
-                fh.close()
-            except:
-                fh= open(tempname, "rb")
-                print("invalid PDF file")
-                fh.close()
-                os.remove(tempname)  # remove temp file if compressed pdf is corrupt and causes exception
-            else:
-                pass
-                os.remove(completeName)
-                # try:
-                shutil.move(tempname,"static/data/places")  # move compressed tempfile to places directory is compressed file is valid
-                # except OSError as error:
-                # print(error) # need to trigger a popup in the browser window
-            fname =completeName
-            fnamecpy=fname
-            doc = fitz.open(fname)  # open pdf file object
-            length=len(doc)  # find no. of pages
-            imornot=0  # flag variable to check if pdf contains scanned data or text
-            for page in doc:
-                if not page.getText():  # check if pdf contains scanned data or text
-                    imornot=imornot+1
 
-            text_file_name = fname + ".txt"
-            if imornot > int(length/2):  # if more than half pages of pdf are scanned convert to text pdf through OCR
-                fname=fname.replace('.pdf', '')
+            up="Files uploaded for verification!"
+            print("This file is uploaded to drive:",tempLocation)
+
+        else:
+            files = request.files.getlist("file")  # get list of files uploaded in form
+            for file in files:  # open place pdf file
+                print(file.filename)
+                location_name=""
+                if request.form['type'] == "City":
+                    location_name=request.form['City']
+                else:
+                    location_name=request.form['county']
+                
+                # generate filename with select form data
+                location_name.replace(" ", "-")
+                file.filename=request.form['state']+"_"+request.form['type']+"-"+location_name+"_"+request.form['year']+".pdf"
+                print(file.filename)
+
+                completeName = os.path.join("static/data/places",file.filename)
+
+                print(completeName)
+                # temporary copy file in case compression is not possible
+                tempname=os.path.join("static/data/temp",secure_filename(file.filename)) 
+                print("hello.",tempname)
+                file.save(completeName)  # save file to server
+                arg1= '-sOutputFile='+ tempname  # path for output file after compression to reduce pdf size
+
+                # path to ghostscript in user's OS has to be changed
+                p = subprocess.Popen(['/usr/bin/gs',
+                                      '-sDEVICE=pdfwrite','-dCompatibilityLevel=1.4',
+                                      '-dPDFSETTINGS=/screen','-dNOPAUSE', '-dBATCH',  '-dQUIET',
+                                      str(arg1),completeName ], stdout=subprocess.PIPE)  # function to compress pdf
+                try:
+                    out, err = p.communicate(timeout=1800)  # try compression for 1800 secs max
+                except subprocess.TimeoutExpired:
+                    p.kill()  # kill the process since a timeout was triggered
+                    out, error = p.communicate()  # capture both standard output and standard error
+                else:
+                    pass
+
+                try:
+                    fh= open(tempname, "rb")
+                    check=PyPDF2.PdfFileReader(fh)  # check if pdf is valid file
+                    fh.close()
+                except:
+                    fh= open(tempname, "rb")
+                    print("invalid PDF file")
+                    fh.close()
+                    os.remove(tempname)  # remove temp file if compressed pdf is corrupt and causes exception
+                else:
+                    pass
+                    os.remove(completeName)
+                    # try:
+                    shutil.move(tempname,"static/data/places")  # move compressed tempfile to places directory is compressed file is valid
+                    # except OSError as error:
+                    # print(error) # need to trigger a popup in the browser window
+                fname =completeName
+                fnamecpy=fname
+                doc = fitz.open(fname)  # open pdf file object
+                length=len(doc)  # find no. of pages
+                imornot=0  # flag variable to check if pdf contains scanned data or text
+                for page in doc:
+                    if not page.getText():  # check if pdf contains scanned data or text
+                        imornot=imornot+1
+
                 text_file_name = fname + ".txt"
-                textfile = open(text_file_name, "a")  # create text file with place name
-                for page in doc:
-                    pix = page.getPixmap(alpha = False)  # generate image file from page
-                    pixn=os.path.join("static/data/places","page-%i.png" % page.number)
-                    pix.writePNG(pixn)  # save page image as png
-                    pdfn=os.path.join("static/data/places","page-"+str(page.number)+".pdf")
-                    with open(pdfn, 'w+b') as f:
-                        # ********* UPDATED OCR CODE *********** # 
-                        # Grayscale, Gaussian blur, Otsu's threshold
-                        image = cv2.imread(pixn)
-                        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-                        blur = cv2.GaussianBlur(gray, (3,3), 0)
-                        thresh = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
-                        # Morph open to remove noise and invert image
-                        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3,3))
-                        opening = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel, iterations=1)
-                        invert = 255 - opening
-                        # Perform text extraction
-                        text = pytesseract.image_to_string(invert, lang='eng', config='--psm 6')
-                        # *******************
-                        textfile.write(text)  # write text from the image to text file
-                        pdf = pytesseract.image_to_pdf_or_hocr(pixn, extension='pdf')  # convert image to pdf
-                        f.write(pdf)  # create pdf for the page
-                        os.remove(pixn)  # remove the image after pdf creation
-                    f.close()
-                textfile.close()
+                if imornot > int(length/2):  # if more than half pages of pdf are scanned convert to text pdf through OCR
+                    fname=fname.replace('.pdf', '')
+                    text_file_name = fname + ".txt"
+                    textfile = open(text_file_name, "a")  # create text file with place name
+                    for page in doc:
+                        pix = page.getPixmap(alpha = False)  # generate image file from page
+                        pixn=os.path.join("static/data/places","page-%i.png" % page.number)
+                        pix.writePNG(pixn)  # save page image as png
+                        pdfn=os.path.join("static/data/places","page-"+str(page.number)+".pdf")
+                        with open(pdfn, 'w+b') as f:
+                            # ********* UPDATED OCR CODE *********** # 
+                            # Grayscale, Gaussian blur, Otsu's threshold
+                            image = cv2.imread(pixn)
+                            gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+                            blur = cv2.GaussianBlur(gray, (3,3), 0)
+                            thresh = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
+                            # Morph open to remove noise and invert image
+                            kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3,3))
+                            opening = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel, iterations=1)
+                            invert = 255 - opening
+                            # Perform text extraction
+                            text = pytesseract.image_to_string(invert, lang='eng', config='--psm 6')
+                            # *******************
+                            textfile.write(text)  # write text from the image to text file
+                            pdf = pytesseract.image_to_pdf_or_hocr(pixn, extension='pdf')  # convert image to pdf
+                            f.write(pdf)  # create pdf for the page
+                            os.remove(pixn)  # remove the image after pdf creation
+                        f.close()
+                    textfile.close()
 
-                mergedObject = PdfFileMerger()  # create file merger object
+                    mergedObject = PdfFileMerger()  # create file merger object
 
-                # merge all page pdfs into a single pdf for the particular place
-                for fileNumber in range(page.number+1):
-                    pdfn=os.path.join("static/data/places",("page-"+str(fileNumber)+".pdf"))
-                    mergedObject.append(PdfFileReader(pdfn, 'rb'))  # append page to place pdf
-                    os.remove(pdfn)  # remove appended page pdf from server
+                    # merge all page pdfs into a single pdf for the particular place
+                    for fileNumber in range(page.number+1):
+                        pdfn=os.path.join("static/data/places",("page-"+str(fileNumber)+".pdf"))
+                        mergedObject.append(PdfFileReader(pdfn, 'rb'))  # append page to place pdf
+                        os.remove(pdfn)  # remove appended page pdf from server
 
-                mergedObject.write(fnamecpy)  # save the complete place pdf to single file in server
+                    mergedObject.write(fnamecpy)  # save the complete place pdf to single file in server
 
-                mergedObject.close()
-
-
-            else:  # if the pdf contains less than half scanned pages
-                imornot=0
-                fname=fname.replace('.pdf', '')
-                textfile = open(fname + ".txt", "wb")  # create text document to store text data
-                for page in doc:
-                        text = page.getText().encode("utf8")  # get text from pdf page
-                        textfile.write(text)  # write text to text file for the place
-                        textfile.write(bytes((12,)))
-                textfile.close()
-
-            doc.close()
-
-        ########### GOOGLE DRIVE AUTH STUFF ##################
-        # drive = GoogleDrive(gauth)  # rebuild drive object
-        # file1=drive.CreateFile({'title':file.filename})  # name the drive file
-        # file1.SetContentFile(completeName)  # obtain contents of the pdf
-        # file1.Upload()  # upload the file to drive
+                    mergedObject.close()
 
 
-    up="Files Uploaded Successfully!"
-    print("This file is uploaded:",completeName)
+                else:  # if the pdf contains less than half scanned pages
+                    imornot=0
+                    fname=fname.replace('.pdf', '')
+                    textfile = open(fname + ".txt", "wb")  # create text document to store text data
+                    for page in doc:
+                            text = page.getText().encode("utf8")  # get text from pdf page
+                            textfile.write(text)  # write text to text file for the place
+                            textfile.write(bytes((12,)))
+                    textfile.close()
 
-    ###### Updating the stats.json ######
-    stats_dict = open('static/data/city_plans_files/stats.json')
-    stats_data = json.load(stats_dict)
+                doc.close()
 
-    # Update the number of pdf pages
-    print("Number of pages before:", stats_data["total_pages"])
-    new_pdf_file = open(completeName, 'rb')
-    read_pdf = PyPDF2.PdfFileReader(new_pdf_file)
-    stats_data["total_pages"] += read_pdf.numPages
-    print("Number of pages after:", stats_data["total_pages"])
+                up="Files Uploaded Successfully!"
+            print("This file is uploaded:",completeName)
 
-    # Update the number of words
-    print("Number of words before:", stats_data["total_words"])
-    text = textract.process(completeName).decode('utf-8')
-    words = re.findall(r"[^\W_]+", text, re.MULTILINE)
-    stats_data["total_words"] += len(words)
-    print("Number of words after:", stats_data["total_words"])
+            ###### Updating the stats.json ######
+            stats_dict = open('static/data/city_plans_files/stats.json')
+            stats_data = json.load(stats_dict)
 
-    # Update the file count
-    print("Number of files before:", stats_data["file_count"])
-    stats_data["file_count"] += 1
-    print("Number of files after:", stats_data["file_count"])
+            # Update the number of pdf pages
+            print("Number of pages before:", stats_data["total_pages"])
+            new_pdf_file = open(completeName, 'rb')
+            read_pdf = PyPDF2.PdfFileReader(new_pdf_file)
+            stats_data["total_pages"] += read_pdf.numPages
+            print("Number of pages after:", stats_data["total_pages"])
 
-    # TODO: Update missing cities and counties (FUTURE WORK)
+            # Update the number of words
+            print("Number of words before:", stats_data["total_words"])
+            text = textract.process(completeName).decode('utf-8')
+            words = re.findall(r"[^\W_]+", text, re.MULTILINE)
+            stats_data["total_words"] += len(words)
+            print("Number of words after:", stats_data["total_words"])
 
-    # Update the stats.json with new values
-    stats_json_object = json.dumps(stats_data, indent=4)
-    with open('static/data/city_plans_files/stats.json', "w") as outfile:
-        outfile.write(stats_json_object)
-    #####################################
+            # Update the file count
+            print("Number of files before:", stats_data["file_count"])
+            stats_data["file_count"] += 1
+            print("Number of files after:", stats_data["file_count"])
 
-    # es.add_to_index(text_file_name)
+            # TODO: Update missing cities and counties (FUTURE WORK)
+
+            # Update the stats.json with new values
+            stats_json_object = json.dumps(stats_data, indent=4)
+            with open('static/data/city_plans_files/stats.json', "w") as outfile:
+                outfile.write(stats_json_object)
+            #####################################
 
     return render_template('upload_confirm.html',up=up)  # render upload confirmation message page
 
