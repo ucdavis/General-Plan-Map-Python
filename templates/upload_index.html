@@ -62,7 +62,7 @@
             <ul class="nav">
                 <li class="scroll-to-section"><a href="#top" id="up"  class="active" >Upload</a></li>
                 <li class="scroll-to-section"><a href="#top" id="del">Delete</a></li>
-                <li class="scroll-to-section"><a href="#top" data-toggle="modal" data-target="#editModal">Re-index</a></li>
+                <li class="scroll-to-section"><a href="#top" id="reindex" data-toggle="modal" data-target="#editModal">Re-index</a></li>
                 <li class="scroll-to-section"><a href="https://docs.google.com/forms/d/e/1FAIpQLSeCpD1Dil06c8tuSLnDqHp9W_6zK3S50ho4eGQtM4MyBhYM4g/viewform">Feedback</a></li>
             </ul>        
             <a class='menu-trigger'>
@@ -87,70 +87,70 @@
                     <form action = "/admin/upload"  enctype="multipart/form-data" method = "POST" style="width:30%;height: 100%;">
                     
                         <select name="state" id="state" style="font-size: 2.5vh;width:100%;height: 5vh;margin-bottom: 4vh;">
-                        	<option value="Select state">Select state</option>
-                        	<option value="AK">AK</option>
-							<option value="AL">AL</option>
-							<option value="AR">AR</option>
-							<option value="AZ">AZ</option>
-							<option value="CA">CA</option>
-							<option value="CO">CO</option>
-							<option value="CT">CT</option>
-							<option value="DC">DC</option>
-							<option value="DE">DE</option>
-							<option value="FL">FL</option>
-							<option value="GA">GA</option>
-							<option value="HI">HI</option>
-							<option value="IA">IA</option>
-							<option value="ID">ID</option>
-							<option value="IL">IL</option>
-							<option value="IN">IN</option>
-							<option value="KS">KS</option>
-							<option value="KY">KY</option>
-							<option value="LA">LA</option>
-							<option value="MA">MA</option>
-							<option value="MD">MD</option>
-							<option value="ME">ME</option>
-							<option value="MI">MI</option>
-							<option value="MN">MN</option>
-							<option value="MO">MO</option>
-							<option value="MS">MS</option>
-							<option value="MT">MT</option>
-							<option value="NC">NC</option>
-							<option value="ND">ND</option>
-							<option value="NE">NE</option>
-							<option value="NH">NH</option>
-							<option value="NJ">NJ</option>
-							<option value="NM">NM</option>
-							<option value="NV">NV</option>
-							<option value="NY">NY</option>
-							<option value="OH">OH</option>
-							<option value="OK">OK</option>
-							<option value="OR">OR</option>
-							<option value="PA">PA</option>
-							<option value="RI">RI</option>
-							<option value="SC">SC</option>
-							<option value="SD">SD</option>
-							<option value="TN">TN</option>
-							<option value="TX">TX</option>
-							<option value="UT">UT</option>
-							<option value="VA">VA</option>
-							<option value="VT">VT</option>
-							<option value="WA">WA</option>
-							<option value="WI">WI</option>
-							<option value="WV">WV</option>
-							<option value="WY">WY</option>
+                            <option value="Select state">Select state</option>
+                            <option value="AK">AK</option>
+                            <option value="AL">AL</option>
+                            <option value="AR">AR</option>
+                            <option value="AZ">AZ</option>
+                            <option value="CA">CA</option>
+                            <option value="CO">CO</option>
+                            <option value="CT">CT</option>
+                            <option value="DC">DC</option>
+                            <option value="DE">DE</option>
+                            <option value="FL">FL</option>
+                            <option value="GA">GA</option>
+                            <option value="HI">HI</option>
+                            <option value="IA">IA</option>
+                            <option value="ID">ID</option>
+                            <option value="IL">IL</option>
+                            <option value="IN">IN</option>
+                            <option value="KS">KS</option>
+                            <option value="KY">KY</option>
+                            <option value="LA">LA</option>
+                            <option value="MA">MA</option>
+                            <option value="MD">MD</option>
+                            <option value="ME">ME</option>
+                            <option value="MI">MI</option>
+                            <option value="MN">MN</option>
+                            <option value="MO">MO</option>
+                            <option value="MS">MS</option>
+                            <option value="MT">MT</option>
+                            <option value="NC">NC</option>
+                            <option value="ND">ND</option>
+                            <option value="NE">NE</option>
+                            <option value="NH">NH</option>
+                            <option value="NJ">NJ</option>
+                            <option value="NM">NM</option>
+                            <option value="NV">NV</option>
+                            <option value="NY">NY</option>
+                            <option value="OH">OH</option>
+                            <option value="OK">OK</option>
+                            <option value="OR">OR</option>
+                            <option value="PA">PA</option>
+                            <option value="RI">RI</option>
+                            <option value="SC">SC</option>
+                            <option value="SD">SD</option>
+                            <option value="TN">TN</option>
+                            <option value="TX">TX</option>
+                            <option value="UT">UT</option>
+                            <option value="VA">VA</option>
+                            <option value="VT">VT</option>
+                            <option value="WA">WA</option>
+                            <option value="WI">WI</option>
+                            <option value="WV">WV</option>
+                            <option value="WY">WY</option>
                         </select>
                         <select name="type" id="type" style="font-size: 2.5vh;width:100%;height: 5vh;margin-bottom: 4vh;" >
-                        	<option value="Select type">Select type</option>
-                        	<option value="City">City</option>
-                        	<option value="county">County</option>
+                            <option value="Select type">Select type</option>
+                            <option value="City">City</option>
+                            <option value="county">County</option>
                         </select>
                           
                         <select name="City" id="City" style="font-size: 2.5vh;width:100%;height: 5vh;margin-bottom: 4vh;display: none;">
-                        		<option value="Select city">Select city</option>
+                                <option value="Select city">Select city</option>
                         </select>
                         <select name="county" id="county" style="font-size: 2.5vh;width:100%;height: 5vh;margin-bottom: 4vh;display: none;">
-                        		<option value="Select county">Select county</option>
+                                <option value="Select county">Select county</option>
                         </select>
                           
                         <select name="year" id="year" style="font-size: 2.5vh;width:100%;height: 5vh;margin-bottom: 4vh;">
@@ -171,7 +171,7 @@
                 <center>
                     <form action = "/admin/delete" method = "POST" >
                         <select name="deleter" id="deleter" style="font-size: 2.5vh;">
-                        	<option value="Select file">Select file</option>
+                            <option value="Select file">Select file</option>
                             {{del_list}}
                         </select>
                         <input type="submit" value="Delete" style="background-color: orangered;font-size: 2.5vh;height: 5vh;">
@@ -225,23 +225,23 @@
     <!-- jQuery -->
     <script src="/static/cssjs/js/jquery.min.js"></script>
 
-	<script>
-		$(function() 
-		{
-  			$('#type').change(function()
-  				{
-  					if("City"== $(this).val())
-  						{
-  							$('#City').show();
-  							$('#county').hide();
- 	 					}
-     				else
-  						{
-  							$('#county').show();
-  							$('#City').hide()
-  						}
-  				});
-		});
+    <script>
+        $(function() 
+        {
+            $('#type').change(function()
+                {
+                    if("City"== $(this).val())
+                        {
+                            $('#City').show();
+                            $('#county').hide();
+                        }
+                    else
+                        {
+                            $('#county').show();
+                            $('#City').hide()
+                        }
+                });
+        });
 
         $.get("../static/data/cities.txt",
         function(data) {
@@ -266,8 +266,8 @@
                 console.log ($select)
             }
         });
-	</script>
-	 
+    </script>
+     
 
     <!-- Bootstrap -->
     <script src="/static/cssjs/js/popper.js"></script>
