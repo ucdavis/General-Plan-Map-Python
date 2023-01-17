@@ -290,8 +290,8 @@ def upload_file1():  # function to upload file
             os.remove(tempLocation)
             print("File deleted from temp location")
 
-            gmail_user = 'testuploader97@gmail.com'
-            gmail_password = 'gmcwtynreiqwbspo'
+            gmail_user = config('gmailUserID',default='')
+            gmail_password = config('gmailUserPassw',default='')
 
             sent_from = gmail_user
             to = [request.form['email'], 'testuploader97@gmail.com']
