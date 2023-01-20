@@ -294,7 +294,7 @@ def upload_file1():  # function to upload file
             gmail_password = config('gmailUserPassw',default='')
 
             sent_from = gmail_user
-            to = [request.form['email'], 'testuploader97@gmail.com']
+            to = [request.form['email'], gmail_user]
             subject = 'File uploaded for verification'
             body = 'Dear User,\nYour file {} has been uploaded to drive for verification.'.format(file.filename)
 
