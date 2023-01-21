@@ -230,6 +230,7 @@ def upload_file1():  # function to upload file
     global userType
     completeName=""
     location_name=""
+    up=""
     if request.method == 'POST':  # when upload button is clicked
         if userType == 0:
             gauth = GoogleAuth()
