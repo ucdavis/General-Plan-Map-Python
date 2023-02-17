@@ -61,6 +61,10 @@ app = Flask(__name__)  # create flask object
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0  # avoid storing cache
 bootstrap = Bootstrap(app)  # create bootstrap object
 
+@app.errorhandler(404)
+def not_found(e):
+    return render_template("404.html")
+
 
 @app.route('/', methods=['GET'])  # declare flask page url
 def my_form():  # function for main index
