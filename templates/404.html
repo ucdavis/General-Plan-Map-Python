@@ -14,6 +14,10 @@
     <link rel="stylesheet" type="text/css" href="/static/cssjs/css/font-awesome.css">
     <link rel="stylesheet" href="/static/cssjs/css/general-template.css">
 
+    <script>
+        var endpoint = {{endpoint}};
+    </script>
+
     </head>
     
     <body>
@@ -57,7 +61,7 @@
             
                 <h2 style="color: white">404 : Page does not exist</h2>
                 <br><br>
-                <p style="color: white"><a style="color: white" href="https://plansearch.caes.ucdavis.edu"><u>Click here</u></a> to go back to homepage.</p>
+                <p style="color: white"><a style="color: white" href="{{ 'https://plansearch.caes.ucdavis.edu%s'%endpoint|urlencode }}"><u>Click here</u></a> to go back to homepage.</p>
             </div>
           
     </section>

@@ -64,6 +64,10 @@ blockip = {  # dictionary with list of ips to block
   "": 0,
 }
 
+@app.errorhandler(404)
+def not_found(e):
+    return render_template("404.html", endpoint = "/admin")
+
 @app.route('/admin')
 def home():
     """This function renders and controls login screen
