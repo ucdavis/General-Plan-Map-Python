@@ -770,12 +770,12 @@ def index_search_box():
     #==============================================================================
     #Get results for the query
     #==============================================================================
-    wordinput = " "  # initialize string input for search
+    wordinput = ""  # initialize string input for search
     wordinput = request.args.get('query')  # get input from request form on webpage
 
     try:
         results = getResults(wordinput)
-    except ValueError:  # appears when getResults tries to zip no results
+    except Exception as e: # appears when getResults tries to zip no results
         return render_template('noresult.html')
 
     #==============================================================================
