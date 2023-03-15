@@ -679,9 +679,13 @@ class Result:
 
         # allows user to click on year on webpage's result table; 
         #### uncomment below in order to link to 'highlight_pdf' function
-        self.year = '<p hidden>'+self.plan_date+'</p> <a href="../outp/'+self.pdf_filename+'/'+parsed_query+'" target="_blank">'+self.plan_date+"</a>"
+        # self.year = '<p hidden>'+self.plan_date+'</p> <a href="../outp/'+self.pdf_filename+'/'+parsed_query+'" target="_blank">'+self.plan_date+"</a>"
         #### uncomment below in order to link to 'display_results' function
         # self.year = '<p hidden>'+self.plan_date+'</p> <a href="../outp/'+self.place_name+'/'+self.pdf_filename+'/'+parsed_query+'" target="_blank">'+self.plan_date+"</a>"
+
+        self.year = self.plan_date
+        self.txt_link = '<p hidden>'+self.plan_date+'</p> <a href="../outp/'+self.pdf_filename+'/'+parsed_query+'/txt" target="_blank">'+"View Text"+"</a>"
+        self.pdf_link = '<p hidden>'+self.plan_date+'</p> <a href="../outp/'+self.pdf_filename+'/'+parsed_query+'/pdf" target="_blank">'+"View PDF"+"</a>"
         
     def parse_query(self, query):
         """This function parses a query to add commas between words except
@@ -869,7 +873,9 @@ def index_search_box():
         fNames = [res.pdf_filename for res in cityResults],
         populations = [res.population for res in cityResults],
         counties = [res.county for res in cityResults],
-        hits = [res.hits for res in cityResults]
+        hits = [res.hits for res in cityResults],
+        txt_links = [res.txt_link for res in cityResults],
+        pdf_links = [res.pdf_link for res in cityResults]
         )
 
     countyData = dict(
@@ -879,7 +885,9 @@ def index_search_box():
         types = [res.type for res in countyResults],
         fNames = [res.pdf_filename for res in countyResults],
         populations = [res.population for res in countyResults],
-        hits = [res.hits for res in countyResults]
+        hits = [res.hits for res in countyResults],
+        txt_links = [res.txt_link for res in countyResults],
+        pdf_links = [res.pdf_link for res in countyResults]
         )
 
     #====================================================
@@ -989,7 +997,9 @@ def index_search_box():
             TableColumn(field = "years_href", title = "Year", formatter = HTMLTemplateFormatter()),
             TableColumn(field = "populations", title = "Population", formatter = NumberFormatter(format = '0,0')),
             TableColumn(field = "counties", title = "County"),
-            TableColumn(field = "hits", title = "Count")
+            TableColumn(field = "hits", title = "Count"),
+            TableColumn(field = "pdf_links", title = "Highlighted PDF file", formatter = HTMLTemplateFormatter()),
+            TableColumn(field = "txt_links", title = "Plain Text file", formatter = HTMLTemplateFormatter())
         ]
 
     city_table = DataTable(source = citySource,
@@ -1006,7 +1016,9 @@ def index_search_box():
             TableColumn(field = "names", title = "Name"),
             TableColumn(field = "years_href", title = "Year", formatter = HTMLTemplateFormatter()),
             TableColumn(field = "populations", title = "Population", formatter = NumberFormatter(format = '0,0')),
-            TableColumn(field = "hits", title = "Count")
+            TableColumn(field = "hits", title = "Count"),
+            TableColumn(field = "pdf_links", title = "Highlighted PDF file", formatter = HTMLTemplateFormatter()),
+            TableColumn(field = "txt_links", title = "Plain Text file", formatter = HTMLTemplateFormatter())
         ]
     county_table = DataTable(source = countySource,
                                 columns = columns,
@@ -1031,8 +1043,8 @@ def index_search_box():
 
     return render_template('results.html', lScript_1 = lScript_1, lDiv_1 = lDiv_1, lScript_2 = lScript_2, lDiv_2 = lDiv_2)
 
-@app.route('/outp/<string:city>/<string:words>')
-def highlight_pdf(city, words):
+@app.route('/outp/<string:city>/<string:words>/<string:type>')
+def highlight_pdf(city, words, type):
     """Function responsible for highlighting pdf words
     Args:
         pdf (str): the name of the pdf file
@@ -1046,14 +1058,18 @@ def highlight_pdf(city, words):
     current_date = datetime.now().strftime("%Y-%m-%d")
     files = glob.glob('static/data/pdfoutput/*')
     for f in files:
-        file_date = f.split("/")[3].split("_")[0]
-        try:
-            if datetime.strptime(file_date, "%Y-%m-%d") < datetime.strptime(current_date, "%Y-%m-%d"):
-                os.remove(f)
-                print("Deleting:", f)
-        except:
-            print("Error in file name:", f)
+        if f[-3:] == "txt":
             os.remove(f)
+            print("Deleting:", f)
+        else:
+            file_date = f.split("/")[3].split("_")[0]
+            try:
+                if datetime.strptime(file_date, "%Y-%m-%d") < datetime.strptime(current_date, "%Y-%m-%d"):
+                    os.remove(f)
+                    print("Deleting:", f)
+            except:
+                print("Deleting text file or error in file name:", f)
+                os.remove(f)
 
     # If number of files in pdfoutput exceed 100, delete the first 50 files.
     try:
@@ -1067,39 +1083,56 @@ def highlight_pdf(city, words):
 
     complete_name = os.path.join("static/data/places", city)
 
-    # Some PDFs have ending as .PDF and some have .pdf, to manage that using try except
-    try:
-        doc = fitz.open(complete_name)
-    except:
-        doc = fitz.open(complete_name[:-4] + ".PDF")
-        
-    page_count= len(doc)  # find no. of pages in pdf
-    if "," in words:
-        list_split=words.split(",")
+    if type == 'pdf':
+        # Some PDFs have ending as .PDF and some have .pdf, to manage that using try except
+        try:
+            doc = fitz.open(complete_name)
+        except:
+            doc = fitz.open(complete_name[:-4] + ".PDF")
+            
+        page_count= len(doc)  # find no. of pages in pdf
+        if "," in words:
+            list_split=words.split(",")
+        else:
+            list_split=[words]  # if no commas in wordlist, single word
+
+        wordcount=len(list_split)
+        text_instances = [" "] * wordcount  # occurences of any phrase in a page
+        for i in range(page_count):
+            for k in range(wordcount):
+                text_instances[k] = doc[i].searchFor(list_split[k],hit_max = 100)  # look for search phrase in page (max. 100 occurences)
+                if (len(text_instances[k]) != 0):
+                    # list returned by searchFor can be used directly as argument to highlight
+                    doc[i].addHighlightAnnot(text_instances[k])
+
+        # breakpoint()
+        pdf_output_filename = current_date + "_" + city[:-4] + '_' + ''.join(random.choices(string.ascii_uppercase + string.digits, k=10)) + '.pdf'
+        highlighted_complete_name = os.path.join("static/data/pdfoutput",pdf_output_filename)
+        doc.save(highlighted_complete_name)
+        doc.close()
+
+        # set link for highlighted pdf and make safe to send to html
+        fht= 'window.location.href = "/static/data/pdfoutput/' + pdf_output_filename + '";' 
+        fht = Markup(fht)
+
+        # render highlighted pdf file
+        return render_template('download.html',fht=fht)
+
     else:
-        list_split=[words]  # if no commas in wordlist, single word
+        origin_file = os.path.join("static/data/places", city[:-4] + ".txt")
+        dest_dir = "static/data/pdfoutput/"
+        shutil.copy(origin_file, dest_dir)
+        output_path = os.path.join("static/data/pdfoutput", city[:-4] + ".txt")
+        output_path_new = os.path.join("static/data/pdfoutput", city[:-4] + "_" + ''.join(random.choices(string.ascii_uppercase + string.digits, k=10)) + ".txt")
+        os.rename(output_path, output_path_new)
 
-    wordcount=len(list_split)
-    text_instances = [" "] * wordcount  # occurences of any phrase in a page
-    for i in range(page_count):
-        for k in range(wordcount):
-            text_instances[k] = doc[i].searchFor(list_split[k],hit_max = 100)  # look for search phrase in page (max. 100 occurences)
-            if (len(text_instances[k]) != 0):
-                # list returned by searchFor can be used directly as argument to highlight
-                doc[i].addHighlightAnnot(text_instances[k])
+        output_path_new = "/" + output_path_new
+        # set link for text file and make safe to send to html
+        fht= 'window.location.href = "' + output_path_new +'";'
+        fht = Markup(fht)
 
-    # breakpoint()
-    pdf_output_filename = current_date + "_" + city[:-4] + '_' + ''.join(random.choices(string.ascii_uppercase + string.digits, k=10)) + '.pdf'
-    highlighted_complete_name = os.path.join("static/data/pdfoutput",pdf_output_filename)
-    doc.save(highlighted_complete_name)
-    doc.close()
-
-    # set link for highlighted pdf and make safe to send to html
-    fht= 'window.location.href = "/static/data/pdfoutput/' + pdf_output_filename + '";' 
-    fht = Markup(fht)
-
-    # render highlighted pdf file
-    return render_template('download.html',fht=fht)
+        # render text file
+        return render_template('download.html',fht=fht)
 
 
 if __name__ == "__main__":
