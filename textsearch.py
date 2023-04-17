@@ -49,6 +49,8 @@ from bokeh.sampledata.us_counties import data as counties
 from bokeh.layouts import column, widgetbox, layout, row
 from bokeh.transform import linear_cmap,factor_cmap
 
+# from memory_profiler import profile
+
 
 ### BELOW NEEDED TO EXPORT BOKEH IMAGE FILES
 # from bokeh.io import export_png
@@ -67,6 +69,7 @@ def not_found(e):
 
 
 @app.route('/', methods=['GET'])  # declare flask page url
+# @profile
 def my_form():  # function for main index
 
     # return render_template('maintenance_progress.html')
@@ -760,11 +763,12 @@ with open(os.path.join(geojson_path, 'map.geojson'), 'r') as f:
     my_str = f.read()
     spatial_map = json.loads(my_str)
 
-with open(os.path.join(geojson_path, 'pop_map.geojson'), 'r') as f:
-    pop_map = json.load(f)
+# with open(os.path.join(geojson_path, 'pop_map.geojson'), 'r') as f:
+#     pop_map = json.load(f)
 
 
 @app.route('/results/', methods=['GET'])
+# @profile
 def index_search_box():
     """The code for the search box functionality
     Returns:
@@ -822,25 +826,26 @@ def index_search_box():
     #==========================
     change_json_colors(spatial_map, results)
 
-    change_json_colors(pop_map, results)
+    # change_json_colors(pop_map, results)
 
     TOOLS = ["hover", "pan", "wheel_zoom", "save"]
-    p_pop_map = figure(
-        x_axis_location = None,
-        y_axis_location = None,
-        x_axis_type = "mercator",
-        y_axis_type = "mercator",
-        tools = TOOLS,
-        tooltips = [("Name", "@name")]
-        )
-    p_pop_map.grid.grid_line_color = None
-    p_pop_map.hover.point_policy = "follow_mouse"
-    p_pop_map_GeoSource = GeoJSONDataSource(geojson = json.dumps(pop_map))
-    p_pop_map.patches('xs',
-                        'ys',
-                        source = p_pop_map_GeoSource,
-                        fill_color = 'color',
-                        line_color = 'line_color')
+
+    # p_pop_map = figure(
+    #     x_axis_location = None,
+    #     y_axis_location = None,
+    #     x_axis_type = "mercator",
+    #     y_axis_type = "mercator",
+    #     tools = TOOLS,
+    #     tooltips = [("Name", "@name")]
+    #     )
+    # p_pop_map.grid.grid_line_color = None
+    # p_pop_map.hover.point_policy = "follow_mouse"
+    # p_pop_map_GeoSource = GeoJSONDataSource(geojson = json.dumps(pop_map))
+    # p_pop_map.patches('xs',
+    #                     'ys',
+    #                     source = p_pop_map_GeoSource,
+    #                     fill_color = 'color',
+    #                     line_color = 'line_color')
 
     p_spatial_map = figure(
         x_axis_location = None,
@@ -857,9 +862,9 @@ def index_search_box():
                             fill_color = 'color',
                             line_color = 'line_color')
 
-    popMap = Panel(title = "Population", child = p_pop_map)
+    # popMap = Panel(title = "Population", child = p_pop_map)
     outlineMap = Panel(title = "Spatial", child = p_spatial_map)
-    mapTabs = Tabs(tabs = [outlineMap, popMap])
+    mapTabs = Tabs(tabs = [outlineMap]) #, popMap])
 
     #==============================================================================
     #Create dictionary and data frame of results for summary, timeline, and chart
