@@ -50,6 +50,7 @@ from bokeh.layouts import column, widgetbox, layout, row
 from bokeh.transform import linear_cmap,factor_cmap
 
 # from memory_profiler import profile
+# import copy
 
 
 ### BELOW NEEDED TO EXPORT BOKEH IMAGE FILES
@@ -97,6 +98,7 @@ def my_form():  # function for main index
     with open(os.path.join(geojson_path, 'map.geojson'), 'r') as f:
         my_str = f.read()
         spatial_map_for_city = json.loads(my_str)
+        # spatial_map_for_county = copy.deepcopy(spatial_map_for_city)
         spatial_map_for_county = json.loads(my_str)
 
     county_map = fill_county_colors(spatial_map_for_county, county_df, color_mapper) 
