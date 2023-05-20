@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" style="background-image:url(/static/images/background.png);">
+
+  <head>
+   
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=1024">
+    <link rel = "icon" href = "/static/images/CRC.ico" type = "image/x-icon">
+
+    <title>More Analysis</title>
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="/static/cssjs/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/static/cssjs/css/font-awesome.css">
+    <link rel="stylesheet" href="/static/cssjs/css/general-template.css">
+
+    </head>
+    
+    <body>
+    
+     <!-- ***** Preloader Start ***** -->
+    <div id="js-preloader" class="js-preloader">
+      <div class="preloader-inner">
+        <span class="dot"></span>
+        <div class="dots">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
+    
+    
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky">
+        <nav class="main-nav">
+            <div class="image-overlay header-text">
+                <div class="threed">
+                    <a href="" class="logo" style=" color:white;margin-left: 250px">California General Plan  <em> Database Mapping Tool </em></a>
+                </div>
+            </div> 
+            <a class='menu-trigger'>
+                <span>Menu</span>
+            </a>
+        </nav>
+    </header>
+    <!-- ***** Header Area End ***** -->
+
+
+
+    <!-- ***** Main Banner Area Start ***** -->
+    <div class="main-banner" id="top">
+      <img src="/static/images/ca.jpg" style="width: 100%;">
+        <div class="video-overlay header-text">
+            <div class="caption" id="upload">
+                <div class="grow">
+                    <h2>More <em>Analysis</em></h2>
+                </div>
+                <center>
+                    <form action = "/more_analysis/analyse" method = "POST" style="width:40%;height: 100%;">
+                        <div class="slidecontainer">
+                            <input type="range" min="1" max="100" value="5" class="slider" id="myRange">
+                            <h4 style="color:white; font-size: 2.5vh;width:100%;height: 5vh;margin-bottom: 4vh;">Show plans not updated for the past <span id="year_span"></span> year(s).</h4>
+                            <input style="color:white; background:none; border: none;display: inline;font-family: inherit;font-size: inherit;padding: none; display:none;" type="number" id="years" name="years_val" readonly>  
+                        </div>
+                                           
+                        <div class="grow">
+                               <input style="width:80px;background: orangered;color: white;font-size: 2.5vh;"type = "submit"/>
+                        </div>
+                    </form>
+                </center>           
+            </div>
+        </div>
+    </div>
+    <!-- ***** Main Banner Area End ***** -->
+
+
+       
+    <!-- ***** Footer Start ***** -->
+    <footer>
+        <p>Cite as: Aniket Banginwar, Dexter Antonio, Mirthala Lopez, Lindsay Poirier, Sujoy Ghosh, Makena Dettmann, & Catherine Brinkley. (2023, January 6). General Plan Database Mapping Tool (v3.0). Zenodo. <a href="https://doi.org/10.5281/zenodo.7508689">https://doi.org/10.5281/zenodo.7508689</a><br><a rel="nofollow" href=" https://plansearch.caes.ucdavis.edu/" class="tm-text-link" target="_parent"> https://plansearch.caes.ucdavis.edu/</a></p>
+    </footer>
+
+
+
+    <!-- jQuery -->
+    <script src="/static/cssjs/js/jquery.min.js"></script>
+
+    <script>
+        var slider = document.getElementById("myRange");
+        var output1 = document.getElementById("years");
+        var output2 = document.getElementById("year_span");
+        output1.value = slider.value;
+        output2.innerHTML = slider.value;
+
+        slider.oninput = function() {
+          output1.value = this.value;
+          output2.innerHTML = this.value;
+        }
+    </script>
+
+    <!-- Bootstrap -->
+    <script src="/static/cssjs/js/popper.js"></script>
+    <script src="/static/cssjs/js/bootstrap.min.js"></script>
+
+    <!-- Plugins -->
+    <script src="/static/cssjs/js/scrollreveal.min.js"></script>
+    <script src="/static/cssjs/js/waypoints.min.js"></script>
+    <script src="/static/cssjs/js/jquery.counterup.min.js"></script>
+    <script src="/static/cssjs/js/imgfix.min.js"></script> 
+    <script src="/static/cssjs/js/mixitup.js"></script> 
+    
+    <!-- Global Init -->
+    <script src="/static/cssjs/js/custom.js"></script>
+
+    <!-- Google analytics Tag -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESMKVWZ0K0"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-ESMKVWZ0K0');
+    </script>
+    
+  </body>
+</html>

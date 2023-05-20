@@ -229,19 +229,52 @@ def elastic_search_highlight(query):
 	div_value = 1
 	expected_highlight = ""
 
+	print(words)
+
 	for word in words:
 		expected_highlight += "<#>"+word+"</#>"+" "
 	expected_highlight = expected_highlight.strip()
 
+	print(expected_highlight)
+
+	query_json_1 = {
+		"_source": False,
+		"size": 1000,
+		"query": {
+		    "simple_query_string" : {
+		        "query": "mixed-u*",
+		        "fields": ["text"],
+		        "analyze_wildcard": True,
+		        "default_operator": "and"
+		    }
+		},
+		"highlight": {
+			"pre_tags": [
+				"<#>"
+			],
+			"post_tags": [
+				"</#>"
+			],
+			"fields": {
+				"text": {
+					"number_of_fragments": 0
+				}
+			}
+		},
+	   "fields":[
+		  "filename"
+	   ]
+	}
+
 
 	query_json = {
-	"_source": False,
-	"size": 1000,
-	"query": {
-		"match_phrase": {
-			"text": {
-				"query": query,
-				"slop": 0
+		"_source": False,
+		"size": 1000,
+		"query": {
+			"match_phrase": {
+				"text": {
+					"query": query,
+					"slop": 0
 				}
 			}
 		},
@@ -265,7 +298,7 @@ def elastic_search_highlight(query):
 
 	# import pdb; pdb.set_trace()
 
-	search_with_highlights = es.search(index='test_4' ,body=query_json, request_timeout=90) 
+	search_with_highlights = es.search(index='test_4' ,body=query_json_1, request_timeout=90) 
 	hit_count_dict = OrderedDict()
 	highlight_list = {}
 	ids = []

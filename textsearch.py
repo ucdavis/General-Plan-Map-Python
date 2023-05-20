@@ -1142,9 +1142,24 @@ def highlight_pdf(city, words, type):
         return render_template('download.html',fht=fht)
 
 
+
+@app.route('/more_analysis')
+def open_file_analysis():
+    return render_template('file_analysis.html')
+
+
+@app.route('/more_analysis/analyse', methods=['GET', 'POST'])
+def do_analysis():
+    year_value = request.form['years_val']
+    
+    return render_template('file_analysis.html')
+
+
+
+
 if __name__ == "__main__":
 
     # from werkzeug.contrib.profiler import ProfilerMiddleware
     # app.config['PROFILE'] = True
     # app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[30])
-    app.run(host="0.0.0.0", port=5000, debug=False)
+    app.run(host="0.0.0.0", port=5000, debug=True)
