@@ -1145,15 +1145,120 @@ def highlight_pdf(city, words, type):
 
 @app.route('/more_analysis')
 def open_file_analysis():
-    return render_template('file_analysis.html')
+    return render_template('file_analysis.html', table_active = False, min_year = 2023)
 
 
 @app.route('/more_analysis/analyse', methods=['GET', 'POST'])
 def do_analysis():
-    year_value = request.form['years_val']
-    
-    return render_template('file_analysis.html')
+    diff_value = request.form['years_val']
+    today = date.today()
+    current_year = today.year
+    min_year = current_year - int(diff_value)
 
+    # Parse the file names to get places and corresponding years
+    # seperate lists for cities, counties and their respective years
+
+    city_dict = {}
+    county_dict = {}
+    cities_excluded = set()
+    counties_excluded = set()
+
+    file_names = os.listdir('static/data/places')
+
+    # with open('static/data/files_list.txt') as f:
+    #     file_names = f.readlines()
+
+    for file_name in file_names:
+        file_name = file_name.strip()
+        if file_name[-3:] != "pdf":
+            continue
+        else:
+            file_name = file_name[:-4]
+            place_attributes = file_name.split("_")
+            sub_attributes = place_attributes[1].split("-", 1)
+
+            try:
+                plan_year = int(place_attributes[2])
+            except:
+                continue
+            place_name = sub_attributes[1].replace("-", " ").replace("_", " ")
+            place_type = sub_attributes[0]
+
+            if plan_year < min_year:
+                if place_type == 'City':
+                    if place_name in city_dict:
+                        if plan_year > city_dict[place_name]:
+                            city_dict[place_name] = plan_year
+                    else:
+                        city_dict[place_name] = plan_year
+                else:
+                    if place_name in county_dict:
+                        if plan_year > county_dict[place_name]:
+                            county_dict[place_name] = plan_year
+                    else:
+                        county_dict[place_name] = plan_year
+
+            else:
+                if place_type == 'City':
+                    cities_excluded.add(place_name)
+                else:
+                    counties_excluded.add(place_name)
+
+
+    #Remove the cities and counties that were updated after the min_year
+    for city_name in list(city_dict):
+        if city_name in cities_excluded:
+            del city_dict[city_name]
+
+    for county_name in list(county_dict):
+        if county_name in counties_excluded:
+            del county_dict[county_name]
+
+
+    cityData = dict(names = list(city_dict.keys()), years = list(city_dict.values()))
+    countyData = dict(names = list(county_dict.keys()), years = list(county_dict.values()))
+
+    citySource = ColumnDataSource(cityData)
+    size = 600
+
+    columns = [
+            TableColumn(field = "names", title = "City name"),
+            TableColumn(field = "years", title = "Last year updated")]
+
+    city_table = DataTable(source = citySource,
+                            columns = columns,
+                            width = size,
+                            height = 400,
+                            reorderable = False,
+                            index_position = None,
+                            row_height = 40)
+
+
+    countySource = ColumnDataSource(countyData)
+    size = 600
+
+    columns = [
+            TableColumn(field = "names", title = "County name"),
+            TableColumn(field = "years", title = "Last year updated")]
+
+    county_table = DataTable(source = countySource,
+                            columns = columns,
+                            width = size,
+                            height = 400,
+                            reorderable = False,
+                            index_position = None,
+                            row_height = 40)
+
+    cityTab = Panel(title = "Cities", child = city_table)
+    countyTab = Panel(title = "Counties", child = county_table)
+    tabs = Tabs(tabs = [cityTab, countyTab], css_classes=["table-results-div"], margin = (30, 0, 30, 0))
+
+    page_layout_2 = layout(column(tabs))
+    lScript_2,lDiv_2 = components(page_layout_2)
+    cdn_js = CDN.js_files
+    cdn_css = CDN.css_files
+
+    return render_template('file_analysis.html', lScript_2 = lScript_2, lDiv_2 = lDiv_2, table_active = True, min_year = min_year)
 
 
 

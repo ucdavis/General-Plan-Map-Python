@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/static/cssjs/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/static/cssjs/css/font-awesome.css">
     <link rel="stylesheet" href="/static/cssjs/css/general-template.css">
+    <link rel="stylesheet" type="text/css" href="/../../static/cssjs/css/custom.css">
 
     </head>
     
@@ -37,7 +38,7 @@
         <nav class="main-nav">
             <div class="image-overlay header-text">
                 <div class="threed">
-                    <a href="" class="logo" style=" color:white;margin-left: 250px">California General Plan  <em> Database Mapping Tool </em></a>
+                    <a href="https://plansearch.caes.ucdavis.edu/" class="logo" style=" color:white;margin-left: 250px">California General Plan  <em> Database Mapping Tool </em></a>
                 </div>
             </div> 
             <a class='menu-trigger'>
@@ -61,7 +62,7 @@
                     <form action = "/more_analysis/analyse" method = "POST" style="width:40%;height: 100%;">
                         <div class="slidecontainer">
                             <input type="range" min="1" max="100" value="5" class="slider" id="myRange">
-                            <h4 style="color:white; font-size: 2.5vh;width:100%;height: 5vh;margin-bottom: 4vh;">Show plans not updated for the past <span id="year_span"></span> year(s).</h4>
+                            <h4 style="color:white; font-size: 2.5vh;width:100%;height: 5vh;margin-bottom: 4vh;">Show plans not updated for the past <span id="diff_span"></span> year(s), i.e. since <span id="year_span"></span>.</h4>
                             <input style="color:white; background:none; border: none;display: inline;font-family: inherit;font-size: inherit;padding: none; display:none;" type="number" id="years" name="years_val" readonly>  
                         </div>
                                            
@@ -75,6 +76,17 @@
     </div>
     <!-- ***** Main Banner Area End ***** -->
 
+    <section class="section" id="results">
+      <div class="section-heading">
+        <center name="results" style="padding-bottom: 20px;">
+        <p>Users can sort the table according to any column by clicking on the column heading.</p>
+        <p>Showing the list of plans that have not been updated since {{min_year | safe}}.</p>
+        <p>&#8681; &#8681; &#8681; &#8681;</p>
+        {{lScript_2 | safe}}
+        {{lDiv_2 | safe}}       
+        </center>
+      </div>
+    </section>
 
        
     <!-- ***** Footer Start ***** -->
@@ -90,15 +102,44 @@
     <script>
         var slider = document.getElementById("myRange");
         var output1 = document.getElementById("years");
-        var output2 = document.getElementById("year_span");
+        var output2 = document.getElementById("diff_span");
+        var output3 = document.getElementById("year_span");
         output1.value = slider.value;
         output2.innerHTML = slider.value;
+        var current_year = new Date().getFullYear();
+        output3.innerHTML = current_year - slider.value;
 
         slider.oninput = function() {
           output1.value = this.value;
           output2.innerHTML = this.value;
+          output3.innerHTML = current_year - this.value;
         }
     </script>
+
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("results").scrollIntoView({ behavior: "smooth" });
+    });
+    </script>
+
+    <script type="text/javascript"> 
+        var tableActive = {{table_active | lower}}
+
+        if(tableActive == false)
+        {
+            document.getElementById("results").style.display = "none";
+        }
+
+        else
+        {
+            document.getElementById("results").style.display = "block";
+        }
+    </script> 
+
+    
+
+    <!-- jQuery -->
+    <script src="/static/cssjs/js/jquery.min.js"></script>
 
     <!-- Bootstrap -->
     <script src="/static/cssjs/js/popper.js"></script>
@@ -108,9 +149,13 @@
     <script src="/static/cssjs/js/scrollreveal.min.js"></script>
     <script src="/static/cssjs/js/waypoints.min.js"></script>
     <script src="/static/cssjs/js/jquery.counterup.min.js"></script>
-    <script src="/static/cssjs/js/imgfix.min.js"></script> 
-    <script src="/static/cssjs/js/mixitup.js"></script> 
-    
+    <script src="/static/cssjs/js/imgfix.min.js"></script>
+    <script src="/static/cssjs/js/mixitup.js"></script>
+    <script src="/static/cssjs/js/bokeh-2.4.2.min.js" crossorigin="anonymous"></script>
+    <script src="/static/cssjs/js/bokeh-widgets-2.4.2.min.js" crossorigin="anonymous"></script>
+    <script src="/static/cssjs/js/bokeh-tables-2.4.2.min.js" crossorigin="anonymous"></script>
+    <script src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
     <!-- Global Init -->
     <script src="/static/cssjs/js/custom.js"></script>
 
