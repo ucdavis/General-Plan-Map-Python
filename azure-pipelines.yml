@@ -16,13 +16,9 @@ steps:
     addToPath: true
     architecture: 'x64'
 
-- script: sudo apt-get install binutils libproj-dev gdal-bin
-  displayName: 'Install gdal'
-
 - script: |
-    apt-get update
-    apt-get install -y libgdal-dev
-    python -m pip install --upgrade pip
+    sudo apt-get update
+    sudo apt-get install -y libgdal-dev
     pip install GDAL==3.2.2.1
     pip install -r ./requirements.txt
   displayName: 'Install requirements'
