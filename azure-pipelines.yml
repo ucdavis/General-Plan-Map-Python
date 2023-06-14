@@ -19,11 +19,11 @@ steps:
 - script: sudo apt-get install binutils libproj-dev gdal-bin
   displayName: 'Install gdal'
 
-- task: PythonScript@0
-  displayName: 'Install requirements.txt'
-  inputs:
-    scriptSource: 'inline'
-    script: 'pip install -r requirements.txt'
+
+- script: |
+    python -m pip install --upgrade pip
+    pip install -r ./requirements.txt
+  displayName: 'Install requirements'
 
 - task: ArchiveFiles@2
   inputs:
