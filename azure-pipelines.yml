@@ -21,8 +21,8 @@ steps:
     sudo apt-get install -y libgdal-dev
     python -m pip install --upgrade pip
     pip install setup
-    pip install GDAL==3.2.2.1
-    pip install --target="./.python_packages/lib/site-packages" -r ./requirements.txt
+    pip3 install GDAL==3.2.2.1
+    pip3 install --target="./.python_packages/lib/site-packages" -r ./requirements.txt
   displayName: 'Install requirements'
 
 - script: |
