@@ -16,16 +16,14 @@ steps:
     addToPath: true
 
 - script: |
-    sudo apt-get update
-    sudo apt-get install -y libgdal-dev
-    python -m pip install --upgrade pip
-    pip install setup
+    apt-get update
+    apt-get install -y libgdal-dev
     pip3 install GDAL==3.2.2.1
     pip3 install --target="./.python_packages/lib/site-packages" -r ./requirements.txt
   displayName: 'Install requirements'
 
 - script: |
-    python -c "import bokeh.sampledata; bokeh.sampledata.download()"
+    python3 -c "import bokeh.sampledata; bokeh.sampledata.download()"
   displayName: 'download bokeh data'
 
 - task: ArchiveFiles@2
