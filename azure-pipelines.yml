@@ -10,10 +10,17 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script now'
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.8'
+    addToPath: true
+    architecture: 'x64'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- script: sudo apt-get install binutils libproj-dev gdal-bin
+  displayName: 'Install gdal'
+
+- task: PythonScript@0
+  displayName: 'Install requirements.txt'
+  inputs:
+    scriptSource: 'inline'
+    script: 'pip install requirements.txt'
