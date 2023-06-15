@@ -19,6 +19,9 @@ RUN pip install -r requirements.txt
 # Need to download the bokeh sample data
 RUN python -c "import bokeh.sampledata; bokeh.sampledata.download()"
 
+# install gunicorn server
+RUN pip install gunicorn
+
 # copy all content from the local file to the image
 COPY . /app
 
@@ -26,7 +29,5 @@ COPY . /app
 ENV PORT 5000
 EXPOSE 5000
 
-# configure the container to run in an executed manner
-ENTRYPOINT [ "python" ]
-
-CMD ["textsearch.py" ]
+# run txtsearch with gunicorn
+CMD ["gunicorn", "--workers", "4", "--bind", "0.0.0.0:5000", "textsearch:app"]
