@@ -24,30 +24,25 @@ The file contains the following functions:
 
 """
 
-import os, fitz, requests, shutil, json, shapefile, shapely.affinity, es, re
+import os, fitz, shutil, json, es, re
 import geojson, textract, random, glob, string
 import pandas as pd
 import geopandas as gpd
 
-from flask import Flask, request, render_template, Markup, flash, redirect, session, abort
-from PyPDF2 import PdfFileMerger, PdfFileReader
-from werkzeug.utils import secure_filename
+from flask import Flask, request, render_template, Markup
+from PyPDF2 import PdfFileReader
 from flask_bootstrap import Bootstrap
 from datetime import date, datetime
 
 from bokeh.resources import CDN
 from bokeh.embed import components
 from bokeh.plotting import figure
-from bokeh.io import show, curdoc, output_file
-from bokeh.models import GeoJSONDataSource, LinearColorMapper, ColorBar, NumeralTickFormatter, NumberFormatter, Range1d
-from bokeh.models import LogColorMapper, ColumnDataSource, DataTable, DateFormatter, TableColumn, Div, SingleIntervalTicker
-from bokeh.models import TextInput, Button, Legend, LegendItem, FixedTicker, BasicTickFormatter, HTMLTemplateFormatter
-from bokeh.models.callbacks import CustomJS
+from bokeh.models import GeoJSONDataSource, NumberFormatter, Range1d
+from bokeh.models import ColumnDataSource, DataTable, TableColumn, Div, SingleIntervalTicker
+from bokeh.models import BasicTickFormatter, HTMLTemplateFormatter
 from bokeh.models.widgets import Panel, Tabs
-from bokeh.palettes import Viridis6 as palette
-from bokeh.sampledata.us_counties import data as counties
-from bokeh.layouts import column, widgetbox, layout, row
-from bokeh.transform import linear_cmap,factor_cmap
+from bokeh.layouts import column, layout, row
+from bokeh.transform import factor_cmap
 
 # from memory_profiler import profile
 # import copy
