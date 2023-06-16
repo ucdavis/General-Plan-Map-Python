@@ -18,14 +18,11 @@ The file contains the following functions:
 """
 
 import os, glob, re, json, csv
-import pandas as pd
 
 from elasticsearch import Elasticsearch
 from pathlib import Path
-from collections import namedtuple, OrderedDict
-from typing import Dict, List, Tuple
-from httplib2 import RedirectLimit
-from datetime import date
+from collections import OrderedDict
+from typing import Dict
 
 # when you load this pacakge these global variables are defined 
 # es = Elasticsearch('http://localhost:9200')

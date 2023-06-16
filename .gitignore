@@ -78,3 +78,5 @@ client_secrets.json
 *.pyc
 key_hash_mapping.json
 static/data/city_plans_files/stats.json
+
+!requirements.txt
