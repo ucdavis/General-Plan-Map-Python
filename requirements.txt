@@ -34,5 +34,5 @@ pyxnat
 rdflib==6.1.1
 shapely==1.8.2
 simple-geoip==0.1.1
-textract
+textract==1.6.5
 traits==6.3.2
