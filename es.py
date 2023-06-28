@@ -295,7 +295,7 @@ def elastic_search_highlight(query):
 
 	# import pdb; pdb.set_trace()
 
-	search_with_highlights = es.search(index='test_4' ,body=query_json_1, request_timeout=90) 
+	search_with_highlights = es.search(index='test_4' ,body=query_json, request_timeout=90) 
 	hit_count_dict = OrderedDict()
 	highlight_list = {}
 	ids = []
