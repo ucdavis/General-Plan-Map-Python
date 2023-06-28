@@ -476,4 +476,4 @@ def upload_file1():  # function to upload file
 
 if __name__ == "__main__":  # run app on local host at port 5001 in debug mode
     app.secret_key = os.urandom(12)  # random key for log in authentication
-    app.run(host="0.0.0.0", port=5002, debug=True)
+    app.run(host="0.0.0.0", port=5002, debug=False)
