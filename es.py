@@ -312,6 +312,7 @@ def elastic_search_highlight(query):
 
 	hit_count_list = list(hit_count_dict.values())
 	hit_count_list = [number // div_value for number in hit_count_list]
+	hit_count_list = list(map(lambda x: x == 0 and 1 or x, hit_count_list)) # Replacing all 0's with 1's
 	return (ids, scores, hit_count_list, highlight_list)
 
 
