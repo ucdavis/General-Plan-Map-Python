@@ -898,7 +898,7 @@ def index_search_box():
     twitQuery = re.sub('"','',wordinput)
     uniqueCities = len(set(cityData["names"]))
     uniqueCounties = len(set(countyData["names"]))
-    numCities = 481
+    numCities = 482
     numCounties = 58
     shareDiv = Div(text = """
                         <h1> Share Results: </h1>
