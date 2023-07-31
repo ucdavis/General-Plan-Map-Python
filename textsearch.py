@@ -637,7 +637,11 @@ def getResults(wordinput):
         try:
             place_props = es.get_place_properties(new_result.is_city, new_result.place_name)
         except:
-            print('error with file %s result ignored '%new_result.filename)
+            print('error with file %s result ignored, added custom result '%new_result.filename)
+            new_result.cityType = "CDP"
+            new_result.county = "NA"
+            new_result.population = 0
+            results.append(new_result)
             continue
 
         if new_result.is_city:
