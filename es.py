@@ -222,47 +222,12 @@ def elastic_search_highlight(query):
 	"""	
 	global es
 	words = query.lower().split()
-	# div_value = len(words)
-	div_value = 1
 	expected_highlight = ""
 
-	print(words)
-
-	for word in words:
-		expected_highlight += "<#>"+word+"</#>"+" "
-	expected_highlight = expected_highlight.strip()
-
-	print(expected_highlight)
-
-	query_json_1 = {
-		"_source": False,
-		"size": 1000,
-		"query": {
-		    "simple_query_string" : {
-		        "query": "mixed-u*",
-		        "fields": ["text"],
-		        "analyze_wildcard": True,
-		        "default_operator": "and"
-		    }
-		},
-		"highlight": {
-			"pre_tags": [
-				"<#>"
-			],
-			"post_tags": [
-				"</#>"
-			],
-			"fields": {
-				"text": {
-					"number_of_fragments": 0
-				}
-			}
-		},
-	   "fields":[
-		  "filename"
-	   ]
-	}
-
+	# for word in words:
+	# 	expected_highlight += "<#>"+word+"</#>"+" "
+	# expected_highlight = expected_highlight.strip()
+	expected_highlight = "<#>" + query + "</#>"
 
 	query_json = {
 		"_source": False,
@@ -300,6 +265,7 @@ def elastic_search_highlight(query):
 	highlight_list = {}
 	ids = []
 	scores = []
+	# import pdb; pdb.set_trace()
 	for snipets in search_with_highlights["hits"]["hits"]:
 		id = snipets["_id"]
 		highlight_list[snipets["fields"]["filename"][0]] = snipets["highlight"]["text"]
@@ -310,9 +276,9 @@ def elastic_search_highlight(query):
 			if id in hit_count_dict:
 				hit_count_dict[id] += snip.count(expected_highlight)
 
-	import pdb; pdb.set_trace()
+	# import pdb; pdb.set_trace()
 	hit_count_list = list(hit_count_dict.values())
-	hit_count_list = [number // div_value for number in hit_count_list]
+	# hit_count_list = [number // div_value for number in hit_count_list]
 	hit_count_list = list(map(lambda x: x == 0 and 1 or x, hit_count_list)) # Replacing all 0's with 1's
 	return (ids, scores, hit_count_list, highlight_list)
 
