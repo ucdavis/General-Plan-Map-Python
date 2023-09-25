@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
+<head>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=1024">
@@ -10,9 +10,11 @@
     <meta http-equiv="cache-control" content="no-cache" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="-1" />
-    <link rel = "icon" href = "/static/images/CRC.ico" type = "image/x-icon">
-    
-    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+    <link rel="icon" href="/static/images/CRC.ico" type="image/x-icon">
+
+    <link
+        href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+        rel="stylesheet">
 
     <title>California General Plan Database Mapping Tool</title>
 
@@ -42,71 +44,75 @@
     </script> -->
     <!-- End Matomo Code -->
 
-        <style>
-            .styled-table {
-                border-collapse: collapse;
-                margin: 25px 0;
-                font-size: 0.9em;
-                font-family: sans-serif;
-                min-width: 400px;
-                box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-                border:1px solid black;
-            }
-            .styled-table th,
-            .styled-table td {
-                padding: 12px 15px;
-                border:1px solid black;
-            }
+    <style>
+        .styled-table {
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.9em;
+            font-family: sans-serif;
+            min-width: 400px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+            border: 1px solid black;
+        }
 
-            .styled-table tr {
-                border-bottom: 1px solid #dddddd;
-            }
+        .styled-table th,
+        .styled-table td {
+            padding: 12px 15px;
+            border: 1px solid black;
+        }
 
-            .styled-table tr:nth-of-type(even) {
-                background-color: #f3f3f3;
-            }
+        .styled-table tr {
+            border-bottom: 1px solid #dddddd;
+        }
 
-            #leftbox{
-                display:table-cell;
-                width:75%;
-            }
-            #rightbox{
-                display:table-cell;
-                vertical-align:middle;
-                width:25%;
-            }
-        </style>
+        .styled-table tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
 
-    </head>
+        #leftbox {
+            display: table-cell;
+            width: 75%;
+        }
 
-    <body>
-     <!-- ***** Preloader Start ***** -->
+        #rightbox {
+            display: table-cell;
+            vertical-align: middle;
+            width: 25%;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- ***** Preloader Start ***** -->
     <div id="js-preloader" class="js-preloader">
-      <div class="preloader-inner">
-        <span class="dot"></span>
-        <div class="dots">
-          <span></span>
-          <span></span>
-          <span></span>
+        <div class="preloader-inner">
+            <span class="dot"></span>
+            <div class="dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
-      </div>
     </div>
     <!-- ***** Preloader End ***** -->
 
 
     <!-- ***** Header Area Start ***** -->
     <header class="header-area header-sticky">
-	    <nav class="main-nav">
-	        <a href="" class="logo">California General Plan  <em> Database Mapping Tool </em></a>
-	        <ul class="nav">
-	            <li class="scroll-to-section"><a href="#top" class="active">Text Search</a></li>
-	            <li class="scroll-to-section"><a href="#about">About</a></li>
-	            <li class="scroll-to-section"><a href="https://docs.google.com/forms/d/e/1FAIpQLSezavv4hf5EVQo5p3oYQjnCDtpxKIJ3rdeONCwt4EvpPZV_Kg/viewform?usp=sf_link">Feedback</a></li>
-	        </ul>
-	        <a class='menu-trigger'>
-	            <span>Menu</span>
-	        </a>
-	    </nav>
+        <nav class="main-nav">
+            <a href="" class="logo">California General Plan <em> Database Mapping Tool </em></a>
+            <ul class="nav">
+                <li class="scroll-to-section"><a href="#top" class="active">Text Search</a></li>
+                <li class="scroll-to-section"><a href="#about">About</a></li>
+                <li class="scroll-to-section"><a
+                        href="https://docs.google.com/forms/d/e/1FAIpQLSezavv4hf5EVQo5p3oYQjnCDtpxKIJ3rdeONCwt4EvpPZV_Kg/viewform?usp=sf_link">Feedback</a>
+                </li>
+            </ul>
+            <a class='menu-trigger'>
+                <span>Menu</span>
+            </a>
+        </nav>
     </header>
     <!-- ***** Header Area End ***** -->
 
@@ -115,19 +121,20 @@
 
     <!-- ***** Main Banner Area Start ***** -->
     <div class="main-banner" id="top">
-      <img src="/static/images/ca.jpg" style="width: 100%;">
+        <img src="/static/images/ca.jpg" style="width: 100%;">
         <div class="video-overlay header-text">
             <div class="caption">
-                <h6>GENERAL PLANS SET DEVELOPMENT GOALS AND POLICIES. USE THIS PORTAL TO ACCESS, QUERY, COMPARE, AND SPATIALLY VISUALIZE GENERAL PLANS ACROSS CALIFORNIA’S CITIES AND COUNTIES.</h6>
+                <h6>GENERAL PLANS SET DEVELOPMENT GOALS AND POLICIES. USE THIS PORTAL TO ACCESS, QUERY, COMPARE, AND
+                    SPATIALLY VISUALIZE GENERAL PLANS ACROSS CALIFORNIA’S CITIES AND COUNTIES.</h6>
                 <div class="grow">
                     <h2 style="font-size: 18pt">Enter <em>keywords</em> for search</h2>
                 </div>
-				<center>
-				    <form method="GET" action="results">
-				    <input name="query" style="background-color: transparent;color:  white">
-				    <input type="submit" class="changecolor" margin-top: 10px;>
-				    </form>
-				</center>
+                <center>
+                    <form method="GET" action="results">
+                        <input name="query" style="background-color: transparent;color:  white">
+                        <input type="submit" class="changecolor" margin-top: 10px;>
+                    </form>
+                </center>
             </div>
         </div>
     </div>
@@ -143,15 +150,87 @@
                 <li class="about-item">
                     <div class="right-content">
                         <h4>Purpose</h4>
-                        <p>Land-use design in California is controlled by local communities through documents known as General Plans. These documents commit city and county governments to long-term economic and development goals that shape the fortunes and health of the jurisdiction through zoning regulations. There is currently little coordination across local jurisdictions or at the state-level for monitoring where and which policies are adopted. This searchable database of California’s General Plans is the first of its kind. The portal allows users to review thousands of pages of regulations, read, and compare policy approaches. The goal of this database is to help advocates, policymakers and community members make informed suggestions for their own planning processes. We invite you to search for terms that interest you and to learn from planning efforts in other cities and counties. For corrections, updates, and questions, please contact the lead researcher and project coordinators, <a href="mailto:ckbrinkley@ucdavis.edu">Catherine Brinkley</a> or <a href="mailto:abanginwar@ucdavis.edu">Aniket Banginwar</a>.</p>
+                        <p>Land-use design in California is controlled by local communities through documents known as
+                            General Plans. These documents commit city and county governments to long-term economic and
+                            development goals that shape the fortunes and health of the jurisdiction through zoning
+                            regulations. There is currently little coordination across local jurisdictions or at the
+                            state-level for monitoring where and which policies are adopted. This searchable database of
+                            California's General Plans is the first of its kind. The portal allows users to review
+                            thousands of pages of regulations, read, and compare policy approaches. The goal of this
+                            database is to help advocates, policymakers and community members make informed suggestions
+                            for their own planning processes. We invite you to search for terms that interest you and to
+                            learn from planning efforts in other cities and counties. For corrections, updates, and
+                            questions, please contact the lead researcher and project coordinators, <a
+                                href="mailto:ckbrinkley@ucdavis.edu">Catherine Brinkley</a> or <a
+                                href="mailto:abanginwar@ucdavis.edu">Aniket Banginwar</a>.</p>
+
+                        <br>
+                        <h5>Community:</h5>
+                        <p>Glean ideas for your next plan update. For example, is your community thinking policies
+                            that
+                            include "grey water" systems? Find out which other communities have piloted similar
+                            approaches by searching for that term across all plans and reading about the various
+                            approaches.</p>
+
+                        <br>
+                        <h5>Research:</h5>
+                        <p>Evaluate plans for innovative and common approaches to model future development.
+                            Answer
+                            questions like: how many acres of land will be converted to urban development?</p>
+
+                        <br>
+                        <h5>Educators:</h5>
+                        <p>Teach students about civic engagement. Everyone can provide public comment and
+                            input on
+                            plans. Check out the Community Futures youth engagement toolkit <a
+                                href="https://ypar.cfcl.ucdavis.edu/">here</a> for more ideas.</p>
+
+                        <br>
+                        <h5>Public agencies:</h5>
+                        <p>Understand where initiatives are gaining ground and where capacity building
+                            is needed to
+                            create responsive guidance and technical assistance programming.</p>
+
+                        <br>
+                        <h5>Advocates:</h5>
+                        <p>Track progress toward collective goals and review nuanced approaches. How
+                            many jurisdictions
+                            have climate action plans, for example?</p>
+
+                        <br>
+                        <h5>Elected Officials:</h5>
+                        <p>Compare regional approaches to identify ways to collaborate toward
+                            common goals and funding
+                            opportunities.</p>
+
+                        <br>
+                        <h5>Planning consultants:</h5>
+                        <p>Identify exemplary plans and celebrate cutting edge updates. When
+                            a new plan is adopted,
+                            submit it to us!</p>
+
                     </div>
                 </li>
                 <li class="about-item">
                     <div class="right-content">
                         <h4>Research</h4>
-                        <p>We are using linguistic analysis to learn which topics plans cover, to what extent, and how those topics relate to one another. We found that language related to housing is often very separate from topics in the rest of the plan. As the housing element portion of a plan is more frequently updated, its related policies evolve separately from other sections of the plan that address greenhouse gas emission reduction, hazard planning and air quality- for example. Our research shows a need to more comprehensively plan for housing along with these other important topics. You can read the study <a href="https://journals.sagepub.com/doi/full/10.1177/0739456X21995890?journalCode=jpea">here</a>.</p>
+                        <p>We are using linguistic analysis to learn which topics plans cover, to what extent, and how
+                            those topics relate to one another. We found that language related to housing is often very
+                            separate from topics in the rest of the plan. As the housing element portion of a plan is
+                            more frequently updated, its related policies evolve separately from other sections of the
+                            plan that address greenhouse gas emission reduction, hazard planning and air quality- for
+                            example. Our research shows a need to more comprehensively plan for housing along with these
+                            other important topics. You can read the study <a
+                                href="https://journals.sagepub.com/doi/full/10.1177/0739456X21995890?journalCode=jpea">here</a>.
+                        </p>
                         <br>
-                        <p>Our team has worked with the <a href="https://caleja.org/2017/09/sb-1000-toolkit-release/">California Enivronmental Justice Alliance</a> to assess where and how cities are addressing environmental justice under California SB 1000, “The Planning for Healthy Communities Act”. Here, <a href="https://www.tandfonline.com/doi/full/10.1080/01944363.2022.2118155">you can read the results of this research, published in the Journal of the American Planning Association</a>.</p>
+                        <p>Our team has worked with the <a
+                                href="https://caleja.org/2017/09/sb-1000-toolkit-release/">California Enivronmental
+                                Justice Alliance</a> to assess where and how cities are addressing environmental justice
+                            under California SB 1000, “The Planning for Healthy Communities Act”. Here, <a
+                                href="https://www.tandfonline.com/doi/full/10.1080/01944363.2022.2118155">you can read
+                                the results of this research, published in the Journal of the American Planning
+                                Association</a>.</p>
                     </div>
                 </li>
                 <li class="about-item">
@@ -214,30 +293,28 @@
                                 <td nowrap="nowrap">Cities missing from the database</td>
                                 <td>
                                     {% for i in range(0, (stats[3] | length)) %}
-                                        {% if i < (stats[3] | length) - 1 %}
-                                            {{ stats[3][i] | safe}},
-                                            <!-- {% if i > 0 and i % 5 == 0 %}
-                                                <br>
-                                            {% endif %} -->
+                                    {% if i < (stats[3] | length) - 1 %} {{ stats[3][i] | safe}}, <!-- {% if i> 0 and i
+                                        % 5 == 0 %}
+                                        <br>
+                                        {% endif %} -->
                                         {% else %}
-                                            {{ stats[3][i] | safe}}
+                                        {{ stats[3][i] | safe}}
                                         {% endif %}
-                                    {% endfor %}
+                                        {% endfor %}
                                 </td>
                             </tr>
                             <tr>
                                 <td nowrap="nowrap">Counties missing from the database</td>
                                 <td>
                                     {% for i in range(0, (stats[4] | length)) %}
-                                        {% if i < (stats[4] | length) - 1 %}
-                                            {{ stats[4][i] | safe}},
-                                            {% if i > 0 and i % 5 == 0 %}
-                                                <br>
-                                            {% endif %}
-                                        {% else %}
-                                            {{ stats[4][i] | safe}}
+                                    {% if i < (stats[4] | length) - 1 %} {{ stats[4][i] | safe}}, {% if i> 0 and i % 5
+                                        == 0 %}
+                                        <br>
                                         {% endif %}
-                                    {% endfor %}
+                                        {% else %}
+                                        {{ stats[4][i] | safe}}
+                                        {% endif %}
+                                        {% endfor %}
                                 </td>
                             </tr>
                         </table>
@@ -252,11 +329,24 @@
                 <li class="about-item">
                     <div class="right-content">
                         <h4>Instructions</h4>
-                        <p>To search for a single term or an exact phrase, simply type in the word/s. After entering a query, click “Search” to search across the plans. The total number of occurrences that the word appears for each plan will be shown. The search returns a substring, so that if you search 'race' you will also pull up hits for 'race-based policies.' Similarly, you will pull up hits for 'marathon races'.
-                        <br><br>
-                        Results are visualized as maps that show the cities and counties with search hits. The search hits are also shown in a table that can also be sorted by term count, year, jurisdiction name, or population. The table can also be exported to allow further research.
-                        <br><br>
-                        To understand the context of the search hits, click on the year for a city or county plan in the table to view the PDF of the plan with the highlighted keywords. New plans were added in 2022, and we are still in the process of adding plan updates. If a city is missing a plan or you know of a more up-to-date plan, please reach out to the team so that we can add this plan to the database. <a href="https://docs.google.com/forms/d/e/1FAIpQLSezavv4hf5EVQo5p3oYQjnCDtpxKIJ3rdeONCwt4EvpPZV_Kg/viewform?usp=sf_link">If you have any feedback please provide it here</a>.</p>
+                        <p>To search for a single term or an exact phrase, simply type in the word/s. After entering a
+                            query, click “Search” to search across the plans. The total number of occurrences that the
+                            word appears for each plan will be shown. The search returns a substring, so that if you
+                            search 'race' you will also pull up hits for 'race-based policies.' Similarly, you will pull
+                            up hits for 'marathon races'.
+                            <br><br>
+                            Results are visualized as maps that show the cities and counties with search hits. The
+                            search hits are also shown in a table that can also be sorted by term count, year,
+                            jurisdiction name, or population. The table can also be exported to allow further research.
+                            <br><br>
+                            To understand the context of the search hits, click on the year for a city or county plan in
+                            the table to view the PDF of the plan with the highlighted keywords. New plans were added in
+                            2022, and we are still in the process of adding plan updates. If a city is missing a plan or
+                            you know of a more up-to-date plan, please reach out to the team so that we can add this
+                            plan to the database. <a
+                                href="https://docs.google.com/forms/d/e/1FAIpQLSezavv4hf5EVQo5p3oYQjnCDtpxKIJ3rdeONCwt4EvpPZV_Kg/viewform?usp=sf_link">If
+                                you have any feedback please provide it here</a>.
+                        </p>
                     </div>
                 </li>
                 <li class="about-item">
@@ -265,67 +355,88 @@
                         <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center;">
                             <figure style="padding: 10px;">
                                 <a target="_blank" href="https://github.com/dexterantonio">
-                                    <img src="../static/images/profile_pictures/Dexter_Antonio.jpeg" style="object-fit: cover; width: 250px; height: 250px;">
+                                    <img src="../static/images/profile_pictures/Dexter_Antonio.jpeg"
+                                        style="object-fit: cover; width: 250px; height: 250px;">
                                 </a>
-                                <figcaption style="font-size: 12px; text-align: center;">Dexter Antonio<br>UC Davis M.S. Candidate<br>Chemical Engineering</figcaption>
+                                <figcaption style="font-size: 12px; text-align: center;">Dexter Antonio<br>UC Davis M.S.
+                                    Candidate<br>Chemical Engineering</figcaption>
                             </figure>
                             <figure style="padding: 10px;">
                                 <a target="_blank" href="https://www.linkedin.com/in/aniketbanginwar/">
-                                    <img src="../static/images/profile_pictures/Aniket_Banginwar.jpeg" alt="Aniket Banginwar" style="object-fit: cover; width: 250px; height: 250px;">
+                                    <img src="../static/images/profile_pictures/Aniket_Banginwar.jpeg"
+                                        alt="Aniket Banginwar" style="object-fit: cover; width: 250px; height: 250px;">
                                 </a>
-                                <figcaption style="font-size: 12px; text-align: center;">Aniket Banginwar<br>UC Davis M.S. Graduate<br>Computer Science Engineering</figcaption>
+                                <figcaption style="font-size: 12px; text-align: center;">Aniket Banginwar<br>UC Davis
+                                    M.S. Graduate<br>Computer Science Engineering</figcaption>
                             </figure>
                             <figure style="padding: 10px;">
                                 <a target="_blank" href="https://humanecology.ucdavis.edu/catherine-brinkley">
-                                    <img src="../static/images/profile_pictures/Catherine_Brinkley.jpg" alt="Catherine Brinkley" style="object-fit: cover; width: 250px; height: 250px;">
+                                    <img src="../static/images/profile_pictures/Catherine_Brinkley.jpg"
+                                        alt="Catherine Brinkley"
+                                        style="object-fit: cover; width: 250px; height: 250px;">
                                 </a>
-                                <figcaption style="font-size: 12px; text-align: center;">Catherine Brinkley<br>UC Davis Associate Professor<br>Community & Regional Development</figcaption>
+                                <figcaption style="font-size: 12px; text-align: center;">Catherine Brinkley<br>UC Davis
+                                    Associate Professor<br>Community & Regional Development</figcaption>
                             </figure>
                             <figure style="padding: 10px;">
                                 <a target="_blank" href="https://www.linkedin.com/in/makenadettmann/">
-                                    <img src="../static/images/profile_pictures/Makena_Dettman.jpg" alt="Makena Dettman" style="object-fit: cover; width: 250px; height: 250px;">
+                                    <img src="../static/images/profile_pictures/Makena_Dettman.jpg" alt="Makena Dettman"
+                                        style="object-fit: cover; width: 250px; height: 250px;">
                                 </a>
-                                <figcaption style="font-size: 12px; text-align: center;">Makena Dettman<br>UC Davis Ph.D. Student<br>Materials Engineering</figcaption>
+                                <figcaption style="font-size: 12px; text-align: center;">Makena Dettman<br>UC Davis
+                                    Ph.D. Student<br>Materials Engineering</figcaption>
                             </figure>
                             <figure style="padding: 10px;">
                                 <a target="_blank" href="https://www.linkedin.com/in/sujoy-ghosh-266b0181/">
-                                    <img src="../static/images/profile_pictures/Sujoy_Ghosh.jpg" alt="Sujoy Ghosh" style="object-fit: cover; width: 250px; height: 250px;">
+                                    <img src="../static/images/profile_pictures/Sujoy_Ghosh.jpg" alt="Sujoy Ghosh"
+                                        style="object-fit: cover; width: 250px; height: 250px;">
                                 </a>
-                                <figcaption style="font-size: 12px; text-align: center;">Sujoy Ghosh<br>UC Davis M.S. Graduate<br>Materials Science Engineering</figcaption>
+                                <figcaption style="font-size: 12px; text-align: center;">Sujoy Ghosh<br>UC Davis M.S.
+                                    Graduate<br>Materials Science Engineering</figcaption>
                             </figure>
                             <figure style="padding: 10px;">
                                 <a target="_blank" href="https://jnjoseph.com/">
-                                    <img src="../static/images/profile_pictures/Jared_Joseph.jpg" alt="Jared Joseph" style="object-fit: cover; width: 250px; height: 250px;">
+                                    <img src="../static/images/profile_pictures/Jared_Joseph.jpg" alt="Jared Joseph"
+                                        style="object-fit: cover; width: 250px; height: 250px;">
                                 </a>
-                                <figcaption style="font-size: 12px; text-align: center;">Jared Joseph<br>UC Davis Ph.D. Candidate<br>Sociology</figcaption>
+                                <figcaption style="font-size: 12px; text-align: center;">Jared Joseph<br>UC Davis Ph.D.
+                                    Candidate<br>Sociology</figcaption>
                             </figure>
                             <figure style="padding: 10px;">
                                 <a target="_blank" href="https://www.linkedin.com/in/ranesh-karma-785a921a2/">
-                                    <img src="../static/images/profile_pictures/Ranesh_Karma.jpg" alt="Ranesh Karma" style="object-fit: cover; width: 250px; height: 250px;">
+                                    <img src="../static/images/profile_pictures/Ranesh_Karma.jpg" alt="Ranesh Karma"
+                                        style="object-fit: cover; width: 250px; height: 250px;">
                                 </a>
-                                <figcaption style="font-size: 12px; text-align: center;">Ranesh Karma<br>UC Davis Graduate<br>Sociology ’21</figcaption>
+                                <figcaption style="font-size: 12px; text-align: center;">Ranesh Karma<br>UC Davis
+                                    Graduate<br>Sociology ’21</figcaption>
                             </figure>
                             <figure style="padding: 10px;">
                                 <a target="_blank" href="https://www.linkedin.com/in/mirthala-lopez/">
-                                    <img src="../static/images/profile_pictures/Mirthala_Lopez.jpg" alt="Mirthala Lopez" style="object-fit: cover; width: 250px; height: 250px;">
+                                    <img src="../static/images/profile_pictures/Mirthala_Lopez.jpg" alt="Mirthala Lopez"
+                                        style="object-fit: cover; width: 250px; height: 250px;">
                                 </a>
-                                <figcaption style="font-size: 12px; text-align: center;">Mirthala Lopez<br>UC Davis Graduate<br>Computer Science ’21</figcaption>
+                                <figcaption style="font-size: 12px; text-align: center;">Mirthala Lopez<br>UC Davis
+                                    Graduate<br>Computer Science ’21</figcaption>
                             </figure>
                             <figure style="padding: 10px;">
                                 <a target="_blank" href="https://www.smith.edu/academics/faculty/lindsay-poirier">
-                                    <img src="../static/images/profile_pictures/Lindsay_Poirier.jpg" alt="Lindsay Poirier" style="object-fit: cover; width: 250px; height: 250px;">
+                                    <img src="../static/images/profile_pictures/Lindsay_Poirier.jpg"
+                                        alt="Lindsay Poirier" style="object-fit: cover; width: 250px; height: 250px;">
                                 </a>
-                                <figcaption style="font-size: 12px; text-align: center;">Lindsay Poirier<br>Smith College Assistant Professor<br>Statistical & Data Sciences</figcaption>
+                                <figcaption style="font-size: 12px; text-align: center;">Lindsay Poirier<br>Smith
+                                    College Assistant Professor<br>Statistical & Data Sciences</figcaption>
                             </figure>
                             <figure style="padding: 10px;">
                                 <a target="_blank" href="https://www.linkedin.com/in/terry-tong-538a7523b/">
-                                    <img src="../static/images/profile_pictures/Terry_Tong.jpg" alt="Lindsay Poirier" style="object-fit: cover; width: 250px; height: 250px;">
+                                    <img src="../static/images/profile_pictures/Terry_Tong.jpg" alt="Lindsay Poirier"
+                                        style="object-fit: cover; width: 250px; height: 250px;">
                                 </a>
-                                <figcaption style="font-size: 12px; text-align: center;">Terry Tong<br>UC Davis Undergraduate<br>Computer Science Engineering</figcaption>
+                                <figcaption style="font-size: 12px; text-align: center;">Terry Tong<br>UC Davis
+                                    Undergraduate<br>Computer Science Engineering</figcaption>
                             </figure>
                         </div>
                     </div>
-                </li> 
+                </li>
             </ul>
         </section>
     </div>
@@ -335,9 +446,13 @@
     <!-- ***** Footer Start ***** -->
 
     <footer>
-      <div class = 'citation'>
-  		    <p>Cite as: Aniket Banginwar, Dexter Antonio, Mirthala Lopez, Lindsay Poirier, Sujoy Ghosh, Makena Dettmann, & Catherine Brinkley. (2023, January 6). General Plan Database Mapping Tool (v3.0). Zenodo. <a href="https://doi.org/10.5281/zenodo.7508689">https://doi.org/10.5281/zenodo.7508689</a><br><a rel="nofollow" href=" https://plansearch.caes.ucdavis.edu/" class="tm-text-link" target="_parent"> https://plansearch.caes.ucdavis.edu/</a></p>
-      </div>
+        <div class='citation'>
+            <p>Cite as: Aniket Banginwar, Dexter Antonio, Mirthala Lopez, Lindsay Poirier, Sujoy Ghosh, Makena Dettmann,
+                & Catherine Brinkley. (2023, January 6). General Plan Database Mapping Tool (v3.0). Zenodo. <a
+                    href="https://doi.org/10.5281/zenodo.7508689">https://doi.org/10.5281/zenodo.7508689</a><br><a
+                    rel="nofollow" href=" https://plansearch.caes.ucdavis.edu/" class="tm-text-link" target="_parent">
+                    https://plansearch.caes.ucdavis.edu/</a></p>
+        </div>
     </footer>
 
     <!-- jQuery -->
@@ -364,11 +479,12 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESMKVWZ0K0"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
 
         gtag('config', 'G-ESMKVWZ0K0');
     </script>
 
-  </body>
+</body>
+
 </html>
