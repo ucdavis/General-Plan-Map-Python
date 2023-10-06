@@ -227,7 +227,7 @@ def elastic_search_highlight(query):
 	# for word in words:
 	# 	expected_highlight += "<#>"+word+"</#>"+" "
 	# expected_highlight = expected_highlight.strip()
-	expected_highlight = "<#>" + query + "</#>"
+	expected_highlight = "<#>" + query.lower() + "</#>"
 
 	query_json = {
 		"_source": False,
