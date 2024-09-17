@@ -258,7 +258,7 @@ def my_form():  # function for main index
         scripts = [map_script, plot_1_2_script, plot_3_4_script, plot_5_6_script], 
         divs = [map_div, plot_1_2_div, plot_3_4_div, plot_5_6_div], 
         stats = [stats_dict["file_count"], stats_dict["total_pages"], stats_dict["total_words"], 
-        stats_dict["missing_cities"], stats_dict["missing_counties"]])  # return index page
+        stats_dict["missing_cities"], stats_dict["missing_counties"], stats_dict["last_updated"]])  # return index page
 
 
 def get_stats(city_df, county_df):
@@ -346,6 +346,10 @@ def get_stats(city_df, county_df):
         # Coverting the city and county names from caps to title format.
         missing_cities = [item.title() for item in missing_cities]
         missing_counties = [item.title() for item in missing_counties]
+
+        # Get current time
+        curr_time = datetime.now()
+        current_time_str = curr_time.strftime("%B %d, %Y")
         
         # Create the dictionary and save to local
         stats_dict = {
@@ -353,7 +357,8 @@ def get_stats(city_df, county_df):
             "total_pages" : total_pages,
             "total_words" : total_words,
             "missing_cities" : missing_cities,
-            "missing_counties" : missing_counties
+            "missing_counties" : missing_counties,
+            "last_updated" : current_time_str
         }
 
         stats_json_object = json.dumps(stats_dict, indent=4)
