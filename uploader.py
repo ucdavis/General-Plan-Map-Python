@@ -162,16 +162,6 @@ def reindex_data():  # to update page list
     session['logged_in'] = True
     es.index_everything()
     
-    ###### Updating the stats.json ######
-    stats_dict = open('static/data/city_plans_files/stats.json')
-    stats_data = json.load(stats_dict)
-    stats_data["last_updated"] = datetime.now().strftime("%B %d, %Y")
-    
-    # Update the stats.json with new values
-    stats_json_object = json.dumps(stats_data, indent=4)
-    with open('static/data/city_plans_files/stats.json', "w") as outfile:
-        outfile.write(stats_json_object)
-
     msg = "Files re-indexed Successfully!"
     return render_template('upload_reindex_done.html', msg=msg) 
 

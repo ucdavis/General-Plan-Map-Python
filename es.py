@@ -23,6 +23,7 @@ from elasticsearch import Elasticsearch
 from pathlib import Path
 from collections import OrderedDict
 from typing import Dict
+from datetime import datetime
 
 # when you load this pacakge these global variables are defined 
 # es = Elasticsearch('http://localhost:9200')
@@ -172,6 +173,17 @@ def index_everything():
 
 	with open('key_hash_mapping.json', 'w') as fp:
 		json.dump(hash_to_prop_mapping, fp)
+
+	###### Updating the stats.json ######
+	stats_dict = open('static/data/city_plans_files/stats.json')
+	stats_data = json.load(stats_dict)
+	stats_data["last_updated"] = datetime.now().strftime("%B %d, %Y")
+
+	# Update the stats.json with new values
+	stats_json_object = json.dumps(stats_data, indent=4)
+	with open('static/data/city_plans_files/stats.json', "w") as outfile:
+		outfile.write(stats_json_object)
+
 
 
 def map_keys_to_values(search_result_indices, key_to_hash_path='key_hash_mapping.json'):
