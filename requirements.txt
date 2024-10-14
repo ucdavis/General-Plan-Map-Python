@@ -23,7 +23,7 @@ looseversion==1.0.1
 munch==2.5.0
 nibabel==3.2.2
 nipype==1.8.1
-opencv-python==4.6.0.66
+opencv-python==4.8.1.78
 prov==2.0.0
 pydot==1.4.2
 pymupdf==1.19.0
