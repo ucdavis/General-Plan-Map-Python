@@ -32,7 +32,7 @@ import geopandas as gpd
 from flask import Flask, request, render_template, Markup
 from PyPDF2 import PdfFileReader
 from flask_bootstrap import Bootstrap
-from datetime import date, datetime
+from datetime import date, datetime, timezone, timedelta
 
 from bokeh.resources import CDN
 from bokeh.embed import components
@@ -771,6 +771,13 @@ with open(os.path.join(geojson_path, 'map.geojson'), 'r') as f:
 
 # with open(os.path.join(geojson_path, 'pop_map.geojson'), 'r') as f:
 #     pop_map = json.load(f)
+    
+
+def get_iso_time_from_file(file_path):
+    """Read UTC time from a file and return it in ISO format."""
+    with open(file_path, 'r') as file:
+        timestamp_str = file.read().strip()
+    return datetime.strptime(timestamp_str, '%Y-%m-%d %H:%M:%S %Z').isoformat() + 'Z'
 
 
 @app.route('/results/', methods=['GET'])
@@ -787,10 +794,19 @@ def index_search_box():
     wordinput = ""  # initialize string input for search
     wordinput = request.args.get('query')  # get input from request form on webpage
 
+    isoTime = None
     try:
         results = getResults(wordinput)
     except Exception as e: # appears when getResults tries to zip no results
-        return render_template('noresult.html')
+        try:
+            isoTime = get_iso_time_from_file('restartTimeStamp.txt')
+        except Exception as e:
+            print(f"An error occurred: {e}")  # Log the error for debugging
+            isoTime = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%S') + 'Z'  # Get current time in UTC as ISO format
+
+        isoTimeWithOffset = (datetime.fromisoformat(isoTime[:-1]) + timedelta(minutes=35)).isoformat() + 'Z'
+
+        return render_template('noresult.html', isoTime=isoTimeWithOffset)
 
     #==============================================================================
     #Initialize variables

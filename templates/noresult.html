@@ -56,7 +56,10 @@
             <br><br><br><br><br>
             
                 <h2 style="color: white">No matches found</h2>
-            </div>
+                &nbsp;
+                <p style="color: white" id="timestamp">Please check back in... </p>
+                &nbsp;
+                <p style="color: white">Try using simple search terms like 'Water' to ensure the system is functioning properly. Please note that if a search term does not yield any results, it doesn't necessarily mean the system is not working.</p>
           
     </section>
     <!-- ***** No match End ***** -->
@@ -79,8 +82,21 @@
     
     <!-- Global Init -->
     <script src="/static/cssjs/js/custom.js"></script>
+
     <script>
-      setTimeout("history.back()", 1500)
+      const isoTime = "{{ isoTime }}"; // Get the ISO time from Flask
+      const localTime = new Date(isoTime); // Convert to local time
+      // Check if the date is valid
+      if (isNaN(localTime.getTime())) {
+          document.getElementById('timestamp').innerText = "If you believe the system is not functioning properly, please check back in 35 minutes. Our self-repair tool should take care of it.";
+      } else {
+          // Format the date to the user's local time
+          var options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZoneName: 'short' };
+          var formattedDate = localTime.toLocaleString(undefined, options); // Using undefined will use the user's local timezone
+
+          // Update the HTML to show the formatted date
+          document.getElementById('timestamp').innerText = `If you feel that the system is not working, please check back after ${formattedDate}. Our self-repair tool should take care of it.\nIf you have already waited, and the wait-time got updated, please contact us.`;
+      }
     </script>
 
     <!-- Google analytics Tag -->
