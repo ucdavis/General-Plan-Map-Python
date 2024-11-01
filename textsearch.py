@@ -925,12 +925,13 @@ def index_search_box():
     uniqueCounties = len(set(countyData["names"]))
     numCities = 482
     numCounties = 58
-    shareDiv = Div(text = """
-                        <h1> Share Results: </h1>
-                        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-text="{} out of {} California cities mention &#39;{}&#39; in their General Plans." data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                        """.format(uniqueCities, numCities, twitQuery),
-                        margin = (0, 0, 0, 40),
-                        css_classes = ["share-div"])
+    # shareDiv has the widget to share with twitter, add to page_layout_1 variable AND uncomment the twitter JS on results.html too to use the feature
+    # shareDiv = Div(text = """
+    #                     <h1> Share Results: </h1>
+    #                     <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-text="{} out of {} California cities mention &#39;{}&#39; in their General Plans." data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    #                     """.format(uniqueCities, numCities, twitQuery),
+    #                     margin = (0, 0, 0, 40),
+    #                     css_classes = ["share-div"])
     resultsDiv = Div(text = """
                      <span class='darker-text-color'>{} </span><span class='white-text-color'>out of </span><span class='darker-text-color'>{} </span><span class='white-text-color'>cities mention </span><span class='darker-text-color'>'{}'</span><br/><br/>
                      <span class='darker-text-color'>{} </span><span class='white-text-color'>out of </span><span class='darker-text-color'>{} </span><span class='white-text-color'>counties mention </span><span class='darker-text-color'>'{}'</span>
@@ -1061,7 +1062,8 @@ def index_search_box():
     #Layout of the page
     #====================================================
 
-    page_layout_1 = layout(column([row([column(mapTabs), column([shareDiv, resultsDiv])])]))
+    page_layout_1 = layout(column([row([column(mapTabs), column([resultsDiv])])]))
+    # page_layout_1 = layout(column([row([column(mapTabs), column([shareDiv, resultsDiv])])]))  # Uncomment to use shareDiv
     page_layout_2 = layout(column(tabs, p_timeline))
     lScript_1,lDiv_1 = components(page_layout_1)
     lScript_2,lDiv_2 = components(page_layout_2)
