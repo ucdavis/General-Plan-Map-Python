@@ -20,25 +20,33 @@ results = []
 
 for fileName in os.listdir(filesLocation):
     if fileName.lower().endswith(".pdf"):
-        completeName = os.path.join(filesLocation, fileName)
-        new_pdf_file = open(completeName, 'rb')
-        read_pdf = PyPDF2.PdfFileReader(new_pdf_file)
         placeInfo1 = fileName.split("-")
         placeInfo2 = placeInfo1[0].split("_")
         placeInfo3 = placeInfo1[1].split("_")
         stateName = placeInfo2[0]
         placeType = placeInfo2[1]
         placeName = placeInfo3[0]
-        planYear = placeInfo3[1][:-4]
+        try:
+            planYear = placeInfo3[1][:-4]
+        except:
+            planYear = 0
 
         planInfo = {}
         planInfo["Name"] = placeName
         planInfo["Type"] = placeType
         planInfo["Year"] = planYear
-        planInfo["Pages"] = read_pdf.numPages
         planInfo["State"] = stateName
+        
+        try:
+            completeName = os.path.join(filesLocation, fileName)
+            new_pdf_file = open(completeName, 'rb')
+            read_pdf = PyPDF2.PdfFileReader(new_pdf_file)
+            planInfo["Pages"] = read_pdf.numPages
+        except:
+            planInfo["Pages"] = 0
 
         results.append(planInfo)
+        print("{} Done".format(placeName))
 
 print(results)
 today_date = datetime.today().strftime("%Y-%m-%d")
