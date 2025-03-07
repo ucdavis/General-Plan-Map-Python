@@ -449,14 +449,25 @@ def upload_file1():  # function to upload file
             print("Number of pages before:", stats_data["total_pages"])
             new_pdf_file = open(completeName, 'rb')
             read_pdf = PyPDF2.PdfFileReader(new_pdf_file)
-            stats_data["total_pages"] += read_pdf.numPages
+            num_pages = read_pdf.numPages
+            stats_data["total_pages"] += num_pages
             print("Number of pages after:", stats_data["total_pages"])
 
             # Update the number of words
             print("Number of words before:", stats_data["total_words"])
-            text = textract.process(completeName).decode('utf-8')
-            words = re.findall(r"[^\W_]+", text, re.MULTILINE)
-            stats_data["total_words"] += len(words)
+
+            # This gives accurate number but it is too time consuming
+            # text = textract.process(completeName).decode('utf-8')
+            # words = re.findall(r"[^\W_]+", text, re.MULTILINE)
+            # stats_data["total_words"] += len(words)
+
+            # This gives a rough estimate but very fast
+            # After doing some analysis:
+                # 50% of pages → 500 words per page (text-heavy sections)
+                # 30% of pages → 250 words per page (mixed sections)
+                # 20% of pages → 100 words per page (maps, charts, images)
+            # We come up with avg 340 words per page for general plans
+            stats_data["total_words"] += (340 * num_pages)
             print("Number of words after:", stats_data["total_words"])
 
             # Update the file count
