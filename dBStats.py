@@ -20,7 +20,7 @@ results = []
 
 for fileName in os.listdir(filesLocation):
     if fileName.lower().endswith(".pdf"):
-        placeInfo1 = fileName.split("-")
+        placeInfo1 = fileName.split("-",1)
         placeInfo2 = placeInfo1[0].split("_")
         placeInfo3 = placeInfo1[1].split("_")
         stateName = placeInfo2[0]
@@ -36,7 +36,7 @@ for fileName in os.listdir(filesLocation):
         planInfo["Type"] = placeType
         planInfo["Year"] = planYear
         planInfo["State"] = stateName
-        
+
         try:
             completeName = os.path.join(filesLocation, fileName)
             new_pdf_file = open(completeName, 'rb')
