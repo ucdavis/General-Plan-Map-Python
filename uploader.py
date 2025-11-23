@@ -579,7 +579,7 @@ def view_upload_status(): # View all uploads status
     return render_template('upload_status.html', uploads=uploads)
 
 
-@app.route('/admin/populate_test_data_to_uploads')
+@app.route('/admin/test_endpoint_populate_dummy_data_to_uploads')
 def populate_test_data():
     """Populate database with 100 test uploads for testing"""
     conn = sqlite3.connect(UPLOAD_DB)
@@ -606,4 +606,4 @@ def populate_test_data():
 
 if __name__ == "__main__":  # run app on local host at port 5001 in debug mode
     app.secret_key = os.urandom(12)  # random key for log in authentication
-    app.run(host="0.0.0.0", port=5002, debug=True)
+    app.run(host="0.0.0.0", port=5002, debug=False)
