@@ -30,10 +30,12 @@ from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 from PyPDF2 import PdfFileMerger, PdfFileReader
 from werkzeug.utils import secure_filename
-from datetime import datetime
+from datetime import datetime, timedelta
 from decouple import config
 import smtplib
 
+import sqlite3
+import time
 
 app = Flask(__name__)  # create flask object
 mail= Mail(app)  # create mail object
@@ -230,6 +232,84 @@ def delete_file():  # function to delete file from list
     return redirect(url_for('delete_page_update'))
 
 
+UPLOAD_DB = "static/data/db/uploads.db"
+os.makedirs(os.path.dirname(UPLOAD_DB), exist_ok=True)
+
+
+def init_upload_db(): # initialize the uploads db, the files which are uploaded, their status will be stored here
+    conn = sqlite3.connect(UPLOAD_DB)
+    c = conn.cursor()
+    c.execute('''CREATE TABLE IF NOT EXISTS uploads
+                 (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                  filename TEXT UNIQUE,
+                  status INTEGER,
+                  uploaded_at TEXT,
+                  last_updated TEXT)''')
+    # status: 0 = processing, 1 = completed, 2 = failed
+
+    # Cleaning db of completed uploads more than 7 days old
+    one_week_ago = (datetime.now() - timedelta(days=7)).strftime('%Y-%m-%d %H:%M:%S')
+
+    # Delete rows where the timestamp is older than one week
+    c.execute('''DELETE FROM uploads
+                 WHERE uploaded_at < ?''', (one_week_ago,))
+    
+    # Mark uploads as failed if they've been processing for more than 1 hour
+    one_hour_ago = (datetime.now() - timedelta(hours=1)).strftime('%Y-%m-%d %H:%M:%S')
+    c.execute('''UPDATE uploads
+                 SET status = ? 
+                 WHERE status = ? AND uploaded_at < ?''',
+              (2, 0, one_hour_ago))
+     
+    conn.commit()
+    conn.close()   
+
+
+def log_upload(filename, status, retries = 3): # Log upload status - works across all 4 gunicorn workers
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    for attempt in range(retries):
+        try:
+            conn = sqlite3.connect(UPLOAD_DB)
+            c = conn.cursor()
+            
+            try:
+                # Insert new record
+                c.execute("INSERT INTO uploads (filename, status, uploaded_at, last_updated) VALUES (?, ?, ?, ?)",
+                        (filename, status, timestamp, timestamp))
+            except sqlite3.IntegrityError:
+                # File already exists - update it
+                c.execute("UPDATE uploads SET status = ?, last_updated = ? WHERE filename = ?",
+                        (status, timestamp, filename))
+            
+            conn.commit()
+            conn.close()
+            return True
+        
+        except sqlite3.OperationalError as e:
+            if "database is locked" in str(e):
+                print(f"Database is locked, retrying... (Attempt {attempt + 1}/{retries})")
+                if attempt < retries - 1:
+                    time.sleep(0.1 * (attempt + 1))  # Exponential backoff
+                    continue
+            raise
+    return False
+
+
+def get_all_uploads(): # Get all uploads
+    conn = sqlite3.connect(UPLOAD_DB)
+    conn.row_factory = sqlite3.Row  # Makes rows act like dicts
+    c = conn.cursor()
+    c.execute("SELECT * FROM uploads ORDER BY uploaded_at DESC")
+    uploads = c.fetchall()
+    conn.close()
+    return [dict(row) for row in uploads]
+
+
+# Initialize the uploads database and cleanup old records if any
+init_upload_db()
+
+
 @app.route('/admin/upload', methods = ['GET', 'POST'])  # route to upload form in upload_index html in for getting files and posting to the server
 def upload_file1():  # function to upload file
     global userType
@@ -337,10 +417,13 @@ def upload_file1():  # function to upload file
 
                 completeName = os.path.join("static/data/places",file.filename)
 
+                # Log the file as processing (0) in uploads db
+                log_upload(file.filename, 0)
+
                 print(completeName)
                 # temporary copy file in case compression is not possible
                 tempname=os.path.join("static/data/temp",secure_filename(file.filename)) 
-                print("hello.",tempname)
+                print(tempname)
                 file.save(completeName)  # save file to server
                 arg1= '-sOutputFile='+ tempname  # path for output file after compression to reduce pdf size
 
@@ -355,6 +438,7 @@ def upload_file1():  # function to upload file
                     p.kill()  # kill the process since a timeout was triggered
                     out, error = p.communicate()  # capture both standard output and standard error
                 else:
+                    log_upload(file.filename, 2)  # log as failed (2) in uploads db if compression fails
                     pass
 
                 try:
@@ -371,6 +455,7 @@ def upload_file1():  # function to upload file
                     os.remove(completeName)
                     # try:
                     shutil.move(tempname,"static/data/places")  # move compressed tempfile to places directory is compressed file is valid
+                    log_upload(file.filename, 2)  # log as failed (2) in uploads db if compression fails
                     # except OSError as error:
                     # print(error) # need to trigger a popup in the browser window
                 fname =completeName
@@ -438,6 +523,9 @@ def upload_file1():  # function to upload file
 
                 doc.close()
 
+                # Log as completed (1) in the uploads db
+                log_upload(file.filename, 1)
+
                 up="Files Uploaded Successfully!"
             print("This file is uploaded:",completeName)
 
@@ -475,8 +563,6 @@ def upload_file1():  # function to upload file
             stats_data["file_count"] += 1
             print("Number of files after:", stats_data["file_count"])
 
-            # TODO: Update missing cities and counties (FUTURE WORK)
-
             # Update the stats.json with new values
             stats_json_object = json.dumps(stats_data, indent=4)
             with open('static/data/city_plans_files/stats.json', "w") as outfile:
@@ -486,6 +572,38 @@ def upload_file1():  # function to upload file
     return render_template('upload_confirm.html',up=up)  # render upload confirmation message page
 
 
+@app.route('/admin/upload_status') # route to upload status of files
+def view_upload_status(): # View all uploads status
+    session['logged_in'] = True
+    uploads = get_all_uploads()
+    return render_template('upload_status.html', uploads=uploads)
+
+
+@app.route('/admin/populate_test_data_to_uploads')
+def populate_test_data():
+    """Populate database with 100 test uploads for testing"""
+    conn = sqlite3.connect(UPLOAD_DB)
+    c = conn.cursor()
+    
+    base_time = datetime.now() - timedelta(days=10)
+    
+    for i in range(100):
+        filename = f"Test-City{i}.pdf"
+        status = i % 3  # Cycle through 0 (processing), 1 (completed), 2 (failed)
+        uploaded_at = (base_time + timedelta(minutes=i*15)).strftime("%Y-%m-%d %H:%M:%S")
+        last_updated = (base_time + timedelta(minutes=i*15 + 5)).strftime("%Y-%m-%d %H:%M:%S")
+        
+        try:
+            c.execute("INSERT INTO uploads (filename, status, uploaded_at, last_updated) VALUES (?, ?, ?, ?)",
+                     (filename, status, uploaded_at, last_updated))
+        except sqlite3.IntegrityError:
+            pass  # Skip if already exists
+    
+    conn.commit()
+    conn.close()
+    
+    return jsonify({"message": "100 test records added successfully!"})
+
 if __name__ == "__main__":  # run app on local host at port 5001 in debug mode
     app.secret_key = os.urandom(12)  # random key for log in authentication
-    app.run(host="0.0.0.0", port=5002, debug=False)
+    app.run(host="0.0.0.0", port=5002, debug=True)
