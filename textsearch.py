@@ -1073,27 +1073,60 @@ def index_search_box():
     return render_template('results.html', lScript_1 = lScript_1, lDiv_1 = lDiv_1, lScript_2 = lScript_2, lDiv_2 = lDiv_2)
 
 @app.route('/outp/<string:city>/<string:words>/<string:type>')
-def _is_whole_word_hit(page_words, rect, phrase):
+def _page_char_lines(page):
+    """Returns the page's text as a list of lines, each line being
+    (line_bbox, [(char, (x0, y0, x1, y1)), ...]).
+    Uses "rawdict" because per-character boxes are reliable in all PyMuPDF
+    versions (get_text("words") gives wrong x0/y0 in v1.19.0).
+    """
+    lines = []
+    for block in page.get_text("rawdict").get("blocks", []):
+        if block.get("type", 0) != 0:
+            continue
+        for line in block.get("lines", []):
+            chars = []
+            for span in line.get("spans", []):
+                for ch in span.get("chars", []):
+                    chars.append((ch["c"], ch["bbox"]))
+            if chars:
+                lines.append((line["bbox"], chars))
+    return lines
+
+
+def _is_whole_word_hit(page_lines, rect, phrase):
     """True if the search hit at `rect` is a whole-word match of `phrase`.
     Rejects substring hits such as "dust" inside "industrial", but accepts
-    "dust" inside "dust-free" or "(dust)".
+    "dust" inside "dust-free" or "(dust)". A hit at the start/end of a line
+    (e.g. a phrase wrapped over two lines) is judged only on its own line.
     Args:
-        page_words: output of page.get_text("words") for the page
+        page_lines: output of _page_char_lines(page)
         rect (fitz.Rect): rectangle of the hit
         phrase (str): the phrase that was searched
     """
-    probe = fitz.Rect(rect.x0, rect.y0 + 1, rect.x1, rect.y1 - 1)
-    if probe.is_empty:
-        probe = rect
-    hit_words = [w for w in page_words if not (fitz.Rect(w[:4]) & probe).is_empty]
-    if not hit_words:
-        return True  # can't verify, keep the highlight
-    joined = " ".join(w[4] for w in hit_words)
-    tokens = [re.escape(t) for t in phrase.split()]
+    cy = (rect.y0 + rect.y1) / 2.0
+    tokens = phrase.lower().split()
     if not tokens:
         return True
-    pattern = r"(?<![^\W_])" + r"\s+".join(tokens) + r"(?![^\W_])"
-    return re.search(pattern, joined, re.IGNORECASE) is not None
+    for bbox, chars in page_lines:
+        if not (bbox[1] <= cy <= bbox[3]) or bbox[2] < rect.x0 or bbox[0] > rect.x1:
+            continue
+        idx = [n for n, (c, b) in enumerate(chars)
+               if rect.x0 - 0.5 <= (b[0] + b[2]) / 2.0 <= rect.x1 + 0.5]
+        if not idx:
+            continue
+        first, last = idx[0], idx[-1]
+        text = " ".join("".join(c for c, b in chars[first:last + 1]).lower().split())
+        # the matched text must be a run of the phrase's own words
+        # (the whole phrase, or one line of a wrapped phrase)
+        runs = [" ".join(tokens[i:j + 1]) for i in range(len(tokens)) for j in range(i, len(tokens))]
+        if text not in runs:
+            continue
+        before = chars[first - 1][0] if first > 0 else " "
+        after = chars[last + 1][0] if last + 1 < len(chars) else " "
+        if (before.isalnum() or after.isalnum()):
+            continue
+        return True
+    return False
 
 
 def highlight_pdf(city, words, type):
@@ -1151,12 +1184,12 @@ def highlight_pdf(city, words, type):
         wordcount=len(list_split)
         text_instances = [" "] * wordcount  # occurences of any phrase in a page
         for i in range(page_count):
-            page_words = None
+            page_lines = None
             for k in range(wordcount):
                 phrase = list_split[k].strip()
                 text_instances[k] = doc[i].search_for(phrase, quads=True)  # look for search phrase in page
-                if text_instances[k] and page_words is None:
-                    page_words = doc[i].get_text("words")
+                if text_instances[k] and page_lines is None:
+                    page_lines = _page_char_lines(doc[i])
                 for quad in text_instances[k][:100]:
                     # Highlight hits one at a time so a single bad/degenerate hit
                     # (e.g. multi-word phrase split across lines) doesn't fail the whole PDF
@@ -1165,7 +1198,7 @@ def highlight_pdf(city, words, type):
                         if rect.is_empty or rect.is_infinite:
                             continue
                         # Skip substring hits (e.g. "dust" inside "industrial")
-                        if not _is_whole_word_hit(page_words, rect, phrase):
+                        if not _is_whole_word_hit(page_lines, rect, phrase):
                             continue
                         doc[i].add_highlight_annot(quad)
                     except Exception as e:
