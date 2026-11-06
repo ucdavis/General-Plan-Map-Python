@@ -1134,7 +1134,8 @@ def highlight_pdf(city, words, type):
                     # Highlight hits one at a time so a single bad/degenerate hit
                     # (e.g. multi-word phrase split across lines) doesn't fail the whole PDF
                     try:
-                        if quad.is_empty or quad.is_infinite:
+                        rect = quad.rect
+                        if rect.is_empty or rect.is_infinite:
                             continue
                         doc[i].add_highlight_annot(quad)
                     except Exception as e:
