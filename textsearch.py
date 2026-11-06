@@ -1072,7 +1072,6 @@ def index_search_box():
 
     return render_template('results.html', lScript_1 = lScript_1, lDiv_1 = lDiv_1, lScript_2 = lScript_2, lDiv_2 = lDiv_2)
 
-@app.route('/outp/<string:city>/<string:words>/<string:type>')
 def _page_char_lines(page):
     """Returns the page's text as a list of lines, each line being
     (line_bbox, [(char, (x0, y0, x1, y1)), ...]).
@@ -1129,6 +1128,7 @@ def _is_whole_word_hit(page_lines, rect, phrase):
     return False
 
 
+@app.route('/outp/<string:city>/<string:words>/<string:type>')
 def highlight_pdf(city, words, type):
     """Function responsible for highlighting pdf words
     Args:
