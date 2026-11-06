@@ -1129,10 +1129,16 @@ def highlight_pdf(city, words, type):
         text_instances = [" "] * wordcount  # occurences of any phrase in a page
         for i in range(page_count):
             for k in range(wordcount):
-                text_instances[k] = doc[i].searchFor(list_split[k],hit_max = 100)  # look for search phrase in page (max. 100 occurences)
-                if (len(text_instances[k]) != 0):
-                    # list returned by searchFor can be used directly as argument to highlight
-                    doc[i].addHighlightAnnot(text_instances[k])
+                text_instances[k] = doc[i].search_for(list_split[k].strip(), quads=True)[:100]  # look for search phrase in page (max. 100 occurences)
+                for quad in text_instances[k]:
+                    # Highlight hits one at a time so a single bad/degenerate hit
+                    # (e.g. multi-word phrase split across lines) doesn't fail the whole PDF
+                    try:
+                        if quad.is_empty or quad.is_infinite:
+                            continue
+                        doc[i].add_highlight_annot(quad)
+                    except Exception as e:
+                        print("Skipping bad highlight on page", i, ":", e)
 
         # breakpoint()
         pdf_output_filename = current_date + "_" + city[:-4] + '_' + ''.join(random.choices(string.ascii_uppercase + string.digits, k=10)) + '.pdf'
