@@ -185,14 +185,16 @@ def delete_file():  # function to delete file from list
     print("Number of pages before:", stats_data["total_pages"])
     new_pdf_file = open(completeName, 'rb')
     read_pdf = PyPDF2.PdfFileReader(new_pdf_file)
-    stats_data["total_pages"] -= read_pdf.numPages
+    num_pages = read_pdf.numPages
+    new_pdf_file.close()
+    stats_data["total_pages"] -= num_pages
     print("Number of pages after:", stats_data["total_pages"])
 
     # Update the number of words
+    # Uses the same fast estimate as upload (avg 340 words per page) so that
+    # add and delete stay symmetrical
     print("Number of words before:", stats_data["total_words"])
-    text = textract.process(completeName).decode('utf-8')
-    words = re.findall(r"[^\W_]+", text, re.MULTILINE)
-    stats_data["total_words"] -= len(words)
+    stats_data["total_words"] -= (340 * num_pages)
     print("Number of words after:", stats_data["total_words"])
 
     # Update the file count

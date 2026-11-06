@@ -1073,6 +1073,29 @@ def index_search_box():
     return render_template('results.html', lScript_1 = lScript_1, lDiv_1 = lDiv_1, lScript_2 = lScript_2, lDiv_2 = lDiv_2)
 
 @app.route('/outp/<string:city>/<string:words>/<string:type>')
+def _is_whole_word_hit(page_words, rect, phrase):
+    """True if the search hit at `rect` is a whole-word match of `phrase`.
+    Rejects substring hits such as "dust" inside "industrial", but accepts
+    "dust" inside "dust-free" or "(dust)".
+    Args:
+        page_words: output of page.get_text("words") for the page
+        rect (fitz.Rect): rectangle of the hit
+        phrase (str): the phrase that was searched
+    """
+    probe = fitz.Rect(rect.x0, rect.y0 + 1, rect.x1, rect.y1 - 1)
+    if probe.is_empty:
+        probe = rect
+    hit_words = [w for w in page_words if not (fitz.Rect(w[:4]) & probe).is_empty]
+    if not hit_words:
+        return True  # can't verify, keep the highlight
+    joined = " ".join(w[4] for w in hit_words)
+    tokens = [re.escape(t) for t in phrase.split()]
+    if not tokens:
+        return True
+    pattern = r"(?<![^\W_])" + r"\s+".join(tokens) + r"(?![^\W_])"
+    return re.search(pattern, joined, re.IGNORECASE) is not None
+
+
 def highlight_pdf(city, words, type):
     """Function responsible for highlighting pdf words
     Args:
@@ -1128,14 +1151,21 @@ def highlight_pdf(city, words, type):
         wordcount=len(list_split)
         text_instances = [" "] * wordcount  # occurences of any phrase in a page
         for i in range(page_count):
+            page_words = None
             for k in range(wordcount):
-                text_instances[k] = doc[i].search_for(list_split[k].strip(), quads=True)[:100]  # look for search phrase in page (max. 100 occurences)
-                for quad in text_instances[k]:
+                phrase = list_split[k].strip()
+                text_instances[k] = doc[i].search_for(phrase, quads=True)  # look for search phrase in page
+                if text_instances[k] and page_words is None:
+                    page_words = doc[i].get_text("words")
+                for quad in text_instances[k][:100]:
                     # Highlight hits one at a time so a single bad/degenerate hit
                     # (e.g. multi-word phrase split across lines) doesn't fail the whole PDF
                     try:
                         rect = quad.rect
                         if rect.is_empty or rect.is_infinite:
+                            continue
+                        # Skip substring hits (e.g. "dust" inside "industrial")
+                        if not _is_whole_word_hit(page_words, rect, phrase):
                             continue
                         doc[i].add_highlight_annot(quad)
                     except Exception as e:
